@@ -2,7 +2,7 @@
 
 import React, { useState } from "react";
 import Link from "next/link";
-import { FolderGit2, Plus } from "lucide-react";
+import { FolderGit2, Plus, LayoutDashboard } from "lucide-react";
 import RepoIngestModal from "./RepoIngestModal";
 
 export default function Navbar() {
@@ -24,8 +24,17 @@ export default function Navbar() {
             </Link>
           </div>
 
-          {/* Right: Primary Action */}
-          <div className="flex items-center space-x-3">
+          {/* Right: Actions */}
+          <div className="flex items-center space-x-2.5">
+            <Link
+              href="/dashboard"
+              className="inline-flex items-center space-x-1.5 px-3.5 py-2 rounded-xl border border-[#2A2A2F] bg-[#121214] hover:bg-[#17171A] text-[#FAFAFA] text-xs sm:text-sm font-medium transition-colors shadow-sm cursor-pointer"
+              id="nav-dashboard-btn"
+            >
+              <LayoutDashboard className="w-3.5 h-3.5 text-[#A1A1AA]" />
+              <span>Dashboard</span>
+            </Link>
+
             <button
               onClick={() => setShowIngestModal(true)}
               className="inline-flex items-center space-x-1.5 px-3.5 py-2 rounded-xl bg-[#FAFAFA] hover:bg-[#E4E4E7] text-[#111111] text-xs sm:text-sm font-semibold transition-colors shadow-sm cursor-pointer active:scale-98"
