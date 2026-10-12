@@ -2,509 +2,507 @@
 
 import React, { useState } from "react";
 import Link from "next/link";
-import { useRouter } from "next/navigation";
 import { 
   FolderGit2, 
-  Sparkles, 
   ArrowRight, 
   Briefcase, 
   Building, 
   HeartHandshake, 
-  CheckCircle2, 
+  Check, 
   ExternalLink,
+  Code2, 
+  FileSearch, 
+  PenLine, 
+  Share2, 
   ShieldCheck,
-  Zap,
-  Code2,
-  ChevronDown,
-  Layers,
-  HelpCircle,
-  Play
+  ChevronRight,
+  Layers
 } from "lucide-react";
 import RepoIngestModal from "@/components/RepoIngestModal";
 import MermaidChart from "@/components/MermaidChart";
 
 export default function LandingPage() {
-  const router = useRouter();
   const [heroUrl, setHeroUrl] = useState("");
   const [showIngestModal, setShowIngestModal] = useState(false);
   const [activeAudienceTab, setActiveAudienceTab] = useState<"recruiter" | "client" | "non-technical">("recruiter");
-  const [openFaq, setOpenFaq] = useState<number | null>(0);
 
   const handleHeroSubmit = (e: React.FormEvent) => {
     e.preventDefault();
-    if (heroUrl.trim()) {
-      setShowIngestModal(true);
-    }
+    setShowIngestModal(true);
   };
 
   const showcaseProject = {
     owner: "Ganesh2325",
     repo: "AegisTrace",
-    url: "https://github.com/Ganesh2325/AegisTrace",
-    title: "AegisTrace – AI-Powered, Human-Verified Support Automation",
-    one_line_pitch: "A secure, internal AI assistant for support teams, ensuring document-grounded answers and human-approved, auditable ticket creation.",
-    problem: "Traditional chatbots often provide inaccurate information or take unrecorded actions, leading to customer dissatisfaction and operational inefficiencies.",
-    solution: "AegisTrace provides a private, role-based AI desk that strictly answers from uploaded team documents, refuses to guess, and requires human approval for all ticket creations.",
-    features: [
-      "Document-Grounded AI Responses strictly derived from knowledge base",
-      "Two-Step Ticket Approval Workflow with mandatory human review",
-      "Role-Based Access Control for Operators, Reviewers, and Admins",
-      "Comprehensive Audit Trail for compliance and transparency",
-      "Duplicate Ticket Prevention to eliminate operational waste",
-    ],
+    title: "AegisTrace: Secure, Evidence-Based AI for Support Operations",
+    one_line_pitch: "A private, auditable, and evidence-based AI assistant for support teams, ensuring accurate, document-grounded answers and human-approved actions.",
+    problem: "Traditional chatbots often hallucinate unverified details or trigger actions without an audit trail, creating liability for enterprise support desks.",
+    solution: "AegisTrace requires answers to originate strictly from verified docs and routes all ticket creation actions through human approval workflows.",
     tech_stack: [
-      { name: "TypeScript", reason: "Strong typing across distributed microservices" },
-      { name: "Next.js & React", reason: "Server-side rendering and responsive operator dashboards" },
-      { name: "Docker", reason: "Containerized deployment for agent runtime and control plane" },
-      { name: "Tailwind CSS", reason: "Consistent, rapid UI styling and theme support" },
+      { name: "TypeScript", reason: "Type safety across control plane & services" },
+      { name: "Next.js & React", reason: "Responsive role-based operator interface" },
+      { name: "Docker", reason: "Containerized isolation for agent runtime" },
+      { name: "Tailwind CSS", reason: "Clean design tokens and theme consistency" },
     ],
     mermaid_diagram: `graph TD
-  A[Operator Input] --> B[Frontend Application]
-  B --> C[Control Plane Service]
+  A[Operator Request] --> B[Frontend Interface]
+  B --> C[Control Plane API]
   C --> D[Agent Runtime Service]
   D --> E[(Knowledge Base Docs)]
-  E -- Evidence --> D
-  D -- Generated Proposal --> C
+  E -- Verified Citations --> D
+  D -- Draft Proposal --> C
   C --> F{Requires Human Review?}
   F -- Yes --> G[Reviewer Interface]
   G --> H[Human Approved Ticket]
-  H --> I[Audit Log Record]
   F -- No --> B`,
   };
 
-  const faqs = [
-    {
-      q: "How is RepoFolio different from a generic GitHub repo explainer?",
-      a: "Existing tools explain someone else's code to developers. RepoFolio is a portfolio builder designed for YOU to present your own project as a non-technical case study to recruiters, clients, and judges who don't read raw code.",
-    },
-    {
-      q: "Does RepoFolio require a GitHub token to use?",
-      a: "No! RepoFolio works out-of-the-box for any public GitHub repository. You can paste any repo from any user, and our automated multi-CDN engine parses it instantly.",
-    },
-    {
-      q: "What if my GitHub repository has a bare or empty README?",
-      a: "No problem. RepoFolio inspects your file structure, package dependencies, manifests, and commit messages to deduce architecture, tech stacks, and features automatically.",
-    },
-    {
-      q: "Can I edit the generated story before sharing it?",
-      a: "Yes, 100%! Every single section—from title and problem to features, architecture diagram, pitch script, and interview questions—is completely editable in our rich Project Story Editor.",
-    },
-    {
-      q: "How does the public link work?",
-      a: "Every project gets a clean, responsive public URL at /p/[projectSlug]. You can link it on your resume, LinkedIn profile, Devpost submission, or freelance proposals with automated OpenGraph preview cards.",
-    },
-  ];
-
   return (
-    <div className="relative overflow-hidden">
-      {/* Background radial glow */}
-      <div className="absolute top-0 left-1/2 -translate-x-1/2 w-[1000px] h-[550px] bg-radial-glow pointer-events-none -z-10" />
-      <div className="absolute top-20 left-0 right-0 h-[600px] bg-grid-pattern opacity-40 pointer-events-none -z-10" />
+    <div className="relative overflow-hidden bg-[#0A0A0A] text-[#FAFAFA]">
+      {/* Background ambient lighting */}
+      <div className="absolute top-0 left-1/2 -translate-x-1/2 w-[900px] h-[450px] bg-ambient-top pointer-events-none -z-10" />
+      <div className="absolute top-16 left-0 right-0 h-[600px] bg-grid-subtle opacity-60 pointer-events-none -z-10" />
 
       {/* Hero Section */}
-      <section className="pt-20 pb-20 px-4 sm:px-6 lg:px-8 max-w-7xl mx-auto text-center">
-        {/* Top Announcement Pill */}
-        <div className="inline-flex items-center space-x-2 px-3.5 py-1.5 rounded-full border border-indigo-500/30 bg-indigo-500/10 text-indigo-300 text-xs font-semibold mb-8 hover:bg-indigo-500/20 transition-all cursor-pointer">
-          <Sparkles className="w-3.5 h-3.5 text-amber-400" />
-          <span>RepoFolio — GitHub to Portfolio Story Builder</span>
-          <ArrowRight className="w-3 h-3 text-indigo-400" />
+      <section className="pt-24 sm:pt-28 pb-20 px-4 sm:px-6 lg:px-8 max-w-5xl mx-auto text-center">
+        {/* Eyebrow */}
+        <div className="inline-flex items-center space-x-2 px-3 py-1 rounded-full border border-[#2A2A2F] bg-[#121214] text-[#A1A1AA] text-xs font-mono mb-8">
+          <span>GitHub → Portfolio Story</span>
         </div>
 
         {/* Main Headline */}
-        <h1 className="text-4xl sm:text-6xl lg:text-7xl font-extrabold tracking-tight text-white max-w-5xl mx-auto leading-[1.12]">
-          Turn your GitHub repo into a{" "}
-          <span className="bg-gradient-to-r from-indigo-400 via-purple-300 to-pink-400 bg-clip-text text-transparent">
-            project story
-          </span>{" "}
-          recruiters actually understand.
+        <h1 className="text-4xl sm:text-6xl md:text-7xl font-bold tracking-tight text-[#FAFAFA] leading-[1.08] max-w-4xl mx-auto">
+          Make your GitHub projects easy to understand.
         </h1>
 
         {/* Subheadline */}
-        <p className="text-base sm:text-xl text-slate-400 max-w-3xl mx-auto mt-6 leading-relaxed">
-          Recruiters and clients don’t read commit histories or package.json files. RepoFolio transforms any public repository into a polished, non-technical case study with proof of work, architecture diagrams, and shareable public links.
+        <p className="text-base sm:text-lg md:text-xl text-[#A1A1AA] max-w-3xl mx-auto mt-6 leading-relaxed">
+          RepoFolio reads your public repository and turns it into an editable case study with the problem, solution, features, tech stack, proof of work, and a shareable link.
         </p>
 
-        {/* GitHub URL Input Call To Action */}
-        <div className="mt-10 max-w-2xl mx-auto">
-          <form
-            onSubmit={handleHeroSubmit}
-            className="p-2 rounded-2xl border border-slate-700/80 bg-slate-900/80 shadow-2xl backdrop-blur-xl flex flex-col sm:flex-row items-center gap-2 glow-primary"
+        {/* Hero Actions */}
+        <div className="mt-10 flex flex-col sm:flex-row items-center justify-center gap-3">
+          <Link
+            href="/login"
+            className="w-full sm:w-auto px-6 py-3.5 rounded-xl bg-[#FAFAFA] hover:bg-[#E4E4E7] text-[#111111] text-sm font-semibold flex items-center justify-center space-x-2 transition-all shadow-sm active:scale-98"
+            id="hero-create-account-btn"
           >
-            <div className="relative flex-1 w-full flex items-center pl-3">
-              <FolderGit2 className="w-5 h-5 text-indigo-400 flex-shrink-0 mr-2" />
-              <input
-                type="text"
-                value={heroUrl}
-                onChange={(e) => setHeroUrl(e.target.value)}
-                placeholder="Paste public GitHub URL (e.g. github.com/username/repo)"
-                className="w-full py-2.5 bg-transparent text-sm text-white placeholder-slate-500 focus:outline-none font-mono"
-              />
+            <span>Create a free account</span>
+            <ArrowRight className="w-4 h-4 text-[#111111]" />
+          </Link>
+          <a
+            href="#example"
+            className="w-full sm:w-auto px-5 py-3.5 rounded-xl border border-[#2A2A2F] bg-[#121214] hover:bg-[#17171A] text-xs sm:text-sm font-medium text-[#A1A1AA] hover:text-[#FAFAFA] transition-colors flex items-center justify-center space-x-1.5"
+          >
+            <span>See a real example</span>
+            <ChevronRight className="w-3.5 h-3.5" />
+          </a>
+        </div>
+
+        {/* Mock/Preview GitHub URL Input with account note */}
+        <div className="mt-8 max-w-xl mx-auto">
+          <Link
+            href="/login"
+            className="p-1.5 rounded-xl border border-[#2A2A2F] bg-[#121214] hover:border-[#3E3E46] flex items-center justify-between shadow-sm group transition-all"
+          >
+            <div className="flex items-center pl-3 space-x-2.5 truncate">
+              <FolderGit2 className="w-4 h-4 text-[#71717A] flex-shrink-0" />
+              <span className="text-xs sm:text-sm text-[#71717A] font-mono truncate">
+                github.com/username/repository
+              </span>
             </div>
-            <button
-              type="submit"
-              className="w-full sm:w-auto px-6 py-3 rounded-xl bg-gradient-to-r from-indigo-600 via-indigo-500 to-purple-600 hover:from-indigo-500 hover:to-purple-500 text-white text-sm font-semibold shadow-lg shadow-indigo-600/30 flex items-center justify-center space-x-2 transition-all active:scale-95 cursor-pointer"
-              id="hero-generate-btn"
-            >
-              <Sparkles className="w-4 h-4" />
-              <span>Build Project Story</span>
-              <ArrowRight className="w-4 h-4" />
-            </button>
-          </form>
+            <div className="px-3 py-1.5 rounded-lg bg-[#17171A] border border-[#2A2A2F] text-[11px] text-[#A1A1AA] flex items-center space-x-1.5 flex-shrink-0 group-hover:text-[#FAFAFA] transition-colors">
+              <ShieldCheck className="w-3.5 h-3.5 text-[#A1A1AA]" />
+              <span>Create account to generate story</span>
+            </div>
+          </Link>
 
-          <div className="flex flex-wrap items-center justify-center gap-4 mt-4 text-xs text-slate-500">
-            <span className="flex items-center space-x-1">
-              <CheckCircle2 className="w-3.5 h-3.5 text-emerald-400" />
-              <span>Grounded in actual code</span>
+          {/* Trust Statements */}
+          <div className="flex flex-wrap items-center justify-center gap-6 mt-6 text-xs text-[#71717A]">
+            <span className="flex items-center space-x-1.5">
+              <Check className="w-3.5 h-3.5 text-[#FAFAFA]" />
+              <span>Uses your public repository</span>
             </span>
-            <span className="flex items-center space-x-1">
-              <CheckCircle2 className="w-3.5 h-3.5 text-emerald-400" />
-              <span>Mermaid architecture flow</span>
+            <span className="flex items-center space-x-1.5">
+              <Check className="w-3.5 h-3.5 text-[#FAFAFA]" />
+              <span>You review every AI-generated detail</span>
             </span>
-            <span className="flex items-center space-x-1">
-              <CheckCircle2 className="w-3.5 h-3.5 text-emerald-400" />
-              <span>45-second spoken elevator pitch</span>
+            <span className="flex items-center space-x-1.5">
+              <Check className="w-3.5 h-3.5 text-[#FAFAFA]" />
+              <span>Share a recruiter-ready link</span>
             </span>
-          </div>
-
-          <div className="mt-6 flex items-center justify-center space-x-4">
-            <Link
-              href="/dashboard"
-              className="inline-flex items-center space-x-2 px-4 py-2 rounded-xl bg-slate-800/90 hover:bg-slate-700/90 border border-slate-700 text-xs font-medium text-slate-200 transition-all cursor-pointer shadow"
-            >
-              <Layers className="w-4 h-4 text-indigo-400" />
-              <span>Open Stories Dashboard</span>
-            </Link>
           </div>
         </div>
       </section>
 
-      {/* Audience Differentiation Cards */}
-      <section className="py-16 px-4 sm:px-6 lg:px-8 max-w-7xl mx-auto border-t border-slate-800/80">
-        <div className="text-center mb-12">
-          <h2 className="text-xs uppercase font-mono tracking-widest text-indigo-400 font-semibold mb-2">
-            One Repository • Tailored Perspectives
+      {/* How RepoFolio Works Section */}
+      <section id="how-it-works" className="py-20 px-4 sm:px-6 lg:px-8 max-w-6xl mx-auto border-t border-[#222226]">
+        <div className="text-center mb-16">
+          <span className="text-xs font-mono uppercase tracking-widest text-[#71717A]">
+            Workflow
+          </span>
+          <h2 className="text-3xl sm:text-4xl font-bold text-[#FAFAFA] tracking-tight mt-2">
+            How RepoFolio works
           </h2>
-          <h3 className="text-2xl sm:text-4xl font-bold text-white tracking-tight">
+          <p className="text-[#A1A1AA] text-sm sm:text-base max-w-xl mx-auto mt-2">
+            Four sequential steps from raw codebase to recruiter-ready portfolio page.
+          </p>
+        </div>
+
+        {/* 4 Sequential Steps */}
+        <div className="grid grid-cols-1 md:grid-cols-4 gap-6 relative">
+          {/* Step 1 */}
+          <div className="p-6 rounded-xl border border-[#2A2A2F] bg-[#121214] flex flex-col justify-between">
+            <div>
+              <div className="w-8 h-8 rounded-lg bg-[#17171A] border border-[#2A2A2F] text-[#FAFAFA] text-xs font-mono font-semibold flex items-center justify-center mb-4">
+                01
+              </div>
+              <h3 className="font-semibold text-base text-[#FAFAFA]">Connect your project</h3>
+              <p className="text-xs text-[#A1A1AA] mt-2 leading-relaxed">
+                Paste any public GitHub repository link. No write permissions or complex setup required.
+              </p>
+            </div>
+            <div className="mt-4 pt-3 border-t border-[#222226] text-[11px] text-[#71717A] flex items-center space-x-1">
+              <FolderGit2 className="w-3 h-3" />
+              <span>Public repo URL</span>
+            </div>
+          </div>
+
+          {/* Step 2 */}
+          <div className="p-6 rounded-xl border border-[#2A2A2F] bg-[#121214] flex flex-col justify-between">
+            <div>
+              <div className="w-8 h-8 rounded-lg bg-[#17171A] border border-[#2A2A2F] text-[#FAFAFA] text-xs font-mono font-semibold flex items-center justify-center mb-4">
+                02
+              </div>
+              <h3 className="font-semibold text-base text-[#FAFAFA]">RepoFolio reads evidence</h3>
+              <p className="text-xs text-[#A1A1AA] mt-2 leading-relaxed">
+                We analyze your README, tech stack, folders, dependencies, and commit activity.
+              </p>
+            </div>
+            <div className="mt-4 pt-3 border-t border-[#222226] text-[11px] text-[#71717A] flex items-center space-x-1">
+              <FileSearch className="w-3 h-3" />
+              <span>Manifests & signals</span>
+            </div>
+          </div>
+
+          {/* Step 3 */}
+          <div className="p-6 rounded-xl border border-[#2A2A2F] bg-[#121214] flex flex-col justify-between">
+            <div>
+              <div className="w-8 h-8 rounded-lg bg-[#17171A] border border-[#2A2A2F] text-[#FAFAFA] text-xs font-mono font-semibold flex items-center justify-center mb-4">
+                03
+              </div>
+              <h3 className="font-semibold text-base text-[#FAFAFA]">Review your story</h3>
+              <p className="text-xs text-[#A1A1AA] mt-2 leading-relaxed">
+                Get an AI-generated draft, then edit every detail, add screenshots, and include your demo.
+              </p>
+            </div>
+            <div className="mt-4 pt-3 border-t border-[#222226] text-[11px] text-[#71717A] flex items-center space-x-1">
+              <PenLine className="w-3 h-3" />
+              <span>100% editable draft</span>
+            </div>
+          </div>
+
+          {/* Step 4 */}
+          <div className="p-6 rounded-xl border border-[#2A2A2F] bg-[#121214] flex flex-col justify-between">
+            <div>
+              <div className="w-8 h-8 rounded-lg bg-[#17171A] border border-[#2A2A2F] text-[#FAFAFA] text-xs font-mono font-semibold flex items-center justify-center mb-4">
+                04
+              </div>
+              <h3 className="font-semibold text-base text-[#FAFAFA]">Share with confidence</h3>
+              <p className="text-xs text-[#A1A1AA] mt-2 leading-relaxed">
+                Publish a clean project page for recruiters, clients, judges, or your portfolio.
+              </p>
+            </div>
+            <div className="mt-4 pt-3 border-t border-[#222226] text-[11px] text-[#71717A] flex items-center space-x-1">
+              <Share2 className="w-3 h-3" />
+              <span>Shareable public slug</span>
+            </div>
+          </div>
+        </div>
+
+        {/* Restrained Visual Workflow Diagram */}
+        <div className="mt-12 p-6 rounded-xl border border-[#2A2A2F] bg-[#121214]">
+          <div className="flex flex-col sm:flex-row items-center justify-between gap-3 text-xs font-mono text-[#A1A1AA]">
+            <div className="flex items-center space-x-2 px-3 py-2 rounded-lg bg-[#17171A] border border-[#2A2A2F]">
+              <FolderGit2 className="w-3.5 h-3.5 text-[#FAFAFA]" />
+              <span>GitHub Repository</span>
+            </div>
+            <span className="text-[#52525B]">→</span>
+            <div className="flex items-center space-x-2 px-3 py-2 rounded-lg bg-[#17171A] border border-[#2A2A2F]">
+              <FileSearch className="w-3.5 h-3.5 text-[#FAFAFA]" />
+              <span>Repo Analysis</span>
+            </div>
+            <span className="text-[#52525B]">→</span>
+            <div className="flex items-center space-x-2 px-3 py-2 rounded-lg bg-[#17171A] border border-[#2A2A2F]">
+              <PenLine className="w-3.5 h-3.5 text-[#FAFAFA]" />
+              <span>Editable Story</span>
+            </div>
+            <span className="text-[#52525B]">→</span>
+            <div className="flex items-center space-x-2 px-3 py-2 rounded-lg bg-[#FAFAFA] text-[#111111] font-semibold">
+              <Share2 className="w-3.5 h-3.5" />
+              <span>Public Project Page</span>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      {/* Audience Section */}
+      <section className="py-20 px-4 sm:px-6 lg:px-8 max-w-6xl mx-auto border-t border-[#222226]">
+        <div className="text-center mb-16">
+          <span className="text-xs font-mono uppercase tracking-widest text-[#71717A]">
+            Perspectives
+          </span>
+          <h2 className="text-3xl sm:text-4xl font-bold text-[#FAFAFA] tracking-tight mt-2">
             Tell the right story to the right person
-          </h3>
-          <p className="text-slate-400 text-sm sm:text-base max-w-2xl mx-auto mt-3">
-            A hiring manager wants architecture trade-offs. A client wants business outcomes. A judge wants rapid innovation. RepoFolio adapts automatically.
+          </h2>
+          <p className="text-[#A1A1AA] text-sm sm:text-base max-w-xl mx-auto mt-2">
+            Tailor the explanation automatically based on who is reading your portfolio.
           </p>
         </div>
 
         <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
-          {/* Card 1: Recruiter */}
-          <div className="p-6 rounded-2xl border border-blue-500/20 bg-slate-900/60 hover:bg-slate-900/90 transition-all shadow-xl flex flex-col justify-between">
+          {/* Card 1: Recruiters */}
+          <div className="p-6 rounded-xl border border-[#2A2A2F] bg-[#121214] flex flex-col justify-between">
             <div>
-              <div className="w-12 h-12 rounded-xl bg-blue-500/10 border border-blue-500/30 flex items-center justify-center text-blue-400 mb-4">
-                <Briefcase className="w-6 h-6" />
+              <div className="w-9 h-9 rounded-lg bg-[#17171A] border border-[#2A2A2F] flex items-center justify-center text-[#FAFAFA] mb-4">
+                <Briefcase className="w-4 h-4" />
               </div>
-              <h4 className="text-lg font-bold text-white">For Recruiters & Hiring Managers</h4>
-              <p className="text-xs text-blue-400 font-medium mt-0.5">Impact • Skills • Technical Ownership</p>
-              <p className="text-xs sm:text-sm text-slate-300 mt-3 leading-relaxed">
-                Highlights why you picked each technology, how you tackled scalability bottlenecks, your testing approach, and five interview questions hiring managers will ask you.
+              <h3 className="text-base font-semibold text-[#FAFAFA]">Recruiters</h3>
+              <p className="text-xs text-[#A1A1AA] mt-2 leading-relaxed">
+                Show skills, technical decisions, ownership, and project impact.
               </p>
             </div>
-            <div className="mt-6 pt-4 border-t border-slate-800 text-[11px] text-slate-400">
-              Ideal for resumes, LinkedIn portfolio links, and technical phone screens.
+            <div className="mt-6 pt-4 border-t border-[#222226] text-[11px] text-[#71717A]">
+              Architecture trade-offs & interview defense Q&As.
             </div>
           </div>
 
-          {/* Card 2: Client */}
-          <div className="p-6 rounded-2xl border border-emerald-500/20 bg-slate-900/60 hover:bg-slate-900/90 transition-all shadow-xl flex flex-col justify-between">
+          {/* Card 2: Clients & founders */}
+          <div className="p-6 rounded-xl border border-[#2A2A2F] bg-[#121214] flex flex-col justify-between">
             <div>
-              <div className="w-12 h-12 rounded-xl bg-emerald-500/10 border border-emerald-500/30 flex items-center justify-center text-emerald-400 mb-4">
-                <Building className="w-6 h-6" />
+              <div className="w-9 h-9 rounded-lg bg-[#17171A] border border-[#2A2A2F] flex items-center justify-center text-[#FAFAFA] mb-4">
+                <Building className="w-4 h-4" />
               </div>
-              <h4 className="text-lg font-bold text-white">For Potential Clients & Founders</h4>
-              <p className="text-xs text-emerald-400 font-medium mt-0.5">Problem • Solution • Return on Investment</p>
-              <p className="text-xs sm:text-sm text-slate-300 mt-3 leading-relaxed">
-                Translates code into business outcomes. Shows client-friendly problem statements, cost-saving benefits, screenshots, and live demo proof without alienating jargon.
+              <h3 className="text-base font-semibold text-[#FAFAFA]">Clients & founders</h3>
+              <p className="text-xs text-[#A1A1AA] mt-2 leading-relaxed">
+                Explain the problem, solution, outcomes, and proof your product works.
               </p>
             </div>
-            <div className="mt-6 pt-4 border-t border-slate-800 text-[11px] text-slate-400">
-              Ideal for freelance pitches, Upwork proposals, and client case studies.
+            <div className="mt-6 pt-4 border-t border-[#222226] text-[11px] text-[#71717A]">
+              Return on investment, screenshots, and business value.
             </div>
           </div>
 
-          {/* Card 3: Non-Technical */}
-          <div className="p-6 rounded-2xl border border-amber-500/20 bg-slate-900/60 hover:bg-slate-900/90 transition-all shadow-xl flex flex-col justify-between">
+          {/* Card 3: Non-technical viewers */}
+          <div className="p-6 rounded-xl border border-[#2A2A2F] bg-[#121214] flex flex-col justify-between">
             <div>
-              <div className="w-12 h-12 rounded-xl bg-amber-500/10 border border-amber-500/30 flex items-center justify-center text-amber-400 mb-4">
-                <HeartHandshake className="w-6 h-6" />
+              <div className="w-9 h-9 rounded-lg bg-[#17171A] border border-[#2A2A2F] flex items-center justify-center text-[#FAFAFA] mb-4">
+                <HeartHandshake className="w-4 h-4" />
               </div>
-              <h4 className="text-lg font-bold text-white">For Non-Technical People & Judges</h4>
-              <p className="text-xs text-amber-400 font-medium mt-0.5">ELI5 • Intuitive Real-World Metaphors</p>
-              <p className="text-xs sm:text-sm text-slate-300 mt-3 leading-relaxed">
-                Explains your software as if the viewer has never written a line of code. Uses intuitive analogies and clear 4-step flows so anyone can appreciate what you built.
+              <h3 className="text-base font-semibold text-[#FAFAFA]">Non-technical viewers</h3>
+              <p className="text-xs text-[#A1A1AA] mt-2 leading-relaxed">
+                Make your project understandable without code or developer jargon.
               </p>
             </div>
-            <div className="mt-6 pt-4 border-t border-slate-800 text-[11px] text-slate-400">
-              Ideal for hackathon judges, non-tech co-founders, and family/friends.
+            <div className="mt-6 pt-4 border-t border-[#222226] text-[11px] text-[#71717A]">
+              Intuitive ELI5 metaphors and clear 4-step flows.
             </div>
           </div>
         </div>
       </section>
 
-      {/* Interactive Story Showcase Preview */}
-      <section className="py-16 px-4 sm:px-6 lg:px-8 max-w-7xl mx-auto border-t border-slate-800/80">
+      {/* Example Project Section */}
+      <section id="example" className="py-20 px-4 sm:px-6 lg:px-8 max-w-6xl mx-auto border-t border-[#222226]">
         <div className="flex flex-col md:flex-row md:items-end justify-between mb-8 gap-4">
           <div>
-            <div className="inline-flex items-center space-x-2 text-indigo-400 text-xs font-semibold uppercase tracking-wider mb-2">
-              <Sparkles className="w-3.5 h-3.5 text-amber-400" />
-              <span>Interactive Story Preview</span>
-            </div>
-            <h3 className="text-2xl sm:text-3xl font-bold text-white">
-              See what a RepoFolio public page looks like
-            </h3>
-            <p className="text-xs sm:text-sm text-slate-400 mt-1">
-              Sample generated architecture case study:
+            <span className="text-xs font-mono uppercase tracking-widest text-[#71717A]">
+              Live Output
+            </span>
+            <h2 className="text-2xl sm:text-3xl font-bold text-[#FAFAFA] tracking-tight mt-1">
+              Sample project case study
+            </h2>
+            <p className="text-xs sm:text-sm text-[#A1A1AA] mt-1">
+              Real public case study generated by RepoFolio:
             </p>
           </div>
 
           <button
             onClick={() => setShowIngestModal(true)}
-            className="px-4 py-2 rounded-xl bg-indigo-600 hover:bg-indigo-500 text-white text-xs font-semibold shadow-md flex items-center space-x-1.5 self-start md:self-auto cursor-pointer"
+            className="px-4 py-2 rounded-lg bg-[#FAFAFA] hover:bg-[#E4E4E7] text-[#111111] text-xs font-semibold flex items-center space-x-1.5 self-start md:self-auto cursor-pointer"
           >
-            <Sparkles className="w-3.5 h-3.5" />
-            <span>Generate For Your Repo</span>
+            <span>Generate for your repo</span>
+            <ArrowRight className="w-3.5 h-3.5" />
           </button>
         </div>
 
-        {/* Story Card Container */}
-        <div className="rounded-2xl border border-slate-800 bg-[#0d1322] shadow-2xl overflow-hidden">
-          {/* Top banner */}
-          <div className="p-6 sm:p-8 border-b border-slate-800 bg-gradient-to-r from-slate-900 via-indigo-950/40 to-slate-900">
-            <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-4">
-              <div>
-                <a
-                  href={`https://github.com/${showcaseProject.owner}`}
-                  target="_blank"
-                  rel="noopener noreferrer"
-                  className="text-xs font-mono text-indigo-400 hover:underline inline-flex items-center space-x-1"
-                >
-                  {/* eslint-disable-next-line @next/next/no-img-element */}
-                  <img
-                    src={`https://github.com/${showcaseProject.owner}.png`}
-                    alt={showcaseProject.owner}
-                    className="w-4 h-4 rounded-full mr-1 inline"
-                  />
-                  <span>{showcaseProject.owner}</span>
-                  <span>/</span>
-                  <span>{showcaseProject.repo}</span>
-                </a>
-                <h4 className="text-xl sm:text-2xl font-bold text-white mt-1">
-                  {showcaseProject.title}
-                </h4>
-                <p className="text-sm text-slate-300 mt-1 max-w-3xl">
-                  {showcaseProject.one_line_pitch}
-                </p>
-              </div>
-
-              <div className="flex items-center space-x-3">
-                <a
-                  href={showcaseProject.url}
-                  target="_blank"
-                  rel="noopener noreferrer"
-                  className="px-4 py-2 rounded-xl border border-slate-700 bg-slate-800/90 hover:bg-slate-700 text-slate-200 text-xs font-semibold shadow-md flex items-center space-x-1.5"
-                >
-                  <ExternalLink className="w-3.5 h-3.5" />
-                  <span>GitHub Repository</span>
-                </a>
-              </div>
+        {/* Focused Showcase Card */}
+        <div className="rounded-xl border border-[#2A2A2F] bg-[#121214] overflow-hidden">
+          {/* Card Header */}
+          <div className="p-6 sm:p-8 border-b border-[#222226] bg-[#17171A]/50 flex flex-col sm:flex-row sm:items-center justify-between gap-4">
+            <div>
+              <a
+                href={`https://github.com/${showcaseProject.owner}`}
+                target="_blank"
+                rel="noopener noreferrer"
+                className="text-xs font-mono text-[#A1A1AA] hover:text-[#FAFAFA] transition-colors inline-flex items-center space-x-1.5"
+              >
+                {/* eslint-disable-next-line @next/next/no-img-element */}
+                <img
+                  src={`https://github.com/${showcaseProject.owner}.png`}
+                  alt={showcaseProject.owner}
+                  className="w-4 h-4 rounded-full"
+                />
+                <span>{showcaseProject.owner}</span>
+                <span>/</span>
+                <span>{showcaseProject.repo}</span>
+              </a>
+              <h3 className="text-xl sm:text-2xl font-bold text-[#FAFAFA] mt-1.5">
+                {showcaseProject.title}
+              </h3>
+              <p className="text-xs sm:text-sm text-[#A1A1AA] mt-1 max-w-2xl">
+                {showcaseProject.one_line_pitch}
+              </p>
             </div>
 
-            {/* Audience Perspective Switcher on preview */}
-            <div className="mt-6 flex items-center space-x-2">
-              <span className="text-xs text-slate-400 font-medium">Viewing as:</span>
-              <button
-                onClick={() => setActiveAudienceTab("recruiter")}
-                className={`px-2.5 py-1 rounded-lg text-xs font-medium border ${
-                  activeAudienceTab === "recruiter"
-                    ? "bg-blue-600/20 border-blue-500 text-blue-300"
-                    : "bg-slate-800 border-slate-700 text-slate-400"
-                }`}
+            <div className="flex items-center space-x-2">
+              <a
+                href={`https://github.com/${showcaseProject.owner}/${showcaseProject.repo}`}
+                target="_blank"
+                rel="noopener noreferrer"
+                className="px-3 py-1.5 rounded-lg border border-[#2A2A2F] hover:bg-[#1E1E22] text-[#FAFAFA] text-xs font-medium flex items-center space-x-1.5 transition-colors"
               >
-                Recruiter
-              </button>
-              <button
-                onClick={() => setActiveAudienceTab("client")}
-                className={`px-2.5 py-1 rounded-lg text-xs font-medium border ${
-                  activeAudienceTab === "client"
-                    ? "bg-emerald-600/20 border-emerald-500 text-emerald-300"
-                    : "bg-slate-800 border-slate-700 text-slate-400"
-                }`}
-              >
-                Client
-              </button>
-              <button
-                onClick={() => setActiveAudienceTab("non-technical")}
-                className={`px-2.5 py-1 rounded-lg text-xs font-medium border ${
-                  activeAudienceTab === "non-technical"
-                    ? "bg-amber-600/20 border-amber-500 text-amber-300"
-                    : "bg-slate-800 border-slate-700 text-slate-400"
-                }`}
-              >
-                Non-Technical
-              </button>
+                <ExternalLink className="w-3.5 h-3.5" />
+                <span>GitHub Source</span>
+              </a>
             </div>
           </div>
 
-          {/* Story Body */}
+          {/* Card Body */}
           <div className="p-6 sm:p-8 grid grid-cols-1 lg:grid-cols-2 gap-8">
-            <div className="space-y-6">
-              {/* Problem & Solution */}
-              <div className="p-4 rounded-xl bg-slate-950/70 border border-slate-800">
-                <h5 className="text-xs uppercase font-mono font-bold text-rose-400 mb-1">
+            <div className="space-y-5">
+              {/* Problem */}
+              <div className="p-4 rounded-lg bg-[#17171A] border border-[#2A2A2F]">
+                <span className="text-[11px] uppercase font-mono font-semibold text-[#FAFAFA] block mb-1">
                   The Problem
-                </h5>
-                <p className="text-xs sm:text-sm text-slate-300 leading-relaxed">
+                </span>
+                <p className="text-xs sm:text-sm text-[#A1A1AA] leading-relaxed">
                   {showcaseProject.problem}
                 </p>
               </div>
 
-              <div className="p-4 rounded-xl bg-slate-950/70 border border-slate-800">
-                <h5 className="text-xs uppercase font-mono font-bold text-emerald-400 mb-1">
-                  The Engineered Solution
-                </h5>
-                <p className="text-xs sm:text-sm text-slate-300 leading-relaxed">
+              {/* Solution */}
+              <div className="p-4 rounded-lg bg-[#17171A] border border-[#2A2A2F]">
+                <span className="text-[11px] uppercase font-mono font-semibold text-[#FAFAFA] block mb-1">
+                  The Solution
+                </span>
+                <p className="text-xs sm:text-sm text-[#A1A1AA] leading-relaxed">
                   {showcaseProject.solution}
                 </p>
               </div>
 
-              {/* Key Features */}
+              {/* Tech Stack Chips */}
               <div>
-                <h5 className="text-xs uppercase font-mono font-bold text-slate-400 mb-3">
-                  Key Features ({showcaseProject.features.length})
-                </h5>
-                <div className="space-y-2">
-                  {showcaseProject.features.map((feat, idx) => (
-                    <div key={idx} className="flex items-start space-x-2 text-xs sm:text-sm text-slate-300">
-                      <CheckCircle2 className="w-4 h-4 text-indigo-400 flex-shrink-0 mt-0.5" />
-                      <span>{feat}</span>
-                    </div>
-                  ))}
-                </div>
-              </div>
-
-              {/* Tech stack with reasons */}
-              <div>
-                <h5 className="text-xs uppercase font-mono font-bold text-slate-400 mb-3">
-                  Tech Stack with Grounded Rationale
-                </h5>
+                <span className="text-[11px] uppercase font-mono font-semibold text-[#71717A] block mb-2">
+                  Key Technologies & Rationale
+                </span>
                 <div className="flex flex-wrap gap-2">
                   {showcaseProject.tech_stack.map((t, idx) => (
                     <div
                       key={idx}
-                      className="px-3 py-1.5 rounded-lg bg-slate-900 border border-slate-800 text-xs text-slate-200"
-                      title={t.reason}
+                      className="px-2.5 py-1 rounded-md bg-[#17171A] border border-[#2A2A2F] text-xs text-[#FAFAFA]"
                     >
-                      <span className="font-semibold text-indigo-300">{t.name}:</span>{" "}
-                      <span className="text-slate-400 text-[11px]">{t.reason}</span>
+                      <span className="font-medium">{t.name}:</span>{" "}
+                      <span className="text-[#A1A1AA] text-[11px]">{t.reason}</span>
                     </div>
                   ))}
                 </div>
               </div>
             </div>
 
-            {/* Right Column: Mermaid Diagram */}
-            <div className="space-y-6">
-              <MermaidChart
-                chart={showcaseProject.mermaid_diagram}
-                title={`${showcaseProject.repo} Architecture Flow`}
-              />
-            </div>
-          </div>
-        </div>
-      </section>
-
-      {/* Core Features Breakdown */}
-      <section className="py-16 px-4 sm:px-6 lg:px-8 max-w-7xl mx-auto border-t border-slate-800/80">
-        <div className="text-center mb-12">
-          <h2 className="text-xs uppercase font-mono tracking-widest text-indigo-400 font-semibold mb-2">
-            Engineered For Real Job Seekers & Freelancers
-          </h2>
-          <h3 className="text-2xl sm:text-4xl font-bold text-white tracking-tight">
-            Everything you need to prove your software works
-          </h3>
-        </div>
-
-        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6">
-          <div className="p-6 rounded-2xl border border-slate-800 bg-[#0c1220] hover:border-indigo-500/40 transition-colors">
-            <div className="w-10 h-10 rounded-xl bg-indigo-500/10 border border-indigo-500/30 flex items-center justify-center text-indigo-400 mb-4">
-              <ShieldCheck className="w-5 h-5" />
-            </div>
-            <h4 className="font-bold text-white text-base">Proof Mode</h4>
-            <p className="text-xs text-slate-400 mt-2 leading-relaxed">
-              Attach screenshots, architecture flows, live demo links, and video walkthroughs directly on the page.
-            </p>
-          </div>
-
-          <div className="p-6 rounded-2xl border border-slate-800 bg-[#0c1220] hover:border-indigo-500/40 transition-colors">
-            <div className="w-10 h-10 rounded-xl bg-indigo-500/10 border border-indigo-500/30 flex items-center justify-center text-indigo-400 mb-4">
-              <Code2 className="w-5 h-5" />
-            </div>
-            <h4 className="font-bold text-white text-base">Architecture Diagrams</h4>
-            <p className="text-xs text-slate-400 mt-2 leading-relaxed">
-              Auto-generates clean, interactive Mermaid flowcharts illustrating data flows, services, and APIs.
-            </p>
-          </div>
-
-          <div className="p-6 rounded-2xl border border-slate-800 bg-[#0c1220] hover:border-indigo-500/40 transition-colors">
-            <div className="w-10 h-10 rounded-xl bg-indigo-500/10 border border-indigo-500/30 flex items-center justify-center text-indigo-400 mb-4">
-              <Zap className="w-5 h-5" />
-            </div>
-            <h4 className="font-bold text-white text-base">Elevator Pitch Script</h4>
-            <p className="text-xs text-slate-400 mt-2 leading-relaxed">
-              Includes a 45-second teleprompter script tailored for recruiter screening calls and demo days.
-            </p>
-          </div>
-
-          <div className="p-6 rounded-2xl border border-slate-800 bg-[#0c1220] hover:border-indigo-500/40 transition-colors">
-            <div className="w-10 h-10 rounded-xl bg-indigo-500/10 border border-indigo-500/30 flex items-center justify-center text-indigo-400 mb-4">
-              <HelpCircle className="w-5 h-5" />
-            </div>
-            <h4 className="font-bold text-white text-base">Interview Defense</h4>
-            <p className="text-xs text-slate-400 mt-2 leading-relaxed">
-              Generates 5 technical interview questions with model answers grounded in your codebase trade-offs.
-            </p>
-          </div>
-        </div>
-      </section>
-
-      {/* FAQ Section */}
-      <section className="py-16 px-4 sm:px-6 lg:px-8 max-w-3xl mx-auto border-t border-slate-800/80">
-        <div className="text-center mb-10">
-          <h3 className="text-2xl sm:text-3xl font-bold text-white">Frequently Asked Questions</h3>
-          <p className="text-xs sm:text-sm text-slate-400 mt-1">
-            Common questions about RepoFolio
-          </p>
-        </div>
-
-        <div className="space-y-3">
-          {faqs.map((faq, idx) => (
-            <div
-              key={idx}
-              className="rounded-xl border border-slate-800 bg-slate-900/60 overflow-hidden"
-            >
-              <button
-                onClick={() => setOpenFaq(openFaq === idx ? null : idx)}
-                className="w-full p-4 text-left flex items-center justify-between text-xs sm:text-sm font-semibold text-slate-200 hover:text-white"
-              >
-                <span>{faq.q}</span>
-                <ChevronDown
-                  className={`w-4 h-4 text-slate-400 transition-transform ${
-                    openFaq === idx ? "rotate-180 text-indigo-400" : ""
-                  }`}
+            {/* Architecture Flow Preview */}
+            <div>
+              <span className="text-[11px] uppercase font-mono font-semibold text-[#71717A] block mb-2">
+                System Flowchart Preview
+              </span>
+              <div className="rounded-lg border border-[#2A2A2F] bg-[#17171A] p-2">
+                <MermaidChart
+                  chart={showcaseProject.mermaid_diagram}
+                  title="Architecture Flow"
                 />
-              </button>
-              {openFaq === idx && (
-                <div className="px-4 pb-4 text-xs text-slate-400 leading-relaxed border-t border-slate-800/60 pt-3">
-                  {faq.a}
-                </div>
-              )}
+              </div>
             </div>
-          ))}
+          </div>
+        </div>
+      </section>
+
+      {/* Why It Is Trustworthy Section */}
+      <section className="py-20 px-4 sm:px-6 lg:px-8 max-w-4xl mx-auto border-t border-[#222226] text-center">
+        <span className="text-xs font-mono uppercase tracking-widest text-[#71717A]">
+          Trust & Accuracy
+        </span>
+        <h2 className="text-3xl sm:text-4xl font-bold text-[#FAFAFA] tracking-tight mt-2">
+          AI-generated, developer-approved.
+        </h2>
+        <p className="text-[#A1A1AA] text-sm sm:text-base max-w-lg mx-auto mt-2">
+          You retain 100% control over the story before recruiters or clients see it.
+        </p>
+
+        <div className="grid grid-cols-1 md:grid-cols-3 gap-6 mt-12 text-left">
+          <div className="p-5 rounded-xl border border-[#2A2A2F] bg-[#121214]">
+            <div className="w-8 h-8 rounded-lg bg-[#17171A] border border-[#2A2A2F] flex items-center justify-center text-[#FAFAFA] mb-3">
+              <ShieldCheck className="w-4 h-4" />
+            </div>
+            <h3 className="font-semibold text-sm text-[#FAFAFA]">Grounded in repository evidence</h3>
+            <p className="text-xs text-[#A1A1AA] mt-1.5 leading-relaxed">
+              Every detail is pulled from your actual code, README, package manifests, and commit records.
+            </p>
+          </div>
+
+          <div className="p-5 rounded-xl border border-[#2A2A2F] bg-[#121214]">
+            <div className="w-8 h-8 rounded-lg bg-[#17171A] border border-[#2A2A2F] flex items-center justify-center text-[#FAFAFA] mb-3">
+              <PenLine className="w-4 h-4" />
+            </div>
+            <h3 className="font-semibold text-sm text-[#FAFAFA]">Every section is editable</h3>
+            <p className="text-xs text-[#A1A1AA] mt-1.5 leading-relaxed">
+              Easily refine the problem, tweak the tech stack reasons, or re-order features in the editor.
+            </p>
+          </div>
+
+          <div className="p-5 rounded-xl border border-[#2A2A2F] bg-[#121214]">
+            <div className="w-8 h-8 rounded-lg bg-[#17171A] border border-[#2A2A2F] flex items-center justify-center text-[#FAFAFA] mb-3">
+              <Check className="w-4 h-4" />
+            </div>
+            <h3 className="font-semibold text-sm text-[#FAFAFA]">Nothing published until you approve</h3>
+            <p className="text-xs text-[#A1A1AA] mt-1.5 leading-relaxed">
+              Stories remain drafts until you decide to hit publish and share your link with recruiters.
+            </p>
+          </div>
+        </div>
+      </section>
+
+      {/* Final CTA Section */}
+      <section className="py-24 px-4 sm:px-6 lg:px-8 max-w-5xl mx-auto border-t border-[#222226] text-center">
+        <h2 className="text-3xl sm:text-5xl font-bold text-[#FAFAFA] tracking-tight max-w-2xl mx-auto">
+          Your code deserves a story people can understand.
+        </h2>
+        <p className="text-[#A1A1AA] text-sm sm:text-base max-w-md mx-auto mt-4">
+          Turn your repository into a recruiter-ready case study in under 60 seconds.
+        </p>
+
+        <div className="mt-8 flex flex-col sm:flex-row items-center justify-center gap-3">
+          <Link
+            href="/login"
+            className="w-full sm:w-auto px-6 py-3.5 rounded-xl bg-[#FAFAFA] hover:bg-[#E4E4E7] text-[#111111] text-sm font-semibold flex items-center justify-center space-x-2 transition-colors cursor-pointer active:scale-98"
+          >
+            <span>Create your free account</span>
+            <ArrowRight className="w-4 h-4 text-[#111111]" />
+          </Link>
+          <a
+            href="#example"
+            className="w-full sm:w-auto px-5 py-3.5 rounded-xl border border-[#2A2A2F] bg-[#121214] hover:bg-[#17171A] text-[#A1A1AA] hover:text-[#FAFAFA] text-sm font-medium transition-colors"
+          >
+            View an example project
+          </a>
         </div>
       </section>
 

@@ -16,9 +16,9 @@ const geistMono = Geist_Mono({
 });
 
 export const metadata: Metadata = {
-  title: "RepoFolio — Turn GitHub Repos Into Impactful Project Stories",
+  title: "RepoFolio — Make Your GitHub Projects Easy to Understand",
   description:
-    "Turn your GitHub repository into a polished, shareable project story that recruiters, clients, and hackathon judges can actually understand in under 60 seconds.",
+    "RepoFolio reads your public repository and turns it into an editable case study with problem, solution, features, tech stack, proof of work, and a shareable link.",
   keywords: [
     "developer portfolio",
     "github portfolio",
@@ -28,9 +28,9 @@ export const metadata: Metadata = {
     "hackathon project showcase",
     "code case study",
   ],
-  authors: [{ name: "RepoFolio Team" }],
+  authors: [{ name: "RepoFolio" }],
   openGraph: {
-    title: "RepoFolio — Turn GitHub Repos Into Impactful Project Stories",
+    title: "RepoFolio — Make Your GitHub Projects Easy to Understand",
     description:
       "Transform raw GitHub repositories into shareable case studies with audience-specific explanations, architecture diagrams, and proof assets.",
     type: "website",
@@ -38,7 +38,7 @@ export const metadata: Metadata = {
   },
   twitter: {
     card: "summary_large_image",
-    title: "RepoFolio — GitHub to Non-Technical Project Story Generator",
+    title: "RepoFolio — Make Your GitHub Projects Easy to Understand",
     description:
       "Turn your GitHub repository into a project story that recruiters, clients, and judges can actually understand.",
   },
@@ -52,7 +52,7 @@ export default function RootLayout({
   return (
     <html lang="en" className="dark h-full">
       <body
-        className={`${geistSans.variable} ${geistMono.variable} min-h-screen flex flex-col bg-[#080c14] text-slate-100 antialiased selection:bg-indigo-500/30 selection:text-indigo-200`}
+        className={`${geistSans.variable} ${geistMono.variable} min-h-screen flex flex-col bg-[#0A0A0A] text-[#FAFAFA] font-sans antialiased selection:bg-[#2A2A2F] selection:text-[#FAFAFA]`}
       >
         <SessionProviderWrapper>
           <Navbar />

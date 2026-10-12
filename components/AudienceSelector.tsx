@@ -16,7 +16,6 @@ export const AUDIENCE_CONFIG: Record<
     label: string;
     sublabel: string;
     icon: React.ComponentType<{ className?: string }>;
-    accentColor: string;
     description: string;
   }
 > = {
@@ -24,28 +23,24 @@ export const AUDIENCE_CONFIG: Record<
     label: "Recruiter / Hiring",
     sublabel: "Impact, Skills & Ownership",
     icon: Briefcase,
-    accentColor: "from-blue-600 to-indigo-600 border-indigo-500/50 text-indigo-400",
     description: "Emphasizes engineering trade-offs, architecture decisions, and business impact.",
   },
   client: {
     label: "Client / Freelance",
     sublabel: "Problem, Solution & ROI",
     icon: Building,
-    accentColor: "from-emerald-600 to-teal-600 border-emerald-500/50 text-emerald-400",
     description: "Focuses on delivered value, reliability, and business outcomes without code jargon.",
   },
   "non-technical": {
     label: "Non-Technical",
     sublabel: "Intuitive & ELI5",
     icon: HeartHandshake,
-    accentColor: "from-amber-600 to-orange-600 border-amber-500/50 text-amber-400",
     description: "Explains the project using intuitive real-world metaphors that anyone can understand.",
   },
   judge: {
     label: "Hackathon Judge",
     sublabel: "Innovation & Execution",
     icon: Award,
-    accentColor: "from-purple-600 to-pink-600 border-purple-500/50 text-purple-400",
     description: "Highlights technical novelty, rapid execution under constraints, and future scope.",
   },
 };
@@ -72,8 +67,8 @@ export default function AudienceSelector({
               onClick={() => onChange(ver)}
               className={`inline-flex items-center space-x-2 px-3 py-1.5 rounded-lg text-xs font-medium transition-all ${
                 isSelected
-                  ? "bg-indigo-600 text-white shadow-md shadow-indigo-500/20 ring-1 ring-indigo-400"
-                  : "bg-slate-900 border border-slate-800 text-slate-400 hover:text-slate-200 hover:border-slate-700"
+                  ? "bg-[#FAFAFA] text-[#111111] shadow-sm font-semibold"
+                  : "bg-[#121214] border border-[#2A2A2F] text-[#A1A1AA] hover:text-[#FAFAFA] hover:border-[#3E3E46] hover:bg-[#17171A]"
               }`}
             >
               <Icon className="w-3.5 h-3.5" />
@@ -93,37 +88,35 @@ export default function AudienceSelector({
         const isSelected = selected === ver;
 
         return (
-          <div
+          <button
             key={ver}
+            type="button"
             onClick={() => onChange(ver)}
-            className={`cursor-pointer rounded-xl p-4 border transition-all duration-200 relative overflow-hidden ${
+            className={`text-left cursor-pointer rounded-xl p-4 border transition-all duration-150 relative ${
               isSelected
-                ? "bg-slate-900/90 border-indigo-500/60 shadow-lg shadow-indigo-500/10 ring-1 ring-indigo-500/40"
-                : "bg-slate-950/60 border-slate-800/80 hover:border-slate-700 hover:bg-slate-900/40"
+                ? "bg-[#17171A] border-[#FAFAFA] ring-1 ring-[#FAFAFA]/30"
+                : "bg-[#121214] border-[#2A2A2F] hover:border-[#3E3E46] hover:bg-[#17171A]/60"
             }`}
           >
-            {isSelected && (
-              <div className="absolute top-0 right-0 w-12 h-12 bg-indigo-500/10 rounded-bl-full pointer-events-none" />
-            )}
             <div className="flex items-center space-x-3 mb-2">
               <div
-                className={`w-8 h-8 rounded-lg flex items-center justify-center ${
+                className={`w-8 h-8 rounded-lg flex items-center justify-center transition-colors ${
                   isSelected
-                    ? "bg-indigo-600 text-white shadow-md shadow-indigo-600/30"
-                    : "bg-slate-800 text-slate-400"
+                    ? "bg-[#FAFAFA] text-[#111111]"
+                    : "bg-[#1E1E22] text-[#A1A1AA]"
                 }`}
               >
                 <Icon className="w-4 h-4" />
               </div>
               <div>
-                <h4 className="text-xs font-semibold text-slate-200">{config.label}</h4>
-                <p className="text-[10px] text-slate-400">{config.sublabel}</p>
+                <h4 className="text-xs font-semibold text-[#FAFAFA]">{config.label}</h4>
+                <p className="text-[10px] text-[#71717A]">{config.sublabel}</p>
               </div>
             </div>
-            <p className="text-[11px] text-slate-400 leading-relaxed">
+            <p className="text-[11px] text-[#A1A1AA] leading-relaxed">
               {config.description}
             </p>
-          </div>
+          </button>
         );
       })}
     </div>

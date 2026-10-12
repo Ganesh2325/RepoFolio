@@ -90,24 +90,21 @@ export default function PitchTeleprompter({
   const progressPercent = Math.min((seconds / targetDuration) * 100, 100);
 
   return (
-    <div className="rounded-2xl border border-indigo-500/20 bg-gradient-to-br from-indigo-950/30 via-slate-900/60 to-purple-950/20 p-6 shadow-xl relative overflow-hidden">
-      {/* Background radial highlight */}
-      <div className="absolute top-0 right-0 w-64 h-64 bg-indigo-500/5 rounded-full blur-3xl pointer-events-none" />
-
+    <div className="rounded-xl border border-[#2A2A2F] bg-[#121214] p-6 shadow-sm relative overflow-hidden">
       {/* Header */}
-      <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-4 mb-4 pb-4 border-b border-slate-800">
+      <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-4 mb-4 pb-4 border-b border-[#222226]">
         <div className="flex items-center space-x-3">
-          <div className="w-9 h-9 rounded-xl bg-gradient-to-tr from-indigo-600 to-purple-600 flex items-center justify-center text-white shadow-lg shadow-indigo-600/30">
+          <div className="w-9 h-9 rounded-xl bg-[#1E1E22] border border-[#2A2A2F] flex items-center justify-center text-[#FAFAFA]">
             <Mic className="w-4 h-4" />
           </div>
           <div>
-            <h3 className="font-semibold text-sm text-slate-100 flex items-center space-x-2">
+            <h3 className="font-semibold text-sm text-[#FAFAFA] flex items-center space-x-2">
               <span>45-Second Pitch Script</span>
-              <span className="text-[10px] uppercase font-mono px-2 py-0.5 rounded-full bg-indigo-500/20 text-indigo-300 border border-indigo-500/30">
-                Spoken Teleprompter
+              <span className="text-[10px] uppercase font-mono px-2 py-0.5 rounded-full bg-[#17171A] text-[#A1A1AA] border border-[#2A2A2F]">
+                Teleprompter
               </span>
             </h3>
-            <p className="text-xs text-slate-400">
+            <p className="text-xs text-[#A1A1AA]">
               Practice presenting {projectTitle || "your project"} out loud in 45 seconds.
             </p>
           </div>
@@ -120,8 +117,8 @@ export default function PitchTeleprompter({
               onClick={handleTextToSpeech}
               className={`p-2 rounded-lg text-xs font-medium border transition-colors flex items-center space-x-1.5 ${
                 isSpeaking
-                  ? "bg-purple-600 text-white border-purple-500"
-                  : "bg-slate-800/80 hover:bg-slate-700 text-slate-300 border-slate-700"
+                  ? "bg-[#FAFAFA] text-[#111111] border-[#FAFAFA]"
+                  : "bg-[#17171A] hover:bg-[#1E1E22] text-[#A1A1AA] hover:text-[#FAFAFA] border-[#2A2A2F]"
               }`}
               title={isSpeaking ? "Stop Speaking" : "Play Text-to-Speech"}
             >
@@ -132,15 +129,15 @@ export default function PitchTeleprompter({
 
           <button
             onClick={() => setIsPlaying(!isPlaying)}
-            className="p-2 rounded-lg bg-indigo-600 hover:bg-indigo-500 text-white text-xs font-medium transition-colors flex items-center space-x-1.5 shadow-md shadow-indigo-600/20"
+            className="p-2 px-3 rounded-lg bg-[#FAFAFA] hover:bg-[#E4E4E7] text-[#111111] text-xs font-semibold transition-colors flex items-center space-x-1.5 shadow-sm"
           >
-            {isPlaying ? <Pause className="w-3.5 h-3.5" /> : <Play className="w-3.5 h-3.5" />}
+            {isPlaying ? <Pause className="w-3.5 h-3.5 text-[#111111]" /> : <Play className="w-3.5 h-3.5 text-[#111111]" />}
             <span>{isPlaying ? "Pause" : "Start Pitch"}</span>
           </button>
 
           <button
             onClick={handleReset}
-            className="p-2 rounded-lg bg-slate-800 hover:bg-slate-700 text-slate-300 text-xs transition-colors"
+            className="p-2 rounded-lg bg-[#17171A] hover:bg-[#1E1E22] border border-[#2A2A2F] text-[#A1A1AA] hover:text-[#FAFAFA] text-xs transition-colors"
             title="Reset timer"
           >
             <RotateCcw className="w-3.5 h-3.5" />
@@ -148,25 +145,25 @@ export default function PitchTeleprompter({
 
           <button
             onClick={handleCopy}
-            className="p-2 rounded-lg bg-slate-800 hover:bg-slate-700 text-slate-300 text-xs transition-colors"
+            className="p-2 rounded-lg bg-[#17171A] hover:bg-[#1E1E22] border border-[#2A2A2F] text-[#A1A1AA] hover:text-[#FAFAFA] text-xs transition-colors"
             title="Copy script"
           >
-            {copied ? <Check className="w-3.5 h-3.5 text-emerald-400" /> : <Copy className="w-3.5 h-3.5" />}
+            {copied ? <Check className="w-3.5 h-3.5 text-[#22C55E]" /> : <Copy className="w-3.5 h-3.5" />}
           </button>
         </div>
       </div>
 
       {/* Progress Bar & Timer */}
       <div className="mb-4">
-        <div className="flex items-center justify-between text-xs text-slate-400 mb-1.5 font-mono">
+        <div className="flex items-center justify-between text-xs text-[#A1A1AA] mb-1.5 font-mono">
           <span>Target Pace: 45s</span>
-          <span className="text-indigo-400 font-semibold">
+          <span className="text-[#FAFAFA] font-semibold">
             {seconds}s / {targetDuration}s
           </span>
         </div>
-        <div className="w-full h-1.5 bg-slate-800 rounded-full overflow-hidden">
+        <div className="w-full h-1.5 bg-[#222226] rounded-full overflow-hidden">
           <div
-            className="h-full bg-gradient-to-r from-indigo-500 to-purple-500 transition-all duration-300"
+            className="h-full bg-[#FAFAFA] transition-all duration-300"
             style={{ width: `${progressPercent}%` }}
           />
         </div>
@@ -175,12 +172,12 @@ export default function PitchTeleprompter({
       {/* Teleprompter Script Card */}
       <div
         ref={textRef}
-        className="max-h-48 overflow-y-auto p-4 rounded-xl bg-slate-950/60 border border-slate-800/80 text-sm sm:text-base leading-relaxed text-slate-200 select-text scroll-smooth"
+        className="max-h-48 overflow-y-auto p-4 rounded-xl bg-[#101012] border border-[#2A2A2F] text-sm sm:text-base leading-relaxed text-[#FAFAFA] select-text scroll-smooth"
       >
         <p className="whitespace-pre-wrap">{pitchScript}</p>
       </div>
 
-      <div className="mt-3 flex items-center justify-between text-[11px] text-slate-500">
+      <div className="mt-3 flex items-center justify-between text-[11px] text-[#71717A]">
         <span>Tip: Speak naturally, maintaining eye contact and clear pacing.</span>
         <span>~120 words</span>
       </div>

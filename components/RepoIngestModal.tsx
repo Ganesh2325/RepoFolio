@@ -10,7 +10,8 @@ import {
   Loader2, 
   CheckCircle2, 
   AlertCircle,
-  ArrowRight
+  ArrowRight,
+  ShieldCheck
 } from "lucide-react";
 import AudienceSelector from "./AudienceSelector";
 import { AudienceVersion, UserOnboardingAnswers } from "@/types";
@@ -36,10 +37,10 @@ export default function RepoIngestModal({ onClose, initialUrl = "" }: RepoIngest
   const [error, setError] = useState<string | null>(null);
 
   const steps = [
-    "Validating repository & calling GitHub REST API",
-    "Parsing README, manifests & commit activity",
-    "Analyzing architecture & dependency graph",
-    "AI generating audience story & Mermaid diagram",
+    "Validating repository & reading GitHub signals",
+    "Parsing README, tech stack & commit history",
+    "Analyzing architecture & file structure",
+    "Generating audience story & architecture diagram",
   ];
 
   const handleSubmit = async (e: React.FormEvent) => {
@@ -77,7 +78,7 @@ export default function RepoIngestModal({ onClose, initialUrl = "" }: RepoIngest
         setTimeout(() => {
           onClose();
           router.push(`/dashboard/project/${data.project.id}`);
-        }, 600);
+        }, 500);
       } else {
         setError(data.error || "Failed to process repository.");
         setLoading(false);
@@ -91,33 +92,49 @@ export default function RepoIngestModal({ onClose, initialUrl = "" }: RepoIngest
   };
 
   return (
-    <div className="fixed inset-0 z-50 flex items-center justify-center p-4 bg-black/75 backdrop-blur-md animate-in fade-in">
-      <div className="relative w-full max-w-2xl rounded-2xl border border-slate-800 bg-[#0c1220] p-6 sm:p-8 shadow-2xl overflow-hidden max-h-[90vh] overflow-y-auto">
+    <div 
+      className="fixed inset-0 z-50 flex items-center justify-center p-4 bg-black/80 backdrop-blur-sm animate-in fade-in"
+      role="dialog"
+      aria-modal="true"
+      aria-labelledby="ingest-modal-title"
+    >
+      <div className="relative w-full max-w-2xl rounded-2xl border border-[#2A2A2F] bg-[#121214] p-6 sm:p-8 shadow-2xl overflow-hidden max-h-[92vh] overflow-y-auto">
         <button
           onClick={onClose}
           disabled={loading}
-          className="absolute top-5 right-5 text-slate-400 hover:text-white p-1 rounded-lg hover:bg-slate-800 transition-colors disabled:opacity-40"
+          aria-label="Close dialog"
+          className="absolute top-5 right-5 text-[#A1A1AA] hover:text-[#FAFAFA] p-1.5 rounded-lg border border-transparent hover:border-[#2A2A2F] hover:bg-[#1E1E22] transition-colors disabled:opacity-40"
         >
           <X className="w-5 h-5" />
         </button>
 
         {/* Modal Header */}
         <div className="mb-6">
-          <div className="inline-flex items-center space-x-2 px-3 py-1 rounded-full bg-indigo-500/10 border border-indigo-500/20 text-indigo-400 text-xs font-semibold mb-3">
-            <Sparkles className="w-3.5 h-3.5" />
+          <div className="inline-flex items-center space-x-2 px-2.5 py-1 rounded-md bg-[#17171A] border border-[#2A2A2F] text-[#A1A1AA] text-xs font-medium mb-3">
+            <Sparkles className="w-3.5 h-3.5 text-[#FAFAFA]" />
             <span>AI Story Engine</span>
           </div>
-          <h2 className="text-xl sm:text-2xl font-bold text-white tracking-tight">
+          <h2 id="ingest-modal-title" className="text-xl sm:text-2xl font-bold text-[#FAFAFA] tracking-tight">
             Turn your GitHub repo into a project story
           </h2>
-          <p className="text-xs sm:text-sm text-slate-400 mt-1">
-            Paste any public repository URL. We&apos;ll parse the code, dependencies, and README to craft a recruiter-ready case study.
+          <p className="text-xs sm:text-sm text-[#A1A1AA] mt-1.5 leading-relaxed">
+            Enter a public repository. We will inspect the README, tech stack, and structure to generate a clear, editable case study.
           </p>
+
+          {/* Trust callout */}
+          <div className="mt-3.5 flex items-center space-x-2 px-3 py-2 rounded-lg bg-[#17171A] border border-[#222226] text-[12px] text-[#A1A1AA]">
+            <ShieldCheck className="w-4 h-4 text-[#22C55E] flex-shrink-0" />
+            <span>We only analyze public repository information. You can review and edit everything before publishing.</span>
+          </div>
         </div>
 
         {error && (
-          <div className="mb-5 p-4 rounded-xl border border-rose-500/30 bg-rose-500/10 text-rose-300 text-xs sm:text-sm flex items-start space-x-3">
-            <AlertCircle className="w-5 h-5 flex-shrink-0 text-rose-400 mt-0.5" />
+          <div 
+            role="alert" 
+            aria-live="assertive"
+            className="mb-5 p-4 rounded-xl border border-[#EF4444]/40 bg-[#EF4444]/10 text-[#FAFAFA] text-xs sm:text-sm flex items-start space-x-3"
+          >
+            <AlertCircle className="w-5 h-5 flex-shrink-0 text-[#EF4444] mt-0.5" />
             <div className="leading-relaxed">{error}</div>
           </div>
         )}
@@ -125,14 +142,14 @@ export default function RepoIngestModal({ onClose, initialUrl = "" }: RepoIngest
         {loading ? (
           <div className="py-8 space-y-6">
             <div className="flex items-center justify-center space-x-3">
-              <Loader2 className="w-6 h-6 text-indigo-400 animate-spin" />
-              <span className="font-semibold text-slate-200 text-sm">
+              <Loader2 className="w-5 h-5 text-[#FAFAFA] animate-spin" />
+              <span className="font-semibold text-[#FAFAFA] text-sm">
                 Analyzing repository signals...
               </span>
             </div>
 
             {/* Step progress list */}
-            <div className="space-y-3 max-w-md mx-auto">
+            <div className="space-y-2.5 max-w-md mx-auto" aria-live="polite">
               {steps.map((step, idx) => {
                 const isDone = currentStep > idx;
                 const isCurrent = currentStep === idx;
@@ -142,18 +159,18 @@ export default function RepoIngestModal({ onClose, initialUrl = "" }: RepoIngest
                     key={idx}
                     className={`flex items-center space-x-3 p-3 rounded-xl border text-xs font-medium transition-all ${
                       isDone
-                        ? "bg-slate-900/40 border-emerald-500/30 text-emerald-400"
+                        ? "bg-[#17171A] border-[#2A2A2F] text-[#22C55E]"
                         : isCurrent
-                        ? "bg-indigo-950/40 border-indigo-500/50 text-indigo-200 ring-1 ring-indigo-500/30"
-                        : "bg-slate-950/20 border-slate-800/40 text-slate-500"
+                        ? "bg-[#1E1E22] border-[#FAFAFA] text-[#FAFAFA] ring-1 ring-[#FAFAFA]/20"
+                        : "bg-[#101012] border-[#222226] text-[#71717A]"
                     }`}
                   >
                     {isDone ? (
-                      <CheckCircle2 className="w-4 h-4 text-emerald-400 flex-shrink-0" />
+                      <CheckCircle2 className="w-4 h-4 text-[#22C55E] flex-shrink-0" />
                     ) : isCurrent ? (
-                      <Loader2 className="w-4 h-4 text-indigo-400 animate-spin flex-shrink-0" />
+                      <Loader2 className="w-4 h-4 text-[#FAFAFA] animate-spin flex-shrink-0" />
                     ) : (
-                      <div className="w-4 h-4 rounded-full border border-slate-700 flex-shrink-0" />
+                      <div className="w-4 h-4 rounded-full border border-[#2A2A2F] flex-shrink-0" />
                     )}
                     <span>{step}</span>
                   </div>
@@ -161,39 +178,43 @@ export default function RepoIngestModal({ onClose, initialUrl = "" }: RepoIngest
               })}
             </div>
 
-            <p className="text-center text-[11px] text-slate-500 font-mono">
-              Grounding story in code AST, languages, and commit history...
+            <p className="text-center text-[11px] text-[#71717A]">
+              Grounding story in repository evidence and architecture signals...
             </p>
           </div>
         ) : (
           <form onSubmit={handleSubmit} className="space-y-5">
             {/* Repo URL Input */}
             <div>
-              <label className="block text-xs font-semibold text-slate-300 uppercase tracking-wider mb-2">
+              <label 
+                htmlFor="repo-url-input" 
+                className="block text-xs font-semibold text-[#FAFAFA] uppercase tracking-wider mb-2"
+              >
                 Public GitHub Repository URL
               </label>
               <div className="relative">
-                <div className="absolute inset-y-0 left-0 pl-3.5 flex items-center pointer-events-none text-slate-500">
-                  <FolderGit2 className="w-4 h-4 text-indigo-400" />
+                <div className="absolute inset-y-0 left-0 pl-3.5 flex items-center pointer-events-none text-[#71717A]">
+                  <FolderGit2 className="w-4 h-4" />
                 </div>
                 <input
+                  id="repo-url-input"
                   type="text"
                   value={url}
                   onChange={(e) => setUrl(e.target.value)}
                   placeholder="https://github.com/username/repository or username/repo"
-                  className="w-full pl-10 pr-4 py-3 rounded-xl bg-slate-950 border border-slate-800 focus:border-indigo-500 text-sm text-white placeholder-slate-500 focus:outline-none focus:ring-1 focus:ring-indigo-500 transition-all font-mono"
+                  className="w-full pl-10 pr-4 py-3 rounded-xl bg-[#101012] border border-[#2A2A2F] focus:border-[#FAFAFA] text-sm text-[#FAFAFA] placeholder-[#71717A] focus:outline-none focus:ring-1 focus:ring-[#FAFAFA] transition-all font-mono"
                   required
                 />
               </div>
-              <div className="flex items-center justify-between text-[11px] text-slate-500 mt-1.5">
+              <div className="flex items-center justify-between text-[11px] text-[#71717A] mt-1.5">
                 <span>Examples: github.com/owner/repo or owner/repo</span>
-                <span className="text-indigo-400">Public repos only in v1</span>
+                <span className="text-[#A1A1AA]">Public repos supported</span>
               </div>
             </div>
 
             {/* Audience selector */}
             <div>
-              <label className="block text-xs font-semibold text-slate-300 uppercase tracking-wider mb-2">
+              <label className="block text-xs font-semibold text-[#FAFAFA] uppercase tracking-wider mb-2">
                 Target Audience Version
               </label>
               <AudienceSelector
@@ -203,26 +224,26 @@ export default function RepoIngestModal({ onClose, initialUrl = "" }: RepoIngest
               />
             </div>
 
-            {/* 3 Onboarding Questions toggle */}
-            <div className="border border-slate-800/80 rounded-xl bg-slate-950/40 p-4">
+            {/* 3 Optional hints toggle */}
+            <div className="border border-[#2A2A2F] rounded-xl bg-[#101012] p-4">
               <button
                 type="button"
                 onClick={() => setShowQuestions(!showQuestions)}
-                className="w-full flex items-center justify-between text-left text-xs font-semibold text-slate-300 hover:text-white transition-colors"
+                className="w-full flex items-center justify-between text-left text-xs font-semibold text-[#A1A1AA] hover:text-[#FAFAFA] transition-colors"
               >
                 <div className="flex items-center space-x-2">
-                  <HelpCircle className="w-4 h-4 text-indigo-400" />
-                  <span>Does your repo have a sparse README? Add 3 quick hints (Optional)</span>
+                  <HelpCircle className="w-4 h-4 text-[#A1A1AA]" />
+                  <span>Sparse README? Add 3 quick hints for higher accuracy (Optional)</span>
                 </div>
-                <span className="text-[11px] text-indigo-400 underline">
+                <span className="text-[11px] text-[#FAFAFA] underline underline-offset-2">
                   {showQuestions ? "Hide hints" : "Add hints"}
                 </span>
               </button>
 
               {showQuestions && (
-                <div className="mt-4 space-y-3 pt-3 border-t border-slate-800">
+                <div className="mt-4 space-y-3 pt-3 border-t border-[#2A2A2F]">
                   <div>
-                    <label className="block text-[11px] font-medium text-slate-400 mb-1">
+                    <label className="block text-[11px] font-medium text-[#A1A1AA] mb-1">
                       1. What problem does this project solve?
                     </label>
                     <input
@@ -231,13 +252,13 @@ export default function RepoIngestModal({ onClose, initialUrl = "" }: RepoIngest
                       onChange={(e) =>
                         setAnswers({ ...answers, problemSolved: e.target.value })
                       }
-                      placeholder="e.g. People struggle to track macros for homemade meals"
-                      className="w-full px-3 py-2 rounded-lg bg-slate-900 border border-slate-800 text-xs text-white placeholder-slate-600 focus:outline-none focus:border-indigo-500"
+                      placeholder="e.g. Teams struggle to track cross-cloud infrastructure drift"
+                      className="w-full px-3 py-2 rounded-lg bg-[#17171A] border border-[#2A2A2F] text-xs text-[#FAFAFA] placeholder-[#71717A] focus:outline-none focus:border-[#FAFAFA]"
                     />
                   </div>
 
                   <div>
-                    <label className="block text-[11px] font-medium text-slate-400 mb-1">
+                    <label className="block text-[11px] font-medium text-[#A1A1AA] mb-1">
                       2. Who is it for?
                     </label>
                     <input
@@ -246,13 +267,13 @@ export default function RepoIngestModal({ onClose, initialUrl = "" }: RepoIngest
                       onChange={(e) =>
                         setAnswers({ ...answers, targetAudience: e.target.value })
                       }
-                      placeholder="e.g. Fitness enthusiasts, athletes, busy parents"
-                      className="w-full px-3 py-2 rounded-lg bg-slate-900 border border-slate-800 text-xs text-white placeholder-slate-600 focus:outline-none focus:border-indigo-500"
+                      placeholder="e.g. DevOps engineers, site reliability teams, platform leads"
+                      className="w-full px-3 py-2 rounded-lg bg-[#17171A] border border-[#2A2A2F] text-xs text-[#FAFAFA] placeholder-[#71717A] focus:outline-none focus:border-[#FAFAFA]"
                     />
                   </div>
 
                   <div>
-                    <label className="block text-[11px] font-medium text-slate-400 mb-1">
+                    <label className="block text-[11px] font-medium text-[#A1A1AA] mb-1">
                       3. What are you most proud of or what was the hardest hurdle?
                     </label>
                     <input
@@ -261,30 +282,30 @@ export default function RepoIngestModal({ onClose, initialUrl = "" }: RepoIngest
                       onChange={(e) =>
                         setAnswers({ ...answers, proudestAchievement: e.target.value })
                       }
-                      placeholder="e.g. Sub-second multi-dish vision classification and custom portion estimation"
-                      className="w-full px-3 py-2 rounded-lg bg-slate-900 border border-slate-800 text-xs text-white placeholder-slate-600 focus:outline-none focus:border-indigo-500"
+                      placeholder="e.g. Sub-second drift detection with zero false positives"
+                      className="w-full px-3 py-2 rounded-lg bg-[#17171A] border border-[#2A2A2F] text-xs text-[#FAFAFA] placeholder-[#71717A] focus:outline-none focus:border-[#FAFAFA]"
                     />
                   </div>
                 </div>
               )}
             </div>
 
-            {/* Submit button */}
+            {/* Actions */}
             <div className="pt-2 flex items-center justify-end space-x-3">
               <button
                 type="button"
                 onClick={onClose}
-                className="px-4 py-2.5 rounded-xl text-xs font-medium text-slate-400 hover:text-white hover:bg-slate-800 transition-colors cursor-pointer"
+                className="px-4 py-2.5 rounded-xl text-xs font-medium text-[#A1A1AA] hover:text-[#FAFAFA] hover:bg-[#1E1E22] border border-transparent hover:border-[#2A2A2F] transition-colors cursor-pointer"
               >
                 Cancel
               </button>
               <button
                 type="submit"
-                className="px-6 py-2.5 rounded-xl bg-gradient-to-r from-indigo-600 to-violet-600 hover:from-indigo-500 hover:to-violet-500 text-white text-xs sm:text-sm font-semibold shadow-lg shadow-indigo-600/30 flex items-center space-x-2 transition-all active:scale-95 cursor-pointer"
+                className="px-6 py-2.5 rounded-xl bg-[#FAFAFA] hover:bg-[#E4E4E7] text-[#111111] text-xs sm:text-sm font-semibold flex items-center space-x-2 transition-all active:scale-95 cursor-pointer shadow-sm"
               >
-                <Sparkles className="w-4 h-4" />
+                <Sparkles className="w-4 h-4 text-[#111111]" />
                 <span>Generate Project Story</span>
-                <ArrowRight className="w-4 h-4" />
+                <ArrowRight className="w-4 h-4 text-[#111111]" />
               </button>
             </div>
           </form>

@@ -103,7 +103,7 @@ export default function ScreenshotUploader({
       {/* Upload area */}
       <div className="flex flex-col sm:flex-row gap-3">
         {/* File upload button */}
-        <label className="flex-1 border-2 border-dashed border-slate-700/80 hover:border-indigo-500/80 rounded-xl p-4 flex flex-col items-center justify-center cursor-pointer bg-slate-900/40 hover:bg-slate-900/80 transition-all text-center group">
+        <label className="flex-1 border-2 border-dashed border-[#2A2A2F] hover:border-[#3E3E46] rounded-xl p-4 flex flex-col items-center justify-center cursor-pointer bg-[#121214] hover:bg-[#17171A] transition-all text-center group">
           <input
             type="file"
             accept="image/*"
@@ -111,11 +111,11 @@ export default function ScreenshotUploader({
             onChange={handleFileUpload}
             disabled={isUploading || images.length >= maxImages}
           />
-          <Upload className="w-5 h-5 text-indigo-400 group-hover:scale-110 transition-transform mb-1.5" />
-          <span className="text-xs font-semibold text-slate-200">
+          <Upload className="w-5 h-5 text-[#FAFAFA] group-hover:scale-105 transition-transform mb-1.5" />
+          <span className="text-xs font-semibold text-[#FAFAFA]">
             {isUploading ? "Uploading Screenshot..." : "Upload Screenshot from Device"}
           </span>
-          <span className="text-[11px] text-slate-500 mt-0.5">
+          <span className="text-[11px] text-[#71717A] mt-0.5">
             PNG, JPG, or WebP (up to {maxImages} total)
           </span>
         </label>
@@ -124,11 +124,11 @@ export default function ScreenshotUploader({
         <button
           type="button"
           onClick={() => setShowUrlField(!showUrlField)}
-          className="sm:w-48 border border-slate-700/80 hover:border-slate-600 bg-slate-900/40 hover:bg-slate-900/80 rounded-xl p-4 flex flex-col items-center justify-center transition-all text-center group cursor-pointer"
+          className="sm:w-48 border border-[#2A2A2F] hover:border-[#3E3E46] bg-[#121214] hover:bg-[#17171A] rounded-xl p-4 flex flex-col items-center justify-center transition-all text-center group cursor-pointer"
         >
-          <LinkIcon className="w-5 h-5 text-indigo-400 group-hover:scale-110 transition-transform mb-1.5" />
-          <span className="text-xs font-semibold text-slate-200">Add by Image URL</span>
-          <span className="text-[11px] text-slate-500 mt-0.5">Paste Unsplash/Cloud link</span>
+          <LinkIcon className="w-5 h-5 text-[#A1A1AA] group-hover:scale-105 transition-transform mb-1.5" />
+          <span className="text-xs font-semibold text-[#FAFAFA]">Add by Image URL</span>
+          <span className="text-[11px] text-[#71717A] mt-0.5">Paste direct image link</span>
         </button>
       </div>
 
@@ -136,14 +136,14 @@ export default function ScreenshotUploader({
       {showUrlField && (
         <form
           onSubmit={handleUrlSubmit}
-          className="p-4 rounded-xl border border-indigo-500/30 bg-slate-900/80 space-y-3"
+          className="p-4 rounded-xl border border-[#2A2A2F] bg-[#17171A] space-y-3"
         >
           <div className="flex items-center justify-between">
-            <span className="text-xs font-semibold text-slate-200">Image Web URL</span>
+            <span className="text-xs font-semibold text-[#FAFAFA]">Image Web URL</span>
             <button
               type="button"
               onClick={() => setShowUrlField(false)}
-              className="text-slate-400 hover:text-white"
+              className="text-[#A1A1AA] hover:text-[#FAFAFA]"
             >
               <X className="w-4 h-4" />
             </button>
@@ -153,7 +153,7 @@ export default function ScreenshotUploader({
             value={urlInput}
             onChange={(e) => setUrlInput(e.target.value)}
             placeholder="https://example.com/screenshot.png"
-            className="w-full px-3 py-2 rounded-lg bg-slate-950 border border-slate-700 text-xs text-white placeholder-slate-500 focus:outline-none focus:border-indigo-500"
+            className="w-full px-3 py-2 rounded-lg bg-[#101012] border border-[#2A2A2F] text-xs text-[#FAFAFA] placeholder-[#71717A] focus:outline-none focus:border-[#FAFAFA]"
             required
           />
           <input
@@ -161,20 +161,20 @@ export default function ScreenshotUploader({
             value={captionInput}
             onChange={(e) => setCaptionInput(e.target.value)}
             placeholder="Screenshot caption (e.g., Real-time Analytics Dashboard)"
-            className="w-full px-3 py-2 rounded-lg bg-slate-950 border border-slate-700 text-xs text-white placeholder-slate-500 focus:outline-none focus:border-indigo-500"
+            className="w-full px-3 py-2 rounded-lg bg-[#101012] border border-[#2A2A2F] text-xs text-[#FAFAFA] placeholder-[#71717A] focus:outline-none focus:border-[#FAFAFA]"
           />
           <div className="flex justify-end space-x-2">
             <button
               type="button"
               onClick={() => setShowUrlField(false)}
-              className="px-3 py-1.5 rounded-lg text-xs text-slate-400 hover:text-white"
+              className="px-3 py-1.5 rounded-lg text-xs text-[#A1A1AA] hover:text-[#FAFAFA]"
             >
               Cancel
             </button>
             <button
               type="submit"
               disabled={isUploading}
-              className="px-4 py-1.5 rounded-lg bg-indigo-600 hover:bg-indigo-500 text-white text-xs font-medium cursor-pointer"
+              className="px-4 py-1.5 rounded-lg bg-[#FAFAFA] hover:bg-[#E4E4E7] text-[#111111] text-xs font-semibold cursor-pointer"
             >
               {isUploading ? "Adding..." : "Add Screenshot"}
             </button>
@@ -188,20 +188,20 @@ export default function ScreenshotUploader({
           {images.map((img, idx) => (
             <div
               key={img.id}
-              className="group relative rounded-xl border border-slate-800 bg-slate-950 overflow-hidden shadow-md flex flex-col"
+              className="group relative rounded-xl border border-[#2A2A2F] bg-[#121214] overflow-hidden shadow-sm flex flex-col"
             >
-              <div className="relative aspect-video w-full overflow-hidden bg-slate-900">
+              <div className="relative aspect-video w-full overflow-hidden bg-[#101012]">
                 {/* eslint-disable-next-line @next/next/no-img-element */}
                 <img
                   src={img.image_url}
                   alt={img.caption || `Screenshot ${idx + 1}`}
                   className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-300"
                 />
-                <div className="absolute inset-0 bg-black/40 opacity-0 group-hover:opacity-100 transition-opacity flex items-center justify-center space-x-2">
+                <div className="absolute inset-0 bg-black/60 opacity-0 group-hover:opacity-100 transition-opacity flex items-center justify-center space-x-2">
                   <button
                     type="button"
                     onClick={() => setPreviewImage(img.image_url)}
-                    className="p-2 rounded-lg bg-slate-900/80 hover:bg-slate-900 text-white"
+                    className="p-2 rounded-lg bg-[#17171A] hover:bg-[#1E1E22] text-[#FAFAFA] border border-[#2A2A2F]"
                     title="View Full Size"
                   >
                     <Eye className="w-4 h-4" />
@@ -209,7 +209,7 @@ export default function ScreenshotUploader({
                   <button
                     type="button"
                     onClick={() => handleDelete(img.id)}
-                    className="p-2 rounded-lg bg-rose-600/80 hover:bg-rose-600 text-white"
+                    className="p-2 rounded-lg bg-[#EF4444] hover:bg-[#EF4444]/90 text-white"
                     title="Delete Screenshot"
                   >
                     <Trash2 className="w-4 h-4" />
@@ -217,10 +217,10 @@ export default function ScreenshotUploader({
                 </div>
               </div>
               <div className="p-2.5 text-xs">
-                <span className="text-[10px] uppercase font-mono text-indigo-400 block mb-0.5">
+                <span className="text-[10px] uppercase font-mono text-[#71717A] block mb-0.5">
                   Screenshot #{idx + 1}
                 </span>
-                <p className="text-slate-300 truncate font-medium">
+                <p className="text-[#FAFAFA] truncate font-medium">
                   {img.caption || "No caption added"}
                 </p>
               </div>
@@ -228,11 +228,11 @@ export default function ScreenshotUploader({
           ))}
         </div>
       ) : (
-        <div className="p-8 border border-slate-800 rounded-xl bg-slate-950/40 text-center">
-          <ImageIcon className="w-8 h-8 text-slate-600 mx-auto mb-2" />
-          <p className="text-xs text-slate-400 font-medium">No screenshots uploaded yet</p>
-          <p className="text-[11px] text-slate-500 mt-1">
-            Adding 2–4 screenshots dramatically increases recruiter trust and proves your project is real!
+        <div className="p-8 border border-[#2A2A2F] rounded-xl bg-[#121214] text-center">
+          <ImageIcon className="w-8 h-8 text-[#52525B] mx-auto mb-2" />
+          <p className="text-xs text-[#FAFAFA] font-medium">No screenshots uploaded yet</p>
+          <p className="text-[11px] text-[#71717A] mt-1">
+            Adding screenshots gives recruiters and clients proof of your work.
           </p>
         </div>
       )}

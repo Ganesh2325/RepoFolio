@@ -78,16 +78,16 @@ export default async function PublicProjectPage({ params }: PublicPageProps) {
   if (!project) {
     return (
       <div className="flex-1 flex flex-col items-center justify-center py-32 text-center px-4">
-        <div className="w-12 h-12 rounded-xl bg-slate-900 border border-slate-800 flex items-center justify-center text-slate-500 mb-3 mx-auto">
+        <div className="w-12 h-12 rounded-xl bg-[#121214] border border-[#2A2A2F] flex items-center justify-center text-[#71717A] mb-3 mx-auto">
           <FolderGit2 className="w-6 h-6" />
         </div>
-        <h2 className="text-xl font-bold text-white">Project story not found</h2>
-        <p className="text-xs text-slate-400 mt-1 max-w-md">
+        <h2 className="text-xl font-bold text-[#FAFAFA]">Project story not found</h2>
+        <p className="text-xs text-[#A1A1AA] mt-1 max-w-md">
           This project story does not exist or may have been removed.
         </p>
         <Link
           href="/"
-          className="mt-6 inline-flex items-center space-x-1.5 px-4 py-2 rounded-xl bg-indigo-600 hover:bg-indigo-500 text-white text-xs font-semibold"
+          className="mt-6 inline-flex items-center space-x-1.5 px-4 py-2 rounded-xl bg-[#FAFAFA] hover:bg-[#E4E4E7] text-[#111111] text-xs font-semibold shadow-sm transition-colors"
         >
           <ArrowLeft className="w-3.5 h-3.5" />
           <span>Back to RepoFolio Home</span>

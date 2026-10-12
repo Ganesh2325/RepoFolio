@@ -12,7 +12,6 @@ import {
   Trash2, 
   Globe, 
   Lock,
-  Layers,
   Calendar
 } from "lucide-react";
 import { ProjectModel } from "@/types";
@@ -53,7 +52,7 @@ export default function ProjectCard({ project, onDelete }: ProjectCardProps) {
   const isPublished = project.status === "published" && project.is_public;
 
   return (
-    <div className="rounded-2xl border border-slate-800 bg-[#0d1322] hover:border-slate-700 transition-all duration-200 overflow-hidden shadow-lg flex flex-col group">
+    <div className="rounded-xl border border-[#2A2A2F] bg-[#121214] hover:border-[#3E3E46] transition-all duration-200 overflow-hidden flex flex-col group">
       {/* Top Card Header */}
       <div className="p-5 flex-1 flex flex-col justify-between">
         <div>
@@ -63,8 +62,8 @@ export default function ProjectCard({ project, onDelete }: ProjectCardProps) {
               <span
                 className={`inline-flex items-center space-x-1 px-2.5 py-0.5 rounded-full text-[11px] font-semibold uppercase tracking-wider ${
                   isPublished
-                    ? "bg-emerald-500/10 text-emerald-400 border border-emerald-500/20"
-                    : "bg-amber-500/10 text-amber-400 border border-amber-500/20"
+                    ? "bg-[#22C55E]/10 text-[#22C55E] border border-[#22C55E]/20"
+                    : "bg-[#17171A] text-[#A1A1AA] border border-[#2A2A2F]"
                 }`}
               >
                 {isPublished ? (
@@ -80,41 +79,41 @@ export default function ProjectCard({ project, onDelete }: ProjectCardProps) {
                 )}
               </span>
 
-              <span className="px-2 py-0.5 rounded text-[11px] font-medium capitalize bg-indigo-500/10 text-indigo-300 border border-indigo-500/20">
-                {project.audience_version} mode
+              <span className="px-2 py-0.5 rounded text-[11px] font-medium capitalize bg-[#17171A] text-[#FAFAFA] border border-[#2A2A2F]">
+                {project.audience_version}
               </span>
             </div>
 
             {/* GitHub stats */}
-            <div className="flex items-center space-x-3 text-xs text-slate-400 font-mono">
+            <div className="flex items-center space-x-3 text-xs text-[#71717A] font-mono">
               <span className="flex items-center space-x-1" title="Stars">
-                <Star className="w-3.5 h-3.5 text-amber-400" />
-                <span>{project.raw_github_metadata?.stars || 0}</span>
+                <Star className="w-3.5 h-3.5 text-[#F59E0B]" />
+                <span className="text-[#A1A1AA]">{project.raw_github_metadata?.stars || 0}</span>
               </span>
               <span className="flex items-center space-x-1" title="Forks">
-                <GitFork className="w-3.5 h-3.5 text-slate-400" />
-                <span>{project.raw_github_metadata?.forks || 0}</span>
+                <GitFork className="w-3.5 h-3.5 text-[#71717A]" />
+                <span className="text-[#A1A1AA]">{project.raw_github_metadata?.forks || 0}</span>
               </span>
             </div>
           </div>
 
           {/* Title & Pitch */}
-          <h3 className="font-bold text-base text-slate-100 group-hover:text-indigo-300 transition-colors line-clamp-1">
+          <h3 className="font-bold text-base text-[#FAFAFA] transition-colors line-clamp-1">
             {project.title}
           </h3>
-          <p className="text-xs text-slate-400 mt-1 line-clamp-2 leading-relaxed">
+          <p className="text-xs text-[#A1A1AA] mt-1.5 line-clamp-2 leading-relaxed">
             {project.one_line_pitch}
           </p>
         </div>
 
         {/* Repository Meta Details */}
-        <div className="mt-4 pt-3 border-t border-slate-800/80 flex items-center justify-between text-xs text-slate-500">
+        <div className="mt-4 pt-3 border-t border-[#222226] flex items-center justify-between text-xs text-[#71717A]">
           <div className="flex items-center space-x-1.5 truncate">
             <a
               href={`https://github.com/${project.github_owner}`}
               target="_blank"
               rel="noopener noreferrer"
-              className="font-mono text-indigo-400 hover:text-indigo-300 transition-colors inline-flex items-center truncate"
+              className="font-mono text-[#FAFAFA] hover:underline transition-colors inline-flex items-center truncate"
             >
               {/* eslint-disable-next-line @next/next/no-img-element */}
               <img
@@ -124,34 +123,34 @@ export default function ProjectCard({ project, onDelete }: ProjectCardProps) {
               />
               <span>{project.github_owner}</span>
             </a>
-            <span className="text-slate-600">/</span>
+            <span className="text-[#52525B]">/</span>
             <a
               href={project.github_url}
               target="_blank"
               rel="noopener noreferrer"
-              className="font-mono text-slate-300 hover:text-white transition-colors truncate"
+              className="font-mono text-[#A1A1AA] hover:text-[#FAFAFA] transition-colors truncate"
             >
               {project.github_repo}
             </a>
-            <span className="text-slate-600">•</span>
-            <span className="text-slate-400 font-medium">
+            <span className="text-[#52525B]">•</span>
+            <span className="text-[#71717A] font-medium">
               {project.raw_github_metadata?.primaryLanguage || "Code"}
             </span>
           </div>
 
-          <div className="flex items-center space-x-1 flex-shrink-0 text-[11px]">
-            <Calendar className="w-3 h-3 text-slate-500" />
+          <div className="flex items-center space-x-1 flex-shrink-0 text-[11px] text-[#71717A]">
+            <Calendar className="w-3 h-3" />
             <span>{formatDate(project.updated_at)}</span>
           </div>
         </div>
       </div>
 
       {/* Card Actions Footer */}
-      <div className="bg-slate-950/70 border-t border-slate-800/80 px-4 py-2.5 flex items-center justify-between gap-2">
+      <div className="bg-[#101012] border-t border-[#222226] px-4 py-2.5 flex items-center justify-between gap-2">
         <div className="flex items-center space-x-2">
           <Link
             href={`/dashboard/project/${project.id}`}
-            className="inline-flex items-center space-x-1.5 px-3 py-1.5 rounded-lg bg-indigo-600 hover:bg-indigo-500 text-white text-xs font-medium transition-colors shadow-sm"
+            className="inline-flex items-center space-x-1.5 px-3 py-1.5 rounded-lg bg-[#FAFAFA] hover:bg-[#E4E4E7] text-[#111111] text-xs font-semibold transition-colors shadow-sm"
           >
             <Edit3 className="w-3.5 h-3.5" />
             <span>Edit Story</span>
@@ -159,7 +158,7 @@ export default function ProjectCard({ project, onDelete }: ProjectCardProps) {
 
           <Link
             href={`/p/${project.slug}`}
-            className="inline-flex items-center space-x-1 px-2.5 py-1.5 rounded-lg bg-slate-800/80 hover:bg-slate-800 text-slate-300 hover:text-white text-xs font-medium transition-colors"
+            className="inline-flex items-center space-x-1 px-2.5 py-1.5 rounded-lg bg-[#17171A] hover:bg-[#1E1E22] border border-[#2A2A2F] text-[#A1A1AA] hover:text-[#FAFAFA] text-xs font-medium transition-colors"
           >
             <ExternalLink className="w-3.5 h-3.5" />
             <span>View Public</span>
@@ -170,18 +169,20 @@ export default function ProjectCard({ project, onDelete }: ProjectCardProps) {
           <button
             type="button"
             onClick={handleCopy}
-            className="p-1.5 rounded-lg hover:bg-slate-800 text-slate-400 hover:text-slate-200 transition-colors"
+            className="p-1.5 rounded-lg hover:bg-[#1E1E22] text-[#A1A1AA] hover:text-[#FAFAFA] border border-transparent hover:border-[#2A2A2F] transition-colors"
             title="Copy Public Link"
+            aria-label="Copy Public Link"
           >
-            {copied ? <Check className="w-4 h-4 text-emerald-400" /> : <Copy className="w-4 h-4" />}
+            {copied ? <Check className="w-4 h-4 text-[#22C55E]" /> : <Copy className="w-4 h-4" />}
           </button>
 
           <button
             type="button"
             onClick={handleDelete}
             disabled={isDeleting}
-            className="p-1.5 rounded-lg hover:bg-rose-500/10 text-slate-500 hover:text-rose-400 transition-colors disabled:opacity-50"
+            className="p-1.5 rounded-lg hover:bg-[#EF4444]/10 text-[#71717A] hover:text-[#EF4444] border border-transparent transition-colors disabled:opacity-50"
             title="Delete Project"
+            aria-label="Delete Project"
           >
             <Trash2 className="w-4 h-4" />
           </button>

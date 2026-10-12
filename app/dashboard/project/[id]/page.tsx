@@ -243,31 +243,31 @@ export default function ProjectEditorPage({ params }: PageProps) {
   return (
     <div className="flex-1 py-8 px-4 sm:px-6 lg:px-8 max-w-7xl mx-auto w-full">
       {/* Top Action Header Bar */}
-      <div className="flex flex-col md:flex-row md:items-center justify-between gap-4 mb-6 pb-6 border-b border-slate-800">
+      <div className="flex flex-col md:flex-row md:items-center justify-between gap-4 mb-6 pb-6 border-b border-[#222226]">
         <div className="flex items-center space-x-4">
           <Link
             href="/dashboard"
-            className="p-2 rounded-xl bg-slate-900 border border-slate-800 hover:border-slate-700 text-slate-400 hover:text-white transition-colors"
+            className="p-2 rounded-xl bg-[#121214] border border-[#2A2A2F] hover:border-[#3E3E46] text-[#A1A1AA] hover:text-[#FAFAFA] transition-colors"
           >
             <ArrowLeft className="w-4 h-4" />
           </Link>
           <div>
             <div className="flex items-center space-x-2">
-              <span className="font-mono text-xs text-indigo-400">
+              <span className="font-mono text-xs text-[#A1A1AA]">
                 {project.github_owner}/{project.github_repo}
               </span>
-              <span className="text-slate-600">•</span>
+              <span className="text-[#52525B]">•</span>
               <span
                 className={`text-[11px] font-semibold uppercase tracking-wider px-2 py-0.5 rounded-full ${
                   status === "published"
-                    ? "bg-emerald-500/10 text-emerald-400 border border-emerald-500/20"
-                    : "bg-amber-500/10 text-amber-400 border border-amber-500/20"
+                    ? "bg-[#22C55E]/10 text-[#22C55E] border border-[#22C55E]/20"
+                    : "bg-[#17171A] text-[#A1A1AA] border border-[#2A2A2F]"
                 }`}
               >
                 {status === "published" ? "Published" : "Draft"}
               </span>
             </div>
-            <h1 className="text-xl sm:text-2xl font-bold text-white mt-0.5 truncate max-w-xl">
+            <h1 className="text-xl sm:text-2xl font-bold text-[#FAFAFA] mt-0.5 truncate max-w-xl">
               {title}
             </h1>
           </div>
@@ -277,17 +277,17 @@ export default function ProjectEditorPage({ params }: PageProps) {
         <div className="flex items-center space-x-2.5">
           <button
             onClick={copyPublicLink}
-            className="px-3 py-2 rounded-xl border border-slate-700 bg-slate-800/80 hover:bg-slate-700 text-slate-200 text-xs font-medium transition-colors flex items-center space-x-1.5"
+            className="px-3 py-2 rounded-xl border border-[#2A2A2F] bg-[#121214] hover:bg-[#17171A] text-[#A1A1AA] hover:text-[#FAFAFA] text-xs font-medium transition-colors flex items-center space-x-1.5"
             title="Copy Public Story Link"
           >
-            {copiedLink ? <Check className="w-3.5 h-3.5 text-emerald-400" /> : <Copy className="w-3.5 h-3.5" />}
+            {copiedLink ? <Check className="w-3.5 h-3.5 text-[#22C55E]" /> : <Copy className="w-3.5 h-3.5" />}
             <span>{copiedLink ? "Copied!" : "Copy Link"}</span>
           </button>
 
           <Link
             href={`/p/${project.slug}`}
             target="_blank"
-            className="px-3.5 py-2 rounded-xl border border-slate-700 bg-slate-800/80 hover:bg-slate-700 text-slate-200 text-xs font-medium transition-colors flex items-center space-x-1.5"
+            className="px-3.5 py-2 rounded-xl border border-[#2A2A2F] bg-[#121214] hover:bg-[#17171A] text-[#A1A1AA] hover:text-[#FAFAFA] text-xs font-medium transition-colors flex items-center space-x-1.5"
           >
             <ExternalLink className="w-3.5 h-3.5" />
             <span>Preview Page</span>
@@ -296,7 +296,7 @@ export default function ProjectEditorPage({ params }: PageProps) {
           <button
             onClick={() => handleSave()}
             disabled={saving}
-            className="px-4 py-2 rounded-xl bg-slate-800 hover:bg-slate-700 text-white text-xs font-semibold border border-slate-700 transition-all flex items-center space-x-1.5 cursor-pointer disabled:opacity-50"
+            className="px-4 py-2 rounded-xl bg-[#17171A] hover:bg-[#1E1E22] text-[#FAFAFA] text-xs font-semibold border border-[#2A2A2F] transition-all flex items-center space-x-1.5 cursor-pointer disabled:opacity-50"
           >
             <Save className="w-3.5 h-3.5" />
             <span>{saving ? "Saving..." : saveSuccess ? "Saved!" : "Save Draft"}</span>
@@ -305,10 +305,10 @@ export default function ProjectEditorPage({ params }: PageProps) {
           <button
             onClick={() => handleSave(status === "published" ? "draft" : "published")}
             disabled={saving}
-            className={`px-4 py-2 rounded-xl text-xs font-semibold shadow-md flex items-center space-x-1.5 transition-all cursor-pointer ${
+            className={`px-4 py-2 rounded-xl text-xs font-semibold shadow-sm flex items-center space-x-1.5 transition-all cursor-pointer ${
               status === "published"
-                ? "bg-amber-600 hover:bg-amber-500 text-white"
-                : "bg-emerald-600 hover:bg-emerald-500 text-white shadow-emerald-600/20"
+                ? "bg-[#17171A] hover:bg-[#1E1E22] border border-[#2A2A2F] text-[#A1A1AA] hover:text-[#FAFAFA]"
+                : "bg-[#FAFAFA] hover:bg-[#E4E4E7] text-[#111111]"
             }`}
           >
             <Globe className="w-3.5 h-3.5" />
@@ -318,18 +318,18 @@ export default function ProjectEditorPage({ params }: PageProps) {
       </div>
 
       {/* Audience switcher bar */}
-      <div className="mb-6 p-4 rounded-xl border border-slate-800 bg-[#0d1322]">
+      <div className="mb-6 p-4 rounded-xl border border-[#2A2A2F] bg-[#121214]">
         <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-3 mb-3">
           <div>
-            <span className="text-xs font-bold text-slate-200 uppercase tracking-wider">
+            <span className="text-xs font-bold text-[#FAFAFA] uppercase tracking-wider">
               Audience Persona
             </span>
-            <p className="text-[11px] text-slate-400">
+            <p className="text-[11px] text-[#71717A]">
               Switching audience personas will re-orient the story language and interview prep focus.
             </p>
           </div>
           {regeneratingSection === "full" && (
-            <div className="flex items-center space-x-2 text-xs text-indigo-400 animate-pulse">
+            <div className="flex items-center space-x-2 text-xs text-[#FAFAFA] animate-pulse">
               <Loader2 className="w-3.5 h-3.5 animate-spin" />
               <span>Regenerating story for new audience...</span>
             </div>
@@ -343,13 +343,13 @@ export default function ProjectEditorPage({ params }: PageProps) {
       </div>
 
       {/* Editor Navigation Tabs */}
-      <div className="flex border-b border-slate-800 space-x-4 mb-6 overflow-x-auto text-xs font-medium">
+      <div className="flex border-b border-[#222226] space-x-4 mb-6 overflow-x-auto text-xs font-medium">
         <button
           onClick={() => setActiveTab("story")}
           className={`pb-3 border-b-2 flex items-center space-x-1.5 whitespace-nowrap transition-colors ${
             activeTab === "story"
-              ? "border-indigo-500 text-indigo-400 font-semibold"
-              : "border-transparent text-slate-400 hover:text-slate-200"
+              ? "border-[#FAFAFA] text-[#FAFAFA] font-semibold"
+              : "border-transparent text-[#71717A] hover:text-[#A1A1AA]"
           }`}
         >
           <FolderGit2 className="w-4 h-4" />
@@ -360,8 +360,8 @@ export default function ProjectEditorPage({ params }: PageProps) {
           onClick={() => setActiveTab("tech")}
           className={`pb-3 border-b-2 flex items-center space-x-1.5 whitespace-nowrap transition-colors ${
             activeTab === "tech"
-              ? "border-indigo-500 text-indigo-400 font-semibold"
-              : "border-transparent text-slate-400 hover:text-slate-200"
+              ? "border-[#FAFAFA] text-[#FAFAFA] font-semibold"
+              : "border-transparent text-[#71717A] hover:text-[#A1A1AA]"
           }`}
         >
           <Code2 className="w-4 h-4" />
@@ -372,8 +372,8 @@ export default function ProjectEditorPage({ params }: PageProps) {
           onClick={() => setActiveTab("proof")}
           className={`pb-3 border-b-2 flex items-center space-x-1.5 whitespace-nowrap transition-colors ${
             activeTab === "proof"
-              ? "border-indigo-500 text-indigo-400 font-semibold"
-              : "border-transparent text-slate-400 hover:text-slate-200"
+              ? "border-[#FAFAFA] text-[#FAFAFA] font-semibold"
+              : "border-transparent text-[#71717A] hover:text-[#A1A1AA]"
           }`}
         >
           <ImageIcon className="w-4 h-4" />
@@ -384,8 +384,8 @@ export default function ProjectEditorPage({ params }: PageProps) {
           onClick={() => setActiveTab("pitch")}
           className={`pb-3 border-b-2 flex items-center space-x-1.5 whitespace-nowrap transition-colors ${
             activeTab === "pitch"
-              ? "border-indigo-500 text-indigo-400 font-semibold"
-              : "border-transparent text-slate-400 hover:text-slate-200"
+              ? "border-[#FAFAFA] text-[#FAFAFA] font-semibold"
+              : "border-transparent text-[#71717A] hover:text-[#A1A1AA]"
           }`}
         >
           <Mic className="w-4 h-4" />
@@ -396,8 +396,8 @@ export default function ProjectEditorPage({ params }: PageProps) {
           onClick={() => setActiveTab("interview")}
           className={`pb-3 border-b-2 flex items-center space-x-1.5 whitespace-nowrap transition-colors ${
             activeTab === "interview"
-              ? "border-indigo-500 text-indigo-400 font-semibold"
-              : "border-transparent text-slate-400 hover:text-slate-200"
+              ? "border-[#FAFAFA] text-[#FAFAFA] font-semibold"
+              : "border-transparent text-[#71717A] hover:text-[#A1A1AA]"
           }`}
         >
           <HelpCircle className="w-4 h-4" />
@@ -408,8 +408,8 @@ export default function ProjectEditorPage({ params }: PageProps) {
           onClick={() => setActiveTab("settings")}
           className={`pb-3 border-b-2 flex items-center space-x-1.5 whitespace-nowrap transition-colors ${
             activeTab === "settings"
-              ? "border-indigo-500 text-indigo-400 font-semibold"
-              : "border-transparent text-slate-400 hover:text-slate-200"
+              ? "border-[#FAFAFA] text-[#FAFAFA] font-semibold"
+              : "border-transparent text-[#71717A] hover:text-[#A1A1AA]"
           }`}
         >
           <Layers className="w-4 h-4" />
@@ -423,42 +423,42 @@ export default function ProjectEditorPage({ params }: PageProps) {
           {/* Title & One-line pitch */}
           <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
             <div>
-              <label className="block text-xs font-semibold text-slate-300 uppercase tracking-wider mb-1.5">
+              <label className="block text-xs font-semibold text-[#FAFAFA] uppercase tracking-wider mb-1.5">
                 Project Title
               </label>
               <input
                 type="text"
                 value={title}
                 onChange={(e) => setTitle(e.target.value)}
-                className="w-full px-4 py-2.5 rounded-xl bg-slate-900 border border-slate-800 text-sm text-white focus:outline-none focus:border-indigo-500"
+                className="w-full px-4 py-2.5 rounded-xl bg-[#101012] border border-[#2A2A2F] text-sm text-[#FAFAFA] focus:outline-none focus:border-[#FAFAFA]"
               />
             </div>
 
             <div>
-              <label className="block text-xs font-semibold text-slate-300 uppercase tracking-wider mb-1.5">
+              <label className="block text-xs font-semibold text-[#FAFAFA] uppercase tracking-wider mb-1.5">
                 One-Line Value Proposition
               </label>
               <input
                 type="text"
                 value={pitch}
                 onChange={(e) => setPitch(e.target.value)}
-                className="w-full px-4 py-2.5 rounded-xl bg-slate-900 border border-slate-800 text-sm text-white focus:outline-none focus:border-indigo-500"
+                className="w-full px-4 py-2.5 rounded-xl bg-[#101012] border border-[#2A2A2F] text-sm text-[#FAFAFA] focus:outline-none focus:border-[#FAFAFA]"
               />
             </div>
           </div>
 
           {/* Problem & Solution with individual section regeneration */}
           <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
-            <div className="p-5 rounded-2xl border border-slate-800 bg-[#0d1322]">
+            <div className="p-5 rounded-2xl border border-[#2A2A2F] bg-[#121214]">
               <div className="flex items-center justify-between mb-2">
-                <label className="text-xs font-bold text-rose-400 uppercase tracking-wider">
+                <label className="text-xs font-bold text-[#EF4444] uppercase tracking-wider">
                   Problem Statement
                 </label>
                 <button
                   type="button"
                   onClick={() => handleRegenerateSection("problem")}
                   disabled={regeneratingSection === "problem"}
-                  className="text-[11px] text-indigo-400 hover:text-indigo-300 flex items-center space-x-1 cursor-pointer"
+                  className="text-[11px] text-[#A1A1AA] hover:text-[#FAFAFA] flex items-center space-x-1 cursor-pointer transition-colors"
                 >
                   <RefreshCw className={`w-3 h-3 ${regeneratingSection === "problem" ? "animate-spin" : ""}`} />
                   <span>Regenerate Problem</span>
@@ -468,20 +468,20 @@ export default function ProjectEditorPage({ params }: PageProps) {
                 rows={4}
                 value={problem}
                 onChange={(e) => setProblem(e.target.value)}
-                className="w-full p-3 rounded-xl bg-slate-950 border border-slate-800 text-xs sm:text-sm text-slate-200 focus:outline-none focus:border-indigo-500 leading-relaxed"
+                className="w-full p-3 rounded-xl bg-[#101012] border border-[#2A2A2F] text-xs sm:text-sm text-[#FAFAFA] focus:outline-none focus:border-[#FAFAFA] leading-relaxed"
               />
             </div>
 
-            <div className="p-5 rounded-2xl border border-slate-800 bg-[#0d1322]">
+            <div className="p-5 rounded-2xl border border-[#2A2A2F] bg-[#121214]">
               <div className="flex items-center justify-between mb-2">
-                <label className="text-xs font-bold text-emerald-400 uppercase tracking-wider">
+                <label className="text-xs font-bold text-[#22C55E] uppercase tracking-wider">
                   Solution Explanation
                 </label>
                 <button
                   type="button"
                   onClick={() => handleRegenerateSection("solution")}
                   disabled={regeneratingSection === "solution"}
-                  className="text-[11px] text-indigo-400 hover:text-indigo-300 flex items-center space-x-1 cursor-pointer"
+                  className="text-[11px] text-[#A1A1AA] hover:text-[#FAFAFA] flex items-center space-x-1 cursor-pointer transition-colors"
                 >
                   <RefreshCw className={`w-3 h-3 ${regeneratingSection === "solution" ? "animate-spin" : ""}`} />
                   <span>Regenerate Solution</span>
@@ -491,19 +491,19 @@ export default function ProjectEditorPage({ params }: PageProps) {
                 rows={4}
                 value={solution}
                 onChange={(e) => setSolution(e.target.value)}
-                className="w-full p-3 rounded-xl bg-slate-950 border border-slate-800 text-xs sm:text-sm text-slate-200 focus:outline-none focus:border-indigo-500 leading-relaxed"
+                className="w-full p-3 rounded-xl bg-[#101012] border border-[#2A2A2F] text-xs sm:text-sm text-[#FAFAFA] focus:outline-none focus:border-[#FAFAFA] leading-relaxed"
               />
             </div>
           </div>
 
           {/* Key Features (max 6) */}
-          <div className="p-5 rounded-2xl border border-slate-800 bg-[#0d1322]">
+          <div className="p-5 rounded-2xl border border-[#2A2A2F] bg-[#121214]">
             <div className="flex items-center justify-between mb-3">
               <div>
-                <label className="text-xs font-bold text-slate-200 uppercase tracking-wider">
+                <label className="text-xs font-bold text-[#FAFAFA] uppercase tracking-wider">
                   Key Features (Max 6)
                 </label>
-                <p className="text-[11px] text-slate-400">
+                <p className="text-[11px] text-[#71717A]">
                   Concise bullets summarizing what your software actually accomplishes.
                 </p>
               </div>
@@ -511,7 +511,7 @@ export default function ProjectEditorPage({ params }: PageProps) {
                 type="button"
                 onClick={() => handleRegenerateSection("features")}
                 disabled={regeneratingSection === "features"}
-                className="text-[11px] text-indigo-400 hover:text-indigo-300 flex items-center space-x-1 cursor-pointer"
+                className="text-[11px] text-[#A1A1AA] hover:text-[#FAFAFA] flex items-center space-x-1 cursor-pointer transition-colors"
               >
                 <RefreshCw className={`w-3 h-3 ${regeneratingSection === "features" ? "animate-spin" : ""}`} />
                 <span>Regenerate Features</span>
@@ -529,12 +529,12 @@ export default function ProjectEditorPage({ params }: PageProps) {
                       updated[idx] = e.target.value;
                       setFeatures(updated);
                     }}
-                    className="flex-1 px-3 py-2 rounded-lg bg-slate-950 border border-slate-800 text-xs text-slate-200 focus:outline-none focus:border-indigo-500"
+                    className="flex-1 px-3 py-2 rounded-lg bg-[#101012] border border-[#2A2A2F] text-xs text-[#FAFAFA] focus:outline-none focus:border-[#FAFAFA]"
                   />
                   <button
                     type="button"
                     onClick={() => setFeatures(features.filter((_, i) => i !== idx))}
-                    className="p-2 text-slate-500 hover:text-rose-400"
+                    className="p-2 text-[#71717A] hover:text-[#EF4444]"
                   >
                     <Trash2 className="w-3.5 h-3.5" />
                   </button>
@@ -544,7 +544,7 @@ export default function ProjectEditorPage({ params }: PageProps) {
                 <button
                   type="button"
                   onClick={() => setFeatures([...features, "New feature description"])}
-                  className="inline-flex items-center space-x-1.5 text-xs text-indigo-400 hover:text-indigo-300 font-medium pt-1"
+                  className="inline-flex items-center space-x-1.5 text-xs text-[#FAFAFA] hover:text-white font-medium pt-1"
                 >
                   <Plus className="w-3.5 h-3.5" />
                   <span>Add Feature Bullet</span>
@@ -554,13 +554,13 @@ export default function ProjectEditorPage({ params }: PageProps) {
           </div>
 
           {/* How It Works (4-6 steps) */}
-          <div className="p-5 rounded-2xl border border-slate-800 bg-[#0d1322]">
+          <div className="p-5 rounded-2xl border border-[#2A2A2F] bg-[#121214]">
             <div className="flex items-center justify-between mb-3">
               <div>
-                <label className="text-xs font-bold text-slate-200 uppercase tracking-wider">
+                <label className="text-xs font-bold text-[#FAFAFA] uppercase tracking-wider">
                   How It Works (4–6 Steps)
                 </label>
-                <p className="text-[11px] text-slate-400">
+                <p className="text-[11px] text-[#71717A]">
                   Sequential workflow showing user trigger, processing, and delivered result.
                 </p>
               </div>
@@ -568,7 +568,7 @@ export default function ProjectEditorPage({ params }: PageProps) {
                 type="button"
                 onClick={() => handleRegenerateSection("how_it_works")}
                 disabled={regeneratingSection === "how_it_works"}
-                className="text-[11px] text-indigo-400 hover:text-indigo-300 flex items-center space-x-1 cursor-pointer"
+                className="text-[11px] text-[#A1A1AA] hover:text-[#FAFAFA] flex items-center space-x-1 cursor-pointer transition-colors"
               >
                 <RefreshCw className={`w-3 h-3 ${regeneratingSection === "how_it_works" ? "animate-spin" : ""}`} />
                 <span>Regenerate Steps</span>
@@ -578,7 +578,7 @@ export default function ProjectEditorPage({ params }: PageProps) {
             <div className="space-y-2.5">
               {howItWorks.map((step, idx) => (
                 <div key={idx} className="flex items-center space-x-2">
-                  <span className="w-6 text-center text-xs font-mono font-semibold text-indigo-400">
+                  <span className="w-6 text-center text-xs font-mono font-semibold text-[#A1A1AA]">
                     {idx + 1}.
                   </span>
                   <input
@@ -589,12 +589,12 @@ export default function ProjectEditorPage({ params }: PageProps) {
                       updated[idx] = e.target.value;
                       setHowItWorks(updated);
                     }}
-                    className="flex-1 px-3 py-2 rounded-lg bg-slate-950 border border-slate-800 text-xs text-slate-200 focus:outline-none focus:border-indigo-500"
+                    className="flex-1 px-3 py-2 rounded-lg bg-[#101012] border border-[#2A2A2F] text-xs text-[#FAFAFA] focus:outline-none focus:border-[#FAFAFA]"
                   />
                   <button
                     type="button"
                     onClick={() => setHowItWorks(howItWorks.filter((_, i) => i !== idx))}
-                    className="p-2 text-slate-500 hover:text-rose-400"
+                    className="p-2 text-[#71717A] hover:text-[#EF4444]"
                   >
                     <Trash2 className="w-3.5 h-3.5" />
                   </button>
@@ -609,11 +609,11 @@ export default function ProjectEditorPage({ params }: PageProps) {
       {activeTab === "tech" && (
         <div className="space-y-6">
           {/* Tech Stack List */}
-          <div className="p-5 rounded-2xl border border-slate-800 bg-[#0d1322]">
-            <h3 className="text-xs font-bold text-slate-200 uppercase tracking-wider mb-2">
+          <div className="p-5 rounded-2xl border border-[#2A2A2F] bg-[#121214]">
+            <h3 className="text-xs font-bold text-[#FAFAFA] uppercase tracking-wider mb-2">
               Technologies & Selection Reasons
             </h3>
-            <p className="text-[11px] text-slate-400 mb-4">
+            <p className="text-[11px] text-[#71717A] mb-4">
               Recruiters love understanding WHY you picked a library rather than just seeing a list of names.
             </p>
 
@@ -629,7 +629,7 @@ export default function ProjectEditorPage({ params }: PageProps) {
                       updated[idx].name = e.target.value;
                       setTechStack(updated);
                     }}
-                    className="w-full sm:w-1/3 px-3 py-2 rounded-lg bg-slate-950 border border-slate-800 text-xs text-indigo-300 font-semibold focus:outline-none focus:border-indigo-500"
+                    className="w-full sm:w-1/3 px-3 py-2 rounded-lg bg-[#101012] border border-[#2A2A2F] text-xs text-[#FAFAFA] font-semibold focus:outline-none focus:border-[#FAFAFA]"
                   />
                   <input
                     type="text"
@@ -640,12 +640,12 @@ export default function ProjectEditorPage({ params }: PageProps) {
                       updated[idx].reason = e.target.value;
                       setTechStack(updated);
                     }}
-                    className="w-full sm:flex-1 px-3 py-2 rounded-lg bg-slate-950 border border-slate-800 text-xs text-slate-300 focus:outline-none focus:border-indigo-500"
+                    className="w-full sm:flex-1 px-3 py-2 rounded-lg bg-[#101012] border border-[#2A2A2F] text-xs text-[#A1A1AA] focus:outline-none focus:border-[#FAFAFA]"
                   />
                   <button
                     type="button"
                     onClick={() => setTechStack(techStack.filter((_, i) => i !== idx))}
-                    className="p-2 text-slate-500 hover:text-rose-400"
+                    className="p-2 text-[#71717A] hover:text-[#EF4444]"
                   >
                     <Trash2 className="w-3.5 h-3.5" />
                   </button>
@@ -654,7 +654,7 @@ export default function ProjectEditorPage({ params }: PageProps) {
               <button
                 type="button"
                 onClick={() => setTechStack([...techStack, { name: "", reason: "" }])}
-                className="inline-flex items-center space-x-1.5 text-xs text-indigo-400 hover:text-indigo-300 font-medium"
+                className="inline-flex items-center space-x-1.5 text-xs text-[#FAFAFA] hover:text-white font-medium"
               >
                 <Plus className="w-3.5 h-3.5" />
                 <span>Add Technology</span>
@@ -663,16 +663,16 @@ export default function ProjectEditorPage({ params }: PageProps) {
           </div>
 
           {/* Architecture Summary */}
-          <div className="p-5 rounded-2xl border border-slate-800 bg-[#0d1322]">
+          <div className="p-5 rounded-2xl border border-[#2A2A2F] bg-[#121214]">
             <div className="flex items-center justify-between mb-2">
-              <label className="text-xs font-bold text-slate-200 uppercase tracking-wider">
+              <label className="text-xs font-bold text-[#FAFAFA] uppercase tracking-wider">
                 Architecture Summary
               </label>
               <button
                 type="button"
                 onClick={() => handleRegenerateSection("architecture_summary")}
                 disabled={regeneratingSection === "architecture_summary"}
-                className="text-[11px] text-indigo-400 hover:text-indigo-300 flex items-center space-x-1 cursor-pointer"
+                className="text-[11px] text-[#A1A1AA] hover:text-[#FAFAFA] flex items-center space-x-1 cursor-pointer transition-colors"
               >
                 <RefreshCw className={`w-3 h-3 ${regeneratingSection === "architecture_summary" ? "animate-spin" : ""}`} />
                 <span>Regenerate Summary</span>
@@ -682,18 +682,18 @@ export default function ProjectEditorPage({ params }: PageProps) {
               rows={3}
               value={archSummary}
               onChange={(e) => setArchSummary(e.target.value)}
-              className="w-full p-3 rounded-xl bg-slate-950 border border-slate-800 text-xs sm:text-sm text-slate-200 focus:outline-none focus:border-indigo-500 leading-relaxed"
+              className="w-full p-3 rounded-xl bg-[#101012] border border-[#2A2A2F] text-xs sm:text-sm text-[#FAFAFA] focus:outline-none focus:border-[#FAFAFA] leading-relaxed"
             />
           </div>
 
           {/* Mermaid Diagram Code & Preview */}
-          <div className="p-5 rounded-2xl border border-slate-800 bg-[#0d1322]">
+          <div className="p-5 rounded-2xl border border-[#2A2A2F] bg-[#121214]">
             <div className="flex items-center justify-between mb-3">
               <div>
-                <label className="text-xs font-bold text-slate-200 uppercase tracking-wider">
+                <label className="text-xs font-bold text-[#FAFAFA] uppercase tracking-wider">
                   Mermaid.js Flowchart
                 </label>
-                <p className="text-[11px] text-slate-400">
+                <p className="text-[11px] text-[#71717A]">
                   Edit the Mermaid syntax below to update the visual flow diagram.
                 </p>
               </div>
@@ -701,7 +701,7 @@ export default function ProjectEditorPage({ params }: PageProps) {
                 type="button"
                 onClick={() => handleRegenerateSection("mermaid_diagram")}
                 disabled={regeneratingSection === "mermaid_diagram"}
-                className="text-[11px] text-indigo-400 hover:text-indigo-300 flex items-center space-x-1 cursor-pointer"
+                className="text-[11px] text-[#A1A1AA] hover:text-[#FAFAFA] flex items-center space-x-1 cursor-pointer transition-colors"
               >
                 <RefreshCw className={`w-3 h-3 ${regeneratingSection === "mermaid_diagram" ? "animate-spin" : ""}`} />
                 <span>Regenerate Diagram</span>
@@ -713,7 +713,7 @@ export default function ProjectEditorPage({ params }: PageProps) {
                 rows={10}
                 value={mermaid}
                 onChange={(e) => setMermaid(e.target.value)}
-                className="w-full p-3 rounded-xl bg-slate-950 border border-slate-800 font-mono text-xs text-indigo-200 focus:outline-none focus:border-indigo-500 leading-normal"
+                className="w-full p-3 rounded-xl bg-[#101012] border border-[#2A2A2F] font-mono text-xs text-[#FAFAFA] focus:outline-none focus:border-[#FAFAFA] leading-normal"
               />
               <MermaidChart chart={mermaid} title="Live Diagram Preview" />
             </div>
@@ -724,12 +724,12 @@ export default function ProjectEditorPage({ params }: PageProps) {
       {/* Tab 3: Screenshots & Proof */}
       {activeTab === "proof" && (
         <div className="space-y-6">
-          <div className="p-5 rounded-2xl border border-slate-800 bg-[#0d1322]">
+          <div className="p-5 rounded-2xl border border-[#2A2A2F] bg-[#121214]">
             <div className="mb-4">
-              <h3 className="text-xs font-bold text-slate-200 uppercase tracking-wider">
+              <h3 className="text-xs font-bold text-[#FAFAFA] uppercase tracking-wider">
                 Proof of Work: App Screenshots (2–6 Images)
               </h3>
-              <p className="text-[11px] text-slate-400 mt-0.5">
+              <p className="text-[11px] text-[#71717A] mt-0.5">
                 Upload 2 to 6 real screenshots of your application in action.
               </p>
             </div>
@@ -745,13 +745,13 @@ export default function ProjectEditorPage({ params }: PageProps) {
           </div>
 
           {/* Proof Links (Live Demo, Video, Case Study) */}
-          <div className="p-5 rounded-2xl border border-slate-800 bg-[#0d1322] space-y-4">
-            <h3 className="text-xs font-bold text-slate-200 uppercase tracking-wider">
+          <div className="p-5 rounded-2xl border border-[#2A2A2F] bg-[#121214] space-y-4">
+            <h3 className="text-xs font-bold text-[#FAFAFA] uppercase tracking-wider">
               Verification & Demo Links
             </h3>
 
             <div>
-              <label className="block text-[11px] font-semibold text-slate-400 mb-1">
+              <label className="block text-[11px] font-semibold text-[#A1A1AA] mb-1">
                 Live Deployed Demo URL
               </label>
               <input
@@ -759,12 +759,12 @@ export default function ProjectEditorPage({ params }: PageProps) {
                 value={liveDemoUrl}
                 onChange={(e) => setLiveDemoUrl(e.target.value)}
                 placeholder="https://yourapp.vercel.app"
-                className="w-full px-3 py-2 rounded-lg bg-slate-950 border border-slate-800 text-xs text-white focus:outline-none focus:border-indigo-500 font-mono"
+                className="w-full px-3 py-2 rounded-lg bg-[#101012] border border-[#2A2A2F] text-xs text-[#FAFAFA] focus:outline-none focus:border-[#FAFAFA] font-mono"
               />
             </div>
 
             <div>
-              <label className="block text-[11px] font-semibold text-slate-400 mb-1">
+              <label className="block text-[11px] font-semibold text-[#A1A1AA] mb-1">
                 Demo Video / YouTube URL
               </label>
               <input
@@ -772,12 +772,12 @@ export default function ProjectEditorPage({ params }: PageProps) {
                 value={videoUrl}
                 onChange={(e) => setVideoUrl(e.target.value)}
                 placeholder="https://youtube.com/watch?v=... or Loom URL"
-                className="w-full px-3 py-2 rounded-lg bg-slate-950 border border-slate-800 text-xs text-white focus:outline-none focus:border-indigo-500 font-mono"
+                className="w-full px-3 py-2 rounded-lg bg-[#101012] border border-[#2A2A2F] text-xs text-[#FAFAFA] focus:outline-none focus:border-[#FAFAFA] font-mono"
               />
             </div>
 
             <div>
-              <label className="block text-[11px] font-semibold text-slate-400 mb-1">
+              <label className="block text-[11px] font-semibold text-[#A1A1AA] mb-1">
                 External Devpost or Case Study URL
               </label>
               <input
@@ -785,7 +785,7 @@ export default function ProjectEditorPage({ params }: PageProps) {
                 value={caseStudyUrl}
                 onChange={(e) => setCaseStudyUrl(e.target.value)}
                 placeholder="https://devpost.com/software/..."
-                className="w-full px-3 py-2 rounded-lg bg-slate-950 border border-slate-800 text-xs text-white focus:outline-none focus:border-indigo-500 font-mono"
+                className="w-full px-3 py-2 rounded-lg bg-[#101012] border border-[#2A2A2F] text-xs text-[#FAFAFA] focus:outline-none focus:border-[#FAFAFA] font-mono"
               />
             </div>
           </div>
@@ -795,13 +795,13 @@ export default function ProjectEditorPage({ params }: PageProps) {
       {/* Tab 4: 45-Second Pitch Script */}
       {activeTab === "pitch" && (
         <div className="space-y-6">
-          <div className="p-5 rounded-2xl border border-slate-800 bg-[#0d1322]">
+          <div className="p-5 rounded-2xl border border-[#2A2A2F] bg-[#121214]">
             <div className="flex items-center justify-between mb-3">
               <div>
-                <label className="text-xs font-bold text-slate-200 uppercase tracking-wider">
+                <label className="text-xs font-bold text-[#FAFAFA] uppercase tracking-wider">
                   45-Second Spoken Elevator Pitch Script
                 </label>
-                <p className="text-[11px] text-slate-400">
+                <p className="text-[11px] text-[#71717A]">
                   First-person spoken script crafted for interviews, hackathon demos, and intro video voiceovers.
                 </p>
               </div>
@@ -809,7 +809,7 @@ export default function ProjectEditorPage({ params }: PageProps) {
                 type="button"
                 onClick={() => handleRegenerateSection("pitch_script")}
                 disabled={regeneratingSection === "pitch_script"}
-                className="text-[11px] text-indigo-400 hover:text-indigo-300 flex items-center space-x-1 cursor-pointer"
+                className="text-[11px] text-[#A1A1AA] hover:text-[#FAFAFA] flex items-center space-x-1 cursor-pointer transition-colors"
               >
                 <RefreshCw className={`w-3 h-3 ${regeneratingSection === "pitch_script" ? "animate-spin" : ""}`} />
                 <span>Regenerate Pitch</span>
@@ -820,7 +820,7 @@ export default function ProjectEditorPage({ params }: PageProps) {
               rows={5}
               value={pitchScript}
               onChange={(e) => setPitchScript(e.target.value)}
-              className="w-full p-4 rounded-xl bg-slate-950 border border-slate-800 text-xs sm:text-sm text-slate-200 focus:outline-none focus:border-indigo-500 leading-relaxed font-sans"
+              className="w-full p-4 rounded-xl bg-[#101012] border border-[#2A2A2F] text-xs sm:text-sm text-[#FAFAFA] focus:outline-none focus:border-[#FAFAFA] leading-relaxed font-sans"
             />
           </div>
 
@@ -831,13 +831,13 @@ export default function ProjectEditorPage({ params }: PageProps) {
       {/* Tab 5: Interview Prep Q&A */}
       {activeTab === "interview" && (
         <div className="space-y-6">
-          <div className="p-5 rounded-2xl border border-slate-800 bg-[#0d1322]">
+          <div className="p-5 rounded-2xl border border-[#2A2A2F] bg-[#121214]">
             <div className="flex items-center justify-between mb-4">
               <div>
-                <label className="text-xs font-bold text-slate-200 uppercase tracking-wider">
+                <label className="text-xs font-bold text-[#FAFAFA] uppercase tracking-wider">
                   5 Likely Interview Questions & Talking Points
                 </label>
-                <p className="text-[11px] text-slate-400">
+                <p className="text-[11px] text-[#71717A]">
                   Generated from your real code decisions to help you prepare before recruiter screens.
                 </p>
               </div>
@@ -845,7 +845,7 @@ export default function ProjectEditorPage({ params }: PageProps) {
                 type="button"
                 onClick={() => handleRegenerateSection("interview_questions")}
                 disabled={regeneratingSection === "interview_questions"}
-                className="text-[11px] text-indigo-400 hover:text-indigo-300 flex items-center space-x-1 cursor-pointer"
+                className="text-[11px] text-[#A1A1AA] hover:text-[#FAFAFA] flex items-center space-x-1 cursor-pointer transition-colors"
               >
                 <RefreshCw className={`w-3 h-3 ${regeneratingSection === "interview_questions" ? "animate-spin" : ""}`} />
                 <span>Regenerate Q&A</span>
@@ -854,13 +854,13 @@ export default function ProjectEditorPage({ params }: PageProps) {
 
             <div className="space-y-4">
               {interviewQuestions.map((q, idx) => (
-                <div key={idx} className="p-4 rounded-xl bg-slate-950 border border-slate-800/80 space-y-2">
+                <div key={idx} className="p-4 rounded-xl bg-[#101012] border border-[#2A2A2F] space-y-2">
                   <div className="flex items-center justify-between">
-                    <span className="text-xs font-semibold text-indigo-400">Question #{idx + 1}</span>
+                    <span className="text-xs font-semibold text-[#FAFAFA]">Question #{idx + 1}</span>
                     <button
                       type="button"
                       onClick={() => setInterviewQuestions(interviewQuestions.filter((_, i) => i !== idx))}
-                      className="text-slate-500 hover:text-rose-400 text-xs"
+                      className="text-[#71717A] hover:text-[#EF4444] text-xs"
                     >
                       Delete
                     </button>
@@ -873,7 +873,7 @@ export default function ProjectEditorPage({ params }: PageProps) {
                       updated[idx].question = e.target.value;
                       setInterviewQuestions(updated);
                     }}
-                    className="w-full px-3 py-2 rounded-lg bg-slate-900 border border-slate-800 text-xs text-white focus:outline-none focus:border-indigo-500 font-medium"
+                    className="w-full px-3 py-2 rounded-lg bg-[#17171A] border border-[#2A2A2F] text-xs text-[#FAFAFA] focus:outline-none focus:border-[#FAFAFA] font-medium"
                   />
                   <textarea
                     rows={2}
@@ -884,7 +884,7 @@ export default function ProjectEditorPage({ params }: PageProps) {
                       updated[idx].talking_points = e.target.value;
                       setInterviewQuestions(updated);
                     }}
-                    className="w-full px-3 py-2 rounded-lg bg-slate-900 border border-slate-800 text-xs text-slate-300 focus:outline-none focus:border-indigo-500"
+                    className="w-full px-3 py-2 rounded-lg bg-[#17171A] border border-[#2A2A2F] text-xs text-[#A1A1AA] focus:outline-none focus:border-[#FAFAFA]"
                   />
                 </div>
               ))}
@@ -898,20 +898,20 @@ export default function ProjectEditorPage({ params }: PageProps) {
       {/* Tab 6: Publish & Settings */}
       {activeTab === "settings" && (
         <div className="space-y-6">
-          <div className="p-6 rounded-2xl border border-slate-800 bg-[#0d1322] space-y-6">
-            <h3 className="text-sm font-bold text-slate-100 uppercase tracking-wider">
+          <div className="p-6 rounded-2xl border border-[#2A2A2F] bg-[#121214] space-y-6">
+            <h3 className="text-sm font-bold text-[#FAFAFA] uppercase tracking-wider">
               Publishing & Visibility
             </h3>
 
             {/* Public vs Private toggle */}
-            <div className="flex items-center justify-between p-4 rounded-xl bg-slate-950 border border-slate-800">
+            <div className="flex items-center justify-between p-4 rounded-xl bg-[#101012] border border-[#2A2A2F]">
               <div className="flex items-center space-x-3">
-                <div className={`p-2 rounded-lg ${isPublic ? "bg-emerald-500/10 text-emerald-400" : "bg-slate-800 text-slate-400"}`}>
+                <div className={`p-2 rounded-lg ${isPublic ? "bg-[#22C55E]/10 text-[#22C55E]" : "bg-[#1E1E22] text-[#71717A]"}`}>
                   {isPublic ? <Globe className="w-5 h-5" /> : <Lock className="w-5 h-5" />}
                 </div>
                 <div>
-                  <h4 className="text-xs font-semibold text-white">Public Visibility</h4>
-                  <p className="text-[11px] text-slate-400">
+                  <h4 className="text-xs font-semibold text-[#FAFAFA]">Public Visibility</h4>
+                  <p className="text-[11px] text-[#71717A]">
                     {isPublic
                       ? "Anyone with the link can view your project story page."
                       : "Only you can view this story while logged in."}
@@ -922,30 +922,30 @@ export default function ProjectEditorPage({ params }: PageProps) {
                 type="button"
                 onClick={() => setIsPublic(!isPublic)}
                 className={`w-12 h-6 rounded-full transition-colors relative cursor-pointer ${
-                  isPublic ? "bg-indigo-600" : "bg-slate-700"
+                  isPublic ? "bg-[#FAFAFA]" : "bg-[#2A2A2F]"
                 }`}
               >
                 <div
-                  className={`w-5 h-5 rounded-full bg-white transition-transform absolute top-0.5 ${
-                    isPublic ? "right-0.5" : "left-0.5"
+                  className={`w-5 h-5 rounded-full transition-transform absolute top-0.5 ${
+                    isPublic ? "right-0.5 bg-[#111111]" : "left-0.5 bg-[#71717A]"
                   }`}
                 />
               </button>
             </div>
 
             {/* Slug Info */}
-            <div className="p-4 rounded-xl bg-slate-950 border border-slate-800">
-              <span className="text-[11px] uppercase font-mono font-semibold text-slate-400 block mb-1">
+            <div className="p-4 rounded-xl bg-[#101012] border border-[#2A2A2F]">
+              <span className="text-[11px] uppercase font-mono font-semibold text-[#71717A] block mb-1">
                 Public Shareable Link
               </span>
               <div className="flex items-center justify-between">
-                <code className="text-xs text-indigo-400 font-mono truncate">
+                <code className="text-xs text-[#FAFAFA] font-mono truncate">
                   /p/{project.slug}
                 </code>
                 <button
                   type="button"
                   onClick={copyPublicLink}
-                  className="px-3 py-1.5 rounded-lg bg-slate-800 hover:bg-slate-700 text-xs text-slate-200 transition-colors flex items-center space-x-1"
+                  className="px-3 py-1.5 rounded-lg bg-[#17171A] hover:bg-[#1E1E22] border border-[#2A2A2F] text-xs text-[#FAFAFA] transition-colors flex items-center space-x-1"
                 >
                   <Copy className="w-3.5 h-3.5" />
                   <span>{copiedLink ? "Copied" : "Copy"}</span>
@@ -958,7 +958,7 @@ export default function ProjectEditorPage({ params }: PageProps) {
               <button
                 onClick={() => handleSave()}
                 disabled={saving}
-                className="px-5 py-2.5 rounded-xl border border-slate-700 bg-slate-800 hover:bg-slate-700 text-xs font-semibold text-white transition-colors"
+                className="px-5 py-2.5 rounded-xl border border-[#2A2A2F] bg-[#17171A] hover:bg-[#1E1E22] text-xs font-semibold text-[#FAFAFA] transition-colors"
               >
                 {saving ? "Saving Changes..." : "Save Draft"}
               </button>
@@ -966,10 +966,10 @@ export default function ProjectEditorPage({ params }: PageProps) {
               <button
                 onClick={() => handleSave(status === "published" ? "draft" : "published")}
                 disabled={saving}
-                className={`px-6 py-2.5 rounded-xl text-xs font-semibold transition-all shadow-lg ${
+                className={`px-6 py-2.5 rounded-xl text-xs font-semibold transition-all shadow-sm ${
                   status === "published"
-                    ? "bg-amber-600 hover:bg-amber-500 text-white"
-                    : "bg-emerald-600 hover:bg-emerald-500 text-white shadow-emerald-600/20"
+                    ? "bg-[#17171A] hover:bg-[#1E1E22] border border-[#2A2A2F] text-[#A1A1AA] hover:text-[#FAFAFA]"
+                    : "bg-[#FAFAFA] hover:bg-[#E4E4E7] text-[#111111]"
                 }`}
               >
                 {status === "published" ? "Unpublish Story" : "Publish Story Live"}
