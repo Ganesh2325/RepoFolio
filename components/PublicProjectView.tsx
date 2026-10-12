@@ -13,14 +13,15 @@ import {
   Eye, 
   X, 
   Award, 
-  Video 
+  Video,
+  Workflow,
+  Code2
 } from "lucide-react";
 import confetti from "canvas-confetti";
 import MermaidChart from "@/components/MermaidChart";
-import PitchTeleprompter from "@/components/PitchTeleprompter";
 import InterviewPrepAccordion from "@/components/InterviewPrepAccordion";
 import { GithubIcon } from "@/components/Icons";
-import { AudienceVersion, ProjectModel } from "@/types";
+import { ProjectModel } from "@/types";
 import { getCleanYouTubeId } from "@/lib/utils";
 
 interface PublicProjectViewProps {
@@ -31,9 +32,6 @@ export default function PublicProjectView({ initialProject }: PublicProjectViewP
   const [project] = useState<ProjectModel>(initialProject);
   const [copied, setCopied] = useState(false);
   const [lightboxImage, setLightboxImage] = useState<string | null>(null);
-  const [audienceView, setAudienceView] = useState<AudienceVersion>(
-    initialProject.audience_version || "recruiter"
-  );
 
   const handleCopyLink = () => {
     if (typeof window !== "undefined") {
@@ -76,10 +74,10 @@ export default function PublicProjectView({ initialProject }: PublicProjectViewP
             <button
               onClick={handleCopyLink}
               className="px-3 py-1.5 rounded-lg border border-[#2A2A2F] bg-[#17171A] hover:bg-[#1E1E22] text-[#FAFAFA] text-xs font-medium flex items-center space-x-1.5 cursor-pointer shadow-sm transition-colors"
-              id="share-story-btn"
+              id="share-overview-btn"
             >
               {copied ? <Check className="w-3.5 h-3.5 text-[#22C55E]" /> : <Share2 className="w-3.5 h-3.5" />}
-              <span>{copied ? "Link Copied!" : "Share Story"}</span>
+              <span>{copied ? "Link Copied!" : "Share Overview"}</span>
             </button>
           </div>
         </div>
@@ -91,7 +89,7 @@ export default function PublicProjectView({ initialProject }: PublicProjectViewP
           {/* Badge */}
           <div className="inline-flex items-center space-x-2 px-3 py-1 rounded-full border border-[#2A2A2F] bg-[#121214] text-[#A1A1AA] text-xs font-mono font-medium mb-5">
             <Sparkles className="w-3.5 h-3.5 text-[#FAFAFA]" />
-            <span>Project Case Study</span>
+            <span>Repository Technical Breakdown</span>
           </div>
 
           {/* Project Title */}
@@ -99,7 +97,7 @@ export default function PublicProjectView({ initialProject }: PublicProjectViewP
             {project.title}
           </h1>
 
-          {/* One line pitch */}
+          {/* One line pitch / summary */}
           <p className="text-base sm:text-lg md:text-xl text-[#A1A1AA] mt-4 leading-relaxed max-w-3xl mx-auto font-normal">
             {project.one_line_pitch}
           </p>
@@ -177,7 +175,7 @@ export default function PublicProjectView({ initialProject }: PublicProjectViewP
               <div className="absolute inset-0 bg-gradient-to-t from-black/80 via-transparent to-transparent opacity-0 group-hover:opacity-100 transition-opacity flex items-end p-4 sm:p-6">
                 <span className="text-xs text-[#FAFAFA] bg-[#121214]/90 px-3 py-1.5 rounded-lg border border-[#2A2A2F] flex items-center space-x-1.5">
                   <Eye className="w-3.5 h-3.5" />
-                  <span>Click to view full screenshot</span>
+                  <span>Click to enlarge screenshot</span>
                 </span>
               </div>
             </div>
@@ -187,7 +185,7 @@ export default function PublicProjectView({ initialProject }: PublicProjectViewP
                 <FolderGit2 className="w-12 h-12 text-[#52525B] mx-auto mb-2" />
                 <h3 className="text-lg sm:text-xl font-bold text-[#FAFAFA]">{project.title}</h3>
                 <p className="text-xs text-[#71717A] mt-1 max-w-md mx-auto">
-                  {project.raw_github_metadata?.description || "Public GitHub Repository Case Study"}
+                  {project.raw_github_metadata?.description || "Public GitHub Repository Technical Breakdown"}
                 </p>
               </div>
             </div>
@@ -197,37 +195,27 @@ export default function PublicProjectView({ initialProject }: PublicProjectViewP
 
       {/* Main Content Body */}
       <div className="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8 space-y-8 sm:space-y-10">
-        {/* Audience Perspective Switcher on Public Page */}
-        <div className="p-4 rounded-xl border border-[#2A2A2F] bg-[#121214] flex flex-col sm:flex-row sm:items-center justify-between gap-3">
-          <div className="flex items-center space-x-2">
-            <span className="text-xs font-semibold text-[#FAFAFA]">Audience Lens:</span>
-            <span className="text-[11px] text-[#71717A]">
-              Tuned for {audienceView} perspective
-            </span>
+        {/* Section: Architecture Diagram & Summary */}
+        <div className="p-6 sm:p-8 rounded-2xl border border-[#2A2A2F] bg-[#121214] space-y-5">
+          <div className="flex items-center space-x-2.5">
+            <Workflow className="w-5 h-5 text-[#FAFAFA]" />
+            <h2 className="text-base sm:text-lg font-bold text-[#FAFAFA]">System Architecture Flow</h2>
           </div>
+          {project.architecture_summary && (
+            <p className="text-xs sm:text-sm text-[#A1A1AA] leading-relaxed">{project.architecture_summary}</p>
+          )}
 
-          <div className="flex flex-wrap items-center gap-1.5">
-            {(["recruiter", "client", "non-technical", "judge"] as AudienceVersion[]).map((v) => (
-              <button
-                key={v}
-                onClick={() => setAudienceView(v)}
-                className={`px-3 py-1 rounded-lg text-xs font-medium capitalize transition-colors ${
-                  audienceView === v
-                    ? "bg-[#FAFAFA] text-[#111111] font-semibold shadow-sm"
-                    : "bg-[#17171A] border border-[#2A2A2F] text-[#A1A1AA] hover:text-[#FAFAFA]"
-                }`}
-              >
-                {v}
-              </button>
-            ))}
-          </div>
+          <MermaidChart
+            chart={project.mermaid_diagram}
+            title={`${project.github_repo} Architecture Flow`}
+          />
         </div>
 
         {/* Section: Problem & Solution */}
         <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
           <div className="p-6 rounded-2xl border border-[#2A2A2F] bg-[#121214]">
             <div className="text-xs uppercase font-mono font-bold text-[#EF4444] tracking-wider mb-2">
-              The Problem
+              Problem Solved
             </div>
             <p className="text-xs sm:text-sm text-[#FAFAFA] leading-relaxed">
               {project.problem}
@@ -236,7 +224,7 @@ export default function PublicProjectView({ initialProject }: PublicProjectViewP
 
           <div className="p-6 rounded-2xl border border-[#2A2A2F] bg-[#121214]">
             <div className="text-xs uppercase font-mono font-bold text-[#22C55E] tracking-wider mb-2">
-              The Engineered Solution
+              Engineered Solution
             </div>
             <p className="text-xs sm:text-sm text-[#FAFAFA] leading-relaxed">
               {project.solution}
@@ -247,7 +235,7 @@ export default function PublicProjectView({ initialProject }: PublicProjectViewP
         {/* Section: Key Features */}
         <div className="p-6 sm:p-8 rounded-2xl border border-[#2A2A2F] bg-[#121214]">
           <h2 className="text-base sm:text-lg font-bold text-[#FAFAFA] mb-5 flex items-center space-x-2">
-            <span>Key Features & Capabilities</span>
+            <span>Key Features &amp; Capabilities</span>
             <span className="text-xs font-normal text-[#71717A]">
               ({project.features?.length || 0} features)
             </span>
@@ -272,7 +260,7 @@ export default function PublicProjectView({ initialProject }: PublicProjectViewP
         {project.how_it_works && project.how_it_works.length > 0 && (
           <div className="p-6 sm:p-8 rounded-2xl border border-[#2A2A2F] bg-[#121214]">
             <h2 className="text-base sm:text-lg font-bold text-[#FAFAFA] mb-5">
-              How It Works: Step-by-Step Workflow
+              Execution &amp; Data Flow: Step-by-Step
             </h2>
 
             <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-3 sm:gap-4">
@@ -295,8 +283,9 @@ export default function PublicProjectView({ initialProject }: PublicProjectViewP
 
         {/* Section: Tech Stack With Grounded Reasons */}
         <div className="p-6 sm:p-8 rounded-2xl border border-[#2A2A2F] bg-[#121214]">
-          <h2 className="text-base sm:text-lg font-bold text-[#FAFAFA] mb-1.5">
-            Technology Stack & Technical Rationale
+          <h2 className="text-base sm:text-lg font-bold text-[#FAFAFA] mb-1.5 flex items-center space-x-2">
+            <Code2 className="w-5 h-5 text-[#FAFAFA]" />
+            <span>Technology Stack &amp; Technical Rationale</span>
           </h2>
           <p className="text-xs text-[#71717A] mb-5">
             Directly grounded in repository code, package manifests, and language dependencies.
@@ -313,19 +302,6 @@ export default function PublicProjectView({ initialProject }: PublicProjectViewP
               </div>
             ))}
           </div>
-        </div>
-
-        {/* Section: Architecture Diagram & Summary */}
-        <div className="p-6 sm:p-8 rounded-2xl border border-[#2A2A2F] bg-[#121214] space-y-5">
-          <div>
-            <h2 className="text-base sm:text-lg font-bold text-[#FAFAFA]">System Architecture Flow</h2>
-            <p className="text-xs text-[#A1A1AA] mt-1 leading-relaxed">{project.architecture_summary}</p>
-          </div>
-
-          <MermaidChart
-            chart={project.mermaid_diagram}
-            title={`${project.github_repo} Data Flow`}
-          />
         </div>
 
         {/* Section: Video Embed (if provided) */}
@@ -351,7 +327,7 @@ export default function PublicProjectView({ initialProject }: PublicProjectViewP
         {project.images && project.images.length > 0 && (
           <div className="p-6 sm:p-8 rounded-2xl border border-[#2A2A2F] bg-[#121214]">
             <h2 className="text-base sm:text-lg font-bold text-[#FAFAFA] mb-5">
-              Application Gallery ({project.images.length} Screenshots)
+              Extracted &amp; Uploaded Screenshots ({project.images.length})
             </h2>
 
             <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-4">
@@ -386,23 +362,15 @@ export default function PublicProjectView({ initialProject }: PublicProjectViewP
           </div>
         )}
 
-        {/* Section: 45-Second Pitch Teleprompter */}
-        {project.pitch_script && (
-          <PitchTeleprompter
-            pitchScript={project.pitch_script}
-            projectTitle={project.title}
-          />
-        )}
-
-        {/* Section: Interview Prep Accordion */}
+        {/* Section: Technical Interview & Defense Q&A */}
         {project.interview_questions && project.interview_questions.length > 0 && (
           <div className="p-6 sm:p-8 rounded-2xl border border-[#2A2A2F] bg-[#121214]">
             <div className="mb-5">
               <h2 className="text-base sm:text-lg font-bold text-[#FAFAFA]">
-                Technical Interview Preparation & Defense
+                Technical Architecture Defense &amp; Engineering Q&amp;A
               </h2>
               <p className="text-xs text-[#71717A] mt-1">
-                Five questions hiring managers are most likely to ask based on this project&apos;s technical architecture.
+                Architecture questions and trade-off considerations derived from this repository&apos;s implementation.
               </p>
             </div>
 
@@ -424,7 +392,7 @@ export default function PublicProjectView({ initialProject }: PublicProjectViewP
             />
             <div>
               <span className="text-[10px] sm:text-[11px] uppercase font-mono text-[#71717A] font-semibold tracking-wider">
-                Crafted & Engineered By
+                Repository Owner &amp; Author
               </span>
               <h3 className="text-base sm:text-lg font-bold text-[#FAFAFA]">
                 {author.name || project.github_owner}
@@ -451,7 +419,7 @@ export default function PublicProjectView({ initialProject }: PublicProjectViewP
               className="w-full sm:w-auto px-4 py-2.5 rounded-xl bg-[#FAFAFA] hover:bg-[#E4E4E7] text-xs font-semibold text-[#111111] flex items-center justify-center space-x-1.5 transition-colors cursor-pointer shadow-sm"
             >
               <Share2 className="w-3.5 h-3.5 text-[#111111]" />
-              <span>Share Project Story</span>
+              <span>Share Technical Overview</span>
             </button>
           </div>
         </div>

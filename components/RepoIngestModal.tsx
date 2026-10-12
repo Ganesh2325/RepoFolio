@@ -6,15 +6,12 @@ import {
   FolderGit2, 
   Sparkles, 
   X, 
-  HelpCircle, 
   Loader2, 
   CheckCircle2, 
   AlertCircle,
   ArrowRight,
   ShieldCheck
 } from "lucide-react";
-import AudienceSelector from "./AudienceSelector";
-import { AudienceVersion, UserOnboardingAnswers } from "@/types";
 
 interface RepoIngestModalProps {
   onClose: () => void;
@@ -24,23 +21,15 @@ interface RepoIngestModalProps {
 export default function RepoIngestModal({ onClose, initialUrl = "" }: RepoIngestModalProps) {
   const router = useRouter();
   const [url, setUrl] = useState(initialUrl);
-  const [audience, setAudience] = useState<AudienceVersion>("recruiter");
-  const [showQuestions, setShowQuestions] = useState(false);
-  const [answers, setAnswers] = useState<UserOnboardingAnswers>({
-    problemSolved: "",
-    targetAudience: "",
-    proudestAchievement: "",
-  });
-
   const [loading, setLoading] = useState(false);
   const [currentStep, setCurrentStep] = useState(0);
   const [error, setError] = useState<string | null>(null);
 
   const steps = [
     "Validating repository & reading GitHub signals",
-    "Parsing README, tech stack & commit history",
-    "Analyzing architecture & file structure",
-    "Generating audience story & architecture diagram",
+    "Parsing README, tech stack & manifests",
+    "Analyzing architecture & codebase structure",
+    "Extracting system flows & technical overview",
   ];
 
   const handleSubmit = async (e: React.FormEvent) => {
@@ -51,7 +40,7 @@ export default function RepoIngestModal({ onClose, initialUrl = "" }: RepoIngest
     setLoading(true);
     setCurrentStep(0);
 
-    // Simulate animated step progression for perceived speed and transparency
+    // Step progression animation
     const stepInterval = setInterval(() => {
       setCurrentStep((prev) => {
         if (prev < steps.length - 1) return prev + 1;
@@ -65,8 +54,6 @@ export default function RepoIngestModal({ onClose, initialUrl = "" }: RepoIngest
         headers: { "Content-Type": "application/json" },
         body: JSON.stringify({
           url: url.trim(),
-          audience,
-          onboardingAnswers: showQuestions ? answers : undefined,
         }),
       });
 
@@ -98,7 +85,7 @@ export default function RepoIngestModal({ onClose, initialUrl = "" }: RepoIngest
       aria-modal="true"
       aria-labelledby="ingest-modal-title"
     >
-      <div className="relative w-full max-w-2xl rounded-2xl border border-[#2A2A2F] bg-[#121214] p-6 sm:p-8 shadow-2xl overflow-hidden max-h-[92vh] overflow-y-auto">
+      <div className="relative w-full max-w-xl rounded-2xl border border-[#2A2A2F] bg-[#121214] p-6 sm:p-8 shadow-2xl overflow-hidden max-h-[92vh] overflow-y-auto">
         <button
           onClick={onClose}
           disabled={loading}
@@ -112,19 +99,19 @@ export default function RepoIngestModal({ onClose, initialUrl = "" }: RepoIngest
         <div className="mb-6">
           <div className="inline-flex items-center space-x-2 px-2.5 py-1 rounded-md bg-[#17171A] border border-[#2A2A2F] text-[#A1A1AA] text-xs font-medium mb-3">
             <Sparkles className="w-3.5 h-3.5 text-[#FAFAFA]" />
-            <span>AI Story Engine</span>
+            <span>Repository Analysis Engine</span>
           </div>
           <h2 id="ingest-modal-title" className="text-xl sm:text-2xl font-bold text-[#FAFAFA] tracking-tight">
-            Turn your GitHub repo into a project story
+            Extract &amp; explain your GitHub repository
           </h2>
           <p className="text-xs sm:text-sm text-[#A1A1AA] mt-1.5 leading-relaxed">
-            Enter a public repository. We will inspect the README, tech stack, and structure to generate a clear, editable case study.
+            Enter a public repository. We will inspect the code, README, dependencies, and structure to extract an accurate technical overview with architecture flows.
           </p>
 
           {/* Trust callout */}
           <div className="mt-3.5 flex items-center space-x-2 px-3 py-2 rounded-lg bg-[#17171A] border border-[#222226] text-[12px] text-[#A1A1AA]">
             <ShieldCheck className="w-4 h-4 text-[#22C55E] flex-shrink-0" />
-            <span>We only analyze public repository information. You can review and edit everything before publishing.</span>
+            <span>We analyze public repository evidence directly. You can review and edit everything before publishing.</span>
           </div>
         </div>
 
@@ -179,7 +166,7 @@ export default function RepoIngestModal({ onClose, initialUrl = "" }: RepoIngest
             </div>
 
             <p className="text-center text-[11px] text-[#71717A]">
-              Grounding story in repository evidence and architecture signals...
+              Grounding analysis in repository code, architecture flows, and evidence...
             </p>
           </div>
         ) : (
@@ -212,84 +199,6 @@ export default function RepoIngestModal({ onClose, initialUrl = "" }: RepoIngest
               </div>
             </div>
 
-            {/* Audience selector */}
-            <div>
-              <label className="block text-xs font-semibold text-[#FAFAFA] uppercase tracking-wider mb-2">
-                Target Audience Version
-              </label>
-              <AudienceSelector
-                selected={audience}
-                onChange={setAudience}
-                variant="cards"
-              />
-            </div>
-
-            {/* 3 Optional hints toggle */}
-            <div className="border border-[#2A2A2F] rounded-xl bg-[#101012] p-4">
-              <button
-                type="button"
-                onClick={() => setShowQuestions(!showQuestions)}
-                className="w-full flex items-center justify-between text-left text-xs font-semibold text-[#A1A1AA] hover:text-[#FAFAFA] transition-colors"
-              >
-                <div className="flex items-center space-x-2">
-                  <HelpCircle className="w-4 h-4 text-[#A1A1AA]" />
-                  <span>Sparse README? Add 3 quick hints for higher accuracy (Optional)</span>
-                </div>
-                <span className="text-[11px] text-[#FAFAFA] underline underline-offset-2">
-                  {showQuestions ? "Hide hints" : "Add hints"}
-                </span>
-              </button>
-
-              {showQuestions && (
-                <div className="mt-4 space-y-3 pt-3 border-t border-[#2A2A2F]">
-                  <div>
-                    <label className="block text-[11px] font-medium text-[#A1A1AA] mb-1">
-                      1. What problem does this project solve?
-                    </label>
-                    <input
-                      type="text"
-                      value={answers.problemSolved}
-                      onChange={(e) =>
-                        setAnswers({ ...answers, problemSolved: e.target.value })
-                      }
-                      placeholder="e.g. Teams struggle to track cross-cloud infrastructure drift"
-                      className="w-full px-3 py-2 rounded-lg bg-[#17171A] border border-[#2A2A2F] text-xs text-[#FAFAFA] placeholder-[#71717A] focus:outline-none focus:border-[#FAFAFA]"
-                    />
-                  </div>
-
-                  <div>
-                    <label className="block text-[11px] font-medium text-[#A1A1AA] mb-1">
-                      2. Who is it for?
-                    </label>
-                    <input
-                      type="text"
-                      value={answers.targetAudience}
-                      onChange={(e) =>
-                        setAnswers({ ...answers, targetAudience: e.target.value })
-                      }
-                      placeholder="e.g. DevOps engineers, site reliability teams, platform leads"
-                      className="w-full px-3 py-2 rounded-lg bg-[#17171A] border border-[#2A2A2F] text-xs text-[#FAFAFA] placeholder-[#71717A] focus:outline-none focus:border-[#FAFAFA]"
-                    />
-                  </div>
-
-                  <div>
-                    <label className="block text-[11px] font-medium text-[#A1A1AA] mb-1">
-                      3. What are you most proud of or what was the hardest hurdle?
-                    </label>
-                    <input
-                      type="text"
-                      value={answers.proudestAchievement}
-                      onChange={(e) =>
-                        setAnswers({ ...answers, proudestAchievement: e.target.value })
-                      }
-                      placeholder="e.g. Sub-second drift detection with zero false positives"
-                      className="w-full px-3 py-2 rounded-lg bg-[#17171A] border border-[#2A2A2F] text-xs text-[#FAFAFA] placeholder-[#71717A] focus:outline-none focus:border-[#FAFAFA]"
-                    />
-                  </div>
-                </div>
-              )}
-            </div>
-
             {/* Actions */}
             <div className="pt-2 flex items-center justify-end space-x-3">
               <button
@@ -302,9 +211,10 @@ export default function RepoIngestModal({ onClose, initialUrl = "" }: RepoIngest
               <button
                 type="submit"
                 className="px-6 py-2.5 rounded-xl bg-[#FAFAFA] hover:bg-[#E4E4E7] text-[#111111] text-xs sm:text-sm font-semibold flex items-center space-x-2 transition-all active:scale-95 cursor-pointer shadow-sm"
+                id="modal-submit-analyze-btn"
               >
                 <Sparkles className="w-4 h-4 text-[#111111]" />
-                <span>Generate Project Story</span>
+                <span>Explain Repository</span>
                 <ArrowRight className="w-4 h-4 text-[#111111]" />
               </button>
             </div>

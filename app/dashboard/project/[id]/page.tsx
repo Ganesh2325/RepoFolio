@@ -20,16 +20,13 @@ import {
   Image as ImageIcon,
   Layers,
   HelpCircle,
-  Video,
-  Mic,
-  Copy
+  Copy,
+  Workflow
 } from "lucide-react";
-import AudienceSelector from "@/components/AudienceSelector";
 import MermaidChart from "@/components/MermaidChart";
 import ScreenshotUploader from "@/components/ScreenshotUploader";
-import PitchTeleprompter from "@/components/PitchTeleprompter";
 import InterviewPrepAccordion from "@/components/InterviewPrepAccordion";
-import { AudienceVersion, ProjectModel, TechStackItem } from "@/types";
+import { ProjectModel, TechStackItem } from "@/types";
 
 interface PageProps {
   params: Promise<{ id: string }>;
@@ -44,7 +41,7 @@ export default function ProjectEditorPage({ params }: PageProps) {
   const [saving, setSaving] = useState(false);
   const [saveSuccess, setSaveSuccess] = useState(false);
   const [regeneratingSection, setRegeneratingSection] = useState<string | null>(null);
-  const [activeTab, setActiveTab] = useState<"story" | "tech" | "proof" | "pitch" | "interview" | "settings">("story");
+  const [activeTab, setActiveTab] = useState<"overview" | "architecture" | "tech" | "proof" | "interview" | "settings">("overview");
   const [copiedLink, setCopiedLink] = useState(false);
 
   // Form states
@@ -58,14 +55,12 @@ export default function ProjectEditorPage({ params }: PageProps) {
   const [archSummary, setArchSummary] = useState("");
   const [mermaid, setMermaid] = useState("");
   const [futureImprovements, setFutureImprovements] = useState<string[]>([]);
-  const [pitchScript, setPitchScript] = useState("");
   const [interviewQuestions, setInterviewQuestions] = useState<{ question: string; talking_points?: string }[]>([]);
-  const [audience, setAudience] = useState<AudienceVersion>("recruiter");
   const [liveDemoUrl, setLiveDemoUrl] = useState("");
   const [videoUrl, setVideoUrl] = useState("");
   const [caseStudyUrl, setCaseStudyUrl] = useState("");
   const [isPublic, setIsPublic] = useState(true);
-  const [status, setStatus] = useState<"draft" | "published">("draft");
+  const [status, setStatus] = useState<"draft" | "published">("published");
 
   const fetchProject = async () => {
     try {
@@ -85,14 +80,12 @@ export default function ProjectEditorPage({ params }: PageProps) {
         setArchSummary(p.architecture_summary || "");
         setMermaid(p.mermaid_diagram || "");
         setFutureImprovements(Array.isArray(p.future_improvements) ? p.future_improvements : []);
-        setPitchScript(p.pitch_script || "");
         setInterviewQuestions(Array.isArray(p.interview_questions) ? p.interview_questions : []);
-        setAudience(p.audience_version || "recruiter");
         setLiveDemoUrl(p.live_demo_url || "");
         setVideoUrl(p.video_url || "");
         setCaseStudyUrl(p.external_case_study_url || "");
         setIsPublic(p.is_public ?? true);
-        setStatus(p.status || "draft");
+        setStatus(p.status || "published");
       }
     } catch (err) {
       console.error(err);
@@ -124,9 +117,7 @@ export default function ProjectEditorPage({ params }: PageProps) {
           architecture_summary: archSummary,
           mermaid_diagram: mermaid,
           future_improvements: futureImprovements,
-          pitch_script: pitchScript,
           interview_questions: interviewQuestions,
-          audience_version: audience,
           live_demo_url: liveDemoUrl || null,
           video_url: videoUrl || null,
           external_case_study_url: caseStudyUrl || null,
@@ -159,7 +150,6 @@ export default function ProjectEditorPage({ params }: PageProps) {
         headers: { "Content-Type": "application/json" },
         body: JSON.stringify({
           section,
-          audience,
         }),
       });
 
@@ -169,7 +159,6 @@ export default function ProjectEditorPage({ params }: PageProps) {
         if (section === "problem") setProblem(p.problem);
         if (section === "solution") setSolution(p.solution);
         if (section === "features") setFeatures(p.features);
-        if (section === "pitch_script") setPitchScript(p.pitch_script);
         if (section === "mermaid_diagram") setMermaid(p.mermaid_diagram);
         if (section === "architecture_summary") setArchSummary(p.architecture_summary);
         if (section === "how_it_works") setHowItWorks(p.how_it_works);
@@ -178,34 +167,6 @@ export default function ProjectEditorPage({ params }: PageProps) {
     } catch (err) {
       console.error(err);
       alert("Error regenerating section.");
-    } finally {
-      setRegeneratingSection(null);
-    }
-  };
-
-  const handleSwitchAudience = async (newAudience: AudienceVersion) => {
-    setAudience(newAudience);
-    if (!confirm(`Switch story to '${newAudience}' persona? This will regenerate the copy to match this audience.`)) return;
-
-    setRegeneratingSection("full");
-    try {
-      const res = await fetch(`/api/projects/${id}/generate`, {
-        method: "POST",
-        headers: { "Content-Type": "application/json" },
-        body: JSON.stringify({ audience: newAudience }),
-      });
-      const data = await res.json();
-      if (data.success && data.project) {
-        const p = data.project;
-        setTitle(p.title);
-        setPitch(p.one_line_pitch);
-        setProblem(p.problem);
-        setSolution(p.solution);
-        setFeatures(p.features);
-        setArchSummary(p.architecture_summary);
-        setPitchScript(p.pitch_script);
-        setInterviewQuestions(p.interview_questions);
-      }
     } finally {
       setRegeneratingSection(null);
     }
@@ -222,18 +183,18 @@ export default function ProjectEditorPage({ params }: PageProps) {
 
   if (loading) {
     return (
-      <div className="flex-1 flex flex-col items-center justify-center py-28 text-slate-400">
-        <Loader2 className="w-8 h-8 animate-spin text-indigo-400 mb-3" />
-        <span className="text-sm">Loading Project Story Editor...</span>
+      <div className="flex-1 flex flex-col items-center justify-center py-28 text-[#71717A]">
+        <Loader2 className="w-8 h-8 animate-spin text-[#FAFAFA] mb-3" />
+        <span className="text-sm">Loading Repository Technical Editor...</span>
       </div>
     );
   }
 
   if (!project) {
     return (
-      <div className="flex-1 flex flex-col items-center justify-center py-28 text-slate-400">
-        <h2 className="text-lg font-bold text-white">Project not found</h2>
-        <Link href="/dashboard" className="mt-3 text-xs text-indigo-400 hover:underline">
+      <div className="flex-1 flex flex-col items-center justify-center py-28 text-[#71717A]">
+        <h2 className="text-lg font-bold text-[#FAFAFA]">Project not found</h2>
+        <Link href="/dashboard" className="mt-3 text-xs text-[#FAFAFA] underline">
           Return to Dashboard
         </Link>
       </div>
@@ -278,7 +239,7 @@ export default function ProjectEditorPage({ params }: PageProps) {
           <button
             onClick={copyPublicLink}
             className="px-3 py-2 rounded-xl border border-[#2A2A2F] bg-[#121214] hover:bg-[#17171A] text-[#A1A1AA] hover:text-[#FAFAFA] text-xs font-medium transition-colors flex items-center space-x-1.5"
-            title="Copy Public Story Link"
+            title="Copy Public Link"
           >
             {copiedLink ? <Check className="w-3.5 h-3.5 text-[#22C55E]" /> : <Copy className="w-3.5 h-3.5" />}
             <span>{copiedLink ? "Copied!" : "Copy Link"}</span>
@@ -317,43 +278,30 @@ export default function ProjectEditorPage({ params }: PageProps) {
         </div>
       </div>
 
-      {/* Audience switcher bar */}
-      <div className="mb-6 p-4 rounded-xl border border-[#2A2A2F] bg-[#121214]">
-        <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-3 mb-3">
-          <div>
-            <span className="text-xs font-bold text-[#FAFAFA] uppercase tracking-wider">
-              Audience Persona
-            </span>
-            <p className="text-[11px] text-[#71717A]">
-              Switching audience personas will re-orient the story language and interview prep focus.
-            </p>
-          </div>
-          {regeneratingSection === "full" && (
-            <div className="flex items-center space-x-2 text-xs text-[#FAFAFA] animate-pulse">
-              <Loader2 className="w-3.5 h-3.5 animate-spin" />
-              <span>Regenerating story for new audience...</span>
-            </div>
-          )}
-        </div>
-        <AudienceSelector
-          selected={audience}
-          onChange={handleSwitchAudience}
-          variant="pills"
-        />
-      </div>
-
       {/* Editor Navigation Tabs */}
       <div className="flex border-b border-[#222226] space-x-4 mb-6 overflow-x-auto text-xs font-medium">
         <button
-          onClick={() => setActiveTab("story")}
+          onClick={() => setActiveTab("overview")}
           className={`pb-3 border-b-2 flex items-center space-x-1.5 whitespace-nowrap transition-colors ${
-            activeTab === "story"
+            activeTab === "overview"
               ? "border-[#FAFAFA] text-[#FAFAFA] font-semibold"
               : "border-transparent text-[#71717A] hover:text-[#A1A1AA]"
           }`}
         >
           <FolderGit2 className="w-4 h-4" />
-          <span>Core Story & Features</span>
+          <span>Overview &amp; Features</span>
+        </button>
+
+        <button
+          onClick={() => setActiveTab("architecture")}
+          className={`pb-3 border-b-2 flex items-center space-x-1.5 whitespace-nowrap transition-colors ${
+            activeTab === "architecture"
+              ? "border-[#FAFAFA] text-[#FAFAFA] font-semibold"
+              : "border-transparent text-[#71717A] hover:text-[#A1A1AA]"
+          }`}
+        >
+          <Workflow className="w-4 h-4" />
+          <span>Architecture &amp; Flows</span>
         </button>
 
         <button
@@ -365,7 +313,7 @@ export default function ProjectEditorPage({ params }: PageProps) {
           }`}
         >
           <Code2 className="w-4 h-4" />
-          <span>Tech Stack & Architecture</span>
+          <span>Tech Stack &amp; Tools</span>
         </button>
 
         <button
@@ -377,19 +325,7 @@ export default function ProjectEditorPage({ params }: PageProps) {
           }`}
         >
           <ImageIcon className="w-4 h-4" />
-          <span>Screenshots & Live Demo Proof</span>
-        </button>
-
-        <button
-          onClick={() => setActiveTab("pitch")}
-          className={`pb-3 border-b-2 flex items-center space-x-1.5 whitespace-nowrap transition-colors ${
-            activeTab === "pitch"
-              ? "border-[#FAFAFA] text-[#FAFAFA] font-semibold"
-              : "border-transparent text-[#71717A] hover:text-[#A1A1AA]"
-          }`}
-        >
-          <Mic className="w-4 h-4" />
-          <span>45s Spoken Pitch</span>
+          <span>Screenshots &amp; Demos</span>
         </button>
 
         <button
@@ -401,7 +337,7 @@ export default function ProjectEditorPage({ params }: PageProps) {
           }`}
         >
           <HelpCircle className="w-4 h-4" />
-          <span>Interview Prep Q&A</span>
+          <span>Engineering Q&amp;A</span>
         </button>
 
         <button
@@ -413,12 +349,12 @@ export default function ProjectEditorPage({ params }: PageProps) {
           }`}
         >
           <Layers className="w-4 h-4" />
-          <span>Publish & Links</span>
+          <span>Settings &amp; Links</span>
         </button>
       </div>
 
-      {/* Tab 1: Core Story & Features */}
-      {activeTab === "story" && (
+      {/* Tab 1: Overview & Features */}
+      {activeTab === "overview" && (
         <div className="space-y-6">
           {/* Title & One-line pitch */}
           <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
@@ -436,7 +372,7 @@ export default function ProjectEditorPage({ params }: PageProps) {
 
             <div>
               <label className="block text-xs font-semibold text-[#FAFAFA] uppercase tracking-wider mb-1.5">
-                One-Line Value Proposition
+                One-Line Technical Summary
               </label>
               <input
                 type="text"
@@ -447,12 +383,12 @@ export default function ProjectEditorPage({ params }: PageProps) {
             </div>
           </div>
 
-          {/* Problem & Solution with individual section regeneration */}
+          {/* Problem & Solution */}
           <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
             <div className="p-5 rounded-2xl border border-[#2A2A2F] bg-[#121214]">
               <div className="flex items-center justify-between mb-2">
                 <label className="text-xs font-bold text-[#EF4444] uppercase tracking-wider">
-                  Problem Statement
+                  Problem Solved
                 </label>
                 <button
                   type="button"
@@ -475,7 +411,7 @@ export default function ProjectEditorPage({ params }: PageProps) {
             <div className="p-5 rounded-2xl border border-[#2A2A2F] bg-[#121214]">
               <div className="flex items-center justify-between mb-2">
                 <label className="text-xs font-bold text-[#22C55E] uppercase tracking-wider">
-                  Solution Explanation
+                  Engineered Solution
                 </label>
                 <button
                   type="button"
@@ -501,7 +437,7 @@ export default function ProjectEditorPage({ params }: PageProps) {
             <div className="flex items-center justify-between mb-3">
               <div>
                 <label className="text-xs font-bold text-[#FAFAFA] uppercase tracking-wider">
-                  Key Features (Max 6)
+                  Key Features &amp; Capabilities (Max 6)
                 </label>
                 <p className="text-[11px] text-[#71717A]">
                   Concise bullets summarizing what your software actually accomplishes.
@@ -543,7 +479,7 @@ export default function ProjectEditorPage({ params }: PageProps) {
               {features.length < 6 && (
                 <button
                   type="button"
-                  onClick={() => setFeatures([...features, "New feature description"])}
+                  onClick={() => setFeatures([...features, "New feature capability"])}
                   className="inline-flex items-center space-x-1.5 text-xs text-[#FAFAFA] hover:text-white font-medium pt-1"
                 >
                   <Plus className="w-3.5 h-3.5" />
@@ -552,16 +488,78 @@ export default function ProjectEditorPage({ params }: PageProps) {
               )}
             </div>
           </div>
+        </div>
+      )}
+
+      {/* Tab 2: Architecture & Flows */}
+      {activeTab === "architecture" && (
+        <div className="space-y-6">
+          {/* Architecture Summary */}
+          <div className="p-5 rounded-2xl border border-[#2A2A2F] bg-[#121214]">
+            <div className="flex items-center justify-between mb-2">
+              <label className="text-xs font-bold text-[#FAFAFA] uppercase tracking-wider">
+                System Architecture Summary
+              </label>
+              <button
+                type="button"
+                onClick={() => handleRegenerateSection("architecture_summary")}
+                disabled={regeneratingSection === "architecture_summary"}
+                className="text-[11px] text-[#A1A1AA] hover:text-[#FAFAFA] flex items-center space-x-1 cursor-pointer transition-colors"
+              >
+                <RefreshCw className={`w-3 h-3 ${regeneratingSection === "architecture_summary" ? "animate-spin" : ""}`} />
+                <span>Regenerate Summary</span>
+              </button>
+            </div>
+            <textarea
+              rows={3}
+              value={archSummary}
+              onChange={(e) => setArchSummary(e.target.value)}
+              className="w-full p-3 rounded-xl bg-[#101012] border border-[#2A2A2F] text-xs sm:text-sm text-[#FAFAFA] focus:outline-none focus:border-[#FAFAFA] leading-relaxed"
+            />
+          </div>
+
+          {/* Mermaid Diagram Code & Preview */}
+          <div className="p-5 rounded-2xl border border-[#2A2A2F] bg-[#121214]">
+            <div className="flex items-center justify-between mb-3">
+              <div>
+                <label className="text-xs font-bold text-[#FAFAFA] uppercase tracking-wider">
+                  Mermaid.js Flowchart &amp; Architecture Diagram
+                </label>
+                <p className="text-[11px] text-[#71717A]">
+                  Edit the Mermaid flowchart syntax directly to update the visual diagram in real time.
+                </p>
+              </div>
+              <button
+                type="button"
+                onClick={() => handleRegenerateSection("mermaid_diagram")}
+                disabled={regeneratingSection === "mermaid_diagram"}
+                className="text-[11px] text-[#A1A1AA] hover:text-[#FAFAFA] flex items-center space-x-1 cursor-pointer transition-colors"
+              >
+                <RefreshCw className={`w-3 h-3 ${regeneratingSection === "mermaid_diagram" ? "animate-spin" : ""}`} />
+                <span>Regenerate Diagram</span>
+              </button>
+            </div>
+
+            <div className="grid grid-cols-1 lg:grid-cols-2 gap-4">
+              <textarea
+                rows={10}
+                value={mermaid}
+                onChange={(e) => setMermaid(e.target.value)}
+                className="w-full p-3 rounded-xl bg-[#101012] border border-[#2A2A2F] font-mono text-xs text-[#FAFAFA] focus:outline-none focus:border-[#FAFAFA] leading-normal"
+              />
+              <MermaidChart chart={mermaid} title="Live Diagram Preview" />
+            </div>
+          </div>
 
           {/* How It Works (4-6 steps) */}
           <div className="p-5 rounded-2xl border border-[#2A2A2F] bg-[#121214]">
             <div className="flex items-center justify-between mb-3">
               <div>
                 <label className="text-xs font-bold text-[#FAFAFA] uppercase tracking-wider">
-                  How It Works (4–6 Steps)
+                  Execution &amp; Data Flow (4–6 Steps)
                 </label>
                 <p className="text-[11px] text-[#71717A]">
-                  Sequential workflow showing user trigger, processing, and delivered result.
+                  Sequential workflow showing user trigger, internal processing, and delivered output.
                 </p>
               </div>
               <button
@@ -605,16 +603,15 @@ export default function ProjectEditorPage({ params }: PageProps) {
         </div>
       )}
 
-      {/* Tab 2: Tech Stack & Architecture */}
+      {/* Tab 3: Tech Stack & Tools */}
       {activeTab === "tech" && (
         <div className="space-y-6">
-          {/* Tech Stack List */}
           <div className="p-5 rounded-2xl border border-[#2A2A2F] bg-[#121214]">
             <h3 className="text-xs font-bold text-[#FAFAFA] uppercase tracking-wider mb-2">
-              Technologies & Selection Reasons
+              Technologies &amp; Selection Rationale
             </h3>
             <p className="text-[11px] text-[#71717A] mb-4">
-              Recruiters love understanding WHY you picked a library rather than just seeing a list of names.
+              Explain why specific frameworks and dependencies were chosen based on codebase architecture.
             </p>
 
             <div className="space-y-3">
@@ -634,7 +631,7 @@ export default function ProjectEditorPage({ params }: PageProps) {
                   <input
                     type="text"
                     value={item.reason}
-                    placeholder="Why this was chosen (e.g. Server components for fast rendering)"
+                    placeholder="Why this was chosen (e.g. Type-safe API routes)"
                     onChange={(e) => {
                       const updated = [...techStack];
                       updated[idx].reason = e.target.value;
@@ -661,76 +658,19 @@ export default function ProjectEditorPage({ params }: PageProps) {
               </button>
             </div>
           </div>
-
-          {/* Architecture Summary */}
-          <div className="p-5 rounded-2xl border border-[#2A2A2F] bg-[#121214]">
-            <div className="flex items-center justify-between mb-2">
-              <label className="text-xs font-bold text-[#FAFAFA] uppercase tracking-wider">
-                Architecture Summary
-              </label>
-              <button
-                type="button"
-                onClick={() => handleRegenerateSection("architecture_summary")}
-                disabled={regeneratingSection === "architecture_summary"}
-                className="text-[11px] text-[#A1A1AA] hover:text-[#FAFAFA] flex items-center space-x-1 cursor-pointer transition-colors"
-              >
-                <RefreshCw className={`w-3 h-3 ${regeneratingSection === "architecture_summary" ? "animate-spin" : ""}`} />
-                <span>Regenerate Summary</span>
-              </button>
-            </div>
-            <textarea
-              rows={3}
-              value={archSummary}
-              onChange={(e) => setArchSummary(e.target.value)}
-              className="w-full p-3 rounded-xl bg-[#101012] border border-[#2A2A2F] text-xs sm:text-sm text-[#FAFAFA] focus:outline-none focus:border-[#FAFAFA] leading-relaxed"
-            />
-          </div>
-
-          {/* Mermaid Diagram Code & Preview */}
-          <div className="p-5 rounded-2xl border border-[#2A2A2F] bg-[#121214]">
-            <div className="flex items-center justify-between mb-3">
-              <div>
-                <label className="text-xs font-bold text-[#FAFAFA] uppercase tracking-wider">
-                  Mermaid.js Flowchart
-                </label>
-                <p className="text-[11px] text-[#71717A]">
-                  Edit the Mermaid syntax below to update the visual flow diagram.
-                </p>
-              </div>
-              <button
-                type="button"
-                onClick={() => handleRegenerateSection("mermaid_diagram")}
-                disabled={regeneratingSection === "mermaid_diagram"}
-                className="text-[11px] text-[#A1A1AA] hover:text-[#FAFAFA] flex items-center space-x-1 cursor-pointer transition-colors"
-              >
-                <RefreshCw className={`w-3 h-3 ${regeneratingSection === "mermaid_diagram" ? "animate-spin" : ""}`} />
-                <span>Regenerate Diagram</span>
-              </button>
-            </div>
-
-            <div className="grid grid-cols-1 lg:grid-cols-2 gap-4">
-              <textarea
-                rows={10}
-                value={mermaid}
-                onChange={(e) => setMermaid(e.target.value)}
-                className="w-full p-3 rounded-xl bg-[#101012] border border-[#2A2A2F] font-mono text-xs text-[#FAFAFA] focus:outline-none focus:border-[#FAFAFA] leading-normal"
-              />
-              <MermaidChart chart={mermaid} title="Live Diagram Preview" />
-            </div>
-          </div>
         </div>
       )}
 
-      {/* Tab 3: Screenshots & Proof */}
+      {/* Tab 4: Screenshots & Proof */}
       {activeTab === "proof" && (
         <div className="space-y-6">
           <div className="p-5 rounded-2xl border border-[#2A2A2F] bg-[#121214]">
             <div className="mb-4">
               <h3 className="text-xs font-bold text-[#FAFAFA] uppercase tracking-wider">
-                Proof of Work: App Screenshots (2–6 Images)
+                Application Screenshots &amp; Visuals
               </h3>
               <p className="text-[11px] text-[#71717A] mt-0.5">
-                Upload 2 to 6 real screenshots of your application in action.
+                Screenshots extracted automatically from the repository README or manually uploaded.
               </p>
             </div>
 
@@ -744,10 +684,10 @@ export default function ProjectEditorPage({ params }: PageProps) {
             />
           </div>
 
-          {/* Proof Links (Live Demo, Video, Case Study) */}
+          {/* Links (Live Demo, Video, Case Study) */}
           <div className="p-5 rounded-2xl border border-[#2A2A2F] bg-[#121214] space-y-4">
             <h3 className="text-xs font-bold text-[#FAFAFA] uppercase tracking-wider">
-              Verification & Demo Links
+              Verification &amp; Demo Links
             </h3>
 
             <div>
@@ -778,7 +718,7 @@ export default function ProjectEditorPage({ params }: PageProps) {
 
             <div>
               <label className="block text-[11px] font-semibold text-[#A1A1AA] mb-1">
-                External Devpost or Case Study URL
+                External Documentation or Case Study URL
               </label>
               <input
                 type="url"
@@ -792,53 +732,17 @@ export default function ProjectEditorPage({ params }: PageProps) {
         </div>
       )}
 
-      {/* Tab 4: 45-Second Pitch Script */}
-      {activeTab === "pitch" && (
-        <div className="space-y-6">
-          <div className="p-5 rounded-2xl border border-[#2A2A2F] bg-[#121214]">
-            <div className="flex items-center justify-between mb-3">
-              <div>
-                <label className="text-xs font-bold text-[#FAFAFA] uppercase tracking-wider">
-                  45-Second Spoken Elevator Pitch Script
-                </label>
-                <p className="text-[11px] text-[#71717A]">
-                  First-person spoken script crafted for interviews, hackathon demos, and intro video voiceovers.
-                </p>
-              </div>
-              <button
-                type="button"
-                onClick={() => handleRegenerateSection("pitch_script")}
-                disabled={regeneratingSection === "pitch_script"}
-                className="text-[11px] text-[#A1A1AA] hover:text-[#FAFAFA] flex items-center space-x-1 cursor-pointer transition-colors"
-              >
-                <RefreshCw className={`w-3 h-3 ${regeneratingSection === "pitch_script" ? "animate-spin" : ""}`} />
-                <span>Regenerate Pitch</span>
-              </button>
-            </div>
-
-            <textarea
-              rows={5}
-              value={pitchScript}
-              onChange={(e) => setPitchScript(e.target.value)}
-              className="w-full p-4 rounded-xl bg-[#101012] border border-[#2A2A2F] text-xs sm:text-sm text-[#FAFAFA] focus:outline-none focus:border-[#FAFAFA] leading-relaxed font-sans"
-            />
-          </div>
-
-          <PitchTeleprompter pitchScript={pitchScript} projectTitle={title} />
-        </div>
-      )}
-
-      {/* Tab 5: Interview Prep Q&A */}
+      {/* Tab 5: Engineering Defense Q&A */}
       {activeTab === "interview" && (
         <div className="space-y-6">
           <div className="p-5 rounded-2xl border border-[#2A2A2F] bg-[#121214]">
             <div className="flex items-center justify-between mb-4">
               <div>
                 <label className="text-xs font-bold text-[#FAFAFA] uppercase tracking-wider">
-                  5 Likely Interview Questions & Talking Points
+                  Technical Architecture Defense &amp; Engineering Q&amp;A
                 </label>
                 <p className="text-[11px] text-[#71717A]">
-                  Generated from your real code decisions to help you prepare before recruiter screens.
+                  Architecture questions and engineering trade-offs derived from this repository&apos;s code.
                 </p>
               </div>
               <button
@@ -848,7 +752,7 @@ export default function ProjectEditorPage({ params }: PageProps) {
                 className="text-[11px] text-[#A1A1AA] hover:text-[#FAFAFA] flex items-center space-x-1 cursor-pointer transition-colors"
               >
                 <RefreshCw className={`w-3 h-3 ${regeneratingSection === "interview_questions" ? "animate-spin" : ""}`} />
-                <span>Regenerate Q&A</span>
+                <span>Regenerate Q&amp;A</span>
               </button>
             </div>
 
@@ -895,12 +799,12 @@ export default function ProjectEditorPage({ params }: PageProps) {
         </div>
       )}
 
-      {/* Tab 6: Publish & Settings */}
+      {/* Tab 6: Settings & Links */}
       {activeTab === "settings" && (
         <div className="space-y-6">
           <div className="p-6 rounded-2xl border border-[#2A2A2F] bg-[#121214] space-y-6">
             <h3 className="text-sm font-bold text-[#FAFAFA] uppercase tracking-wider">
-              Publishing & Visibility
+              Publishing &amp; Visibility
             </h3>
 
             {/* Public vs Private toggle */}
@@ -913,8 +817,8 @@ export default function ProjectEditorPage({ params }: PageProps) {
                   <h4 className="text-xs font-semibold text-[#FAFAFA]">Public Visibility</h4>
                   <p className="text-[11px] text-[#71717A]">
                     {isPublic
-                      ? "Anyone with the link can view your project story page."
-                      : "Only you can view this story while logged in."}
+                      ? "Anyone with the link can view your project overview page."
+                      : "Only you can view this page."}
                   </p>
                 </div>
               </div>
@@ -972,7 +876,7 @@ export default function ProjectEditorPage({ params }: PageProps) {
                     : "bg-[#FAFAFA] hover:bg-[#E4E4E7] text-[#111111]"
                 }`}
               >
-                {status === "published" ? "Unpublish Story" : "Publish Story Live"}
+                {status === "published" ? "Unpublish Overview" : "Publish Live"}
               </button>
             </div>
           </div>

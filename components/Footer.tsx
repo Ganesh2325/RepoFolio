@@ -14,21 +14,12 @@ export default function Footer() {
           <div>
             <span className="font-medium text-[#FAFAFA] text-sm">RepoFolio</span>
             <p className="text-xs text-[#71717A] mt-0.5">
-              Turn your GitHub repository into an editable project story recruiters understand.
+              Extract and explain public GitHub repositories with architecture flows, tech stack, and evidence.
             </p>
           </div>
         </div>
 
         <div className="flex items-center space-x-6 text-xs text-[#A1A1AA]">
-          <Link href="/dashboard" className="hover:text-[#FAFAFA] transition-colors">
-            Dashboard
-          </Link>
-          <a href="#how-it-works" className="hover:text-[#FAFAFA] transition-colors">
-            How it works
-          </a>
-          <a href="#example" className="hover:text-[#FAFAFA] transition-colors">
-            Example
-          </a>
           <a
             href="https://github.com"
             target="_blank"
@@ -41,7 +32,7 @@ export default function Footer() {
         </div>
 
         <div className="text-xs text-[#71717A]">
-          © {new Date().getFullYear()} RepoFolio. Portfolio stories grounded in code evidence.
+          © {new Date().getFullYear()} RepoFolio. Code-grounded repository analysis &amp; architecture flows.
         </div>
       </div>
     </footer>

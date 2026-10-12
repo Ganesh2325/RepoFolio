@@ -78,10 +78,6 @@ export default function ProjectCard({ project, onDelete }: ProjectCardProps) {
                   </>
                 )}
               </span>
-
-              <span className="px-2 py-0.5 rounded text-[11px] font-medium capitalize bg-[#17171A] text-[#FAFAFA] border border-[#2A2A2F]">
-                {project.audience_version}
-              </span>
             </div>
 
             {/* GitHub stats */}

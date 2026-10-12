@@ -5,18 +5,14 @@ import Link from "next/link";
 import { 
   FolderGit2, 
   ArrowRight, 
-  Briefcase, 
-  Building, 
-  HeartHandshake, 
   Check, 
   ExternalLink,
   Code2, 
   FileSearch, 
-  PenLine, 
+  Layers, 
   Share2, 
   ShieldCheck,
-  ChevronRight,
-  Layers
+  Workflow
 } from "lucide-react";
 import RepoIngestModal from "@/components/RepoIngestModal";
 import MermaidChart from "@/components/MermaidChart";
@@ -24,7 +20,6 @@ import MermaidChart from "@/components/MermaidChart";
 export default function LandingPage() {
   const [heroUrl, setHeroUrl] = useState("");
   const [showIngestModal, setShowIngestModal] = useState(false);
-  const [activeAudienceTab, setActiveAudienceTab] = useState<"recruiter" | "client" | "non-technical">("recruiter");
 
   const handleHeroSubmit = (e: React.FormEvent) => {
     e.preventDefault();
@@ -67,17 +62,17 @@ export default function LandingPage() {
       <section className="pt-24 sm:pt-28 pb-20 px-4 sm:px-6 lg:px-8 max-w-5xl mx-auto text-center">
         {/* Eyebrow */}
         <div className="inline-flex items-center space-x-2 px-3 py-1 rounded-full border border-[#2A2A2F] bg-[#121214] text-[#A1A1AA] text-xs font-mono mb-8">
-          <span>GitHub → Portfolio Story</span>
+          <span>GitHub Architecture &amp; Flow Extractor</span>
         </div>
 
         {/* Main Headline */}
         <h1 className="text-4xl sm:text-6xl md:text-7xl font-bold tracking-tight text-[#FAFAFA] leading-[1.08] max-w-4xl mx-auto">
-          Make your GitHub projects easy to understand.
+          Extract and explain any GitHub repository.
         </h1>
 
         {/* Subheadline */}
         <p className="text-base sm:text-lg md:text-xl text-[#A1A1AA] max-w-3xl mx-auto mt-6 leading-relaxed">
-          RepoFolio reads your public repository and turns it into an editable case study with the problem, solution, features, tech stack, proof of work, and a shareable link.
+          RepoFolio inspects your repository code, README, and dependencies to extract an accurate technical overview, system architecture flows, and evidence-backed diagrams.
         </p>
 
         {/* Working Hero Input & Action */}
@@ -102,7 +97,7 @@ export default function LandingPage() {
               className="w-full sm:w-auto px-5 py-2.5 rounded-lg bg-[#FAFAFA] hover:bg-[#E4E4E7] text-[#111111] text-sm font-semibold flex items-center justify-center space-x-2 transition-colors cursor-pointer active:scale-98"
               id="hero-generate-btn"
             >
-              <span>Create story</span>
+              <span>Explain repository</span>
               <ArrowRight className="w-3.5 h-3.5 text-[#111111]" />
             </button>
           </form>
@@ -111,31 +106,31 @@ export default function LandingPage() {
           <div className="flex flex-wrap items-center justify-center gap-6 mt-6 text-xs text-[#71717A]">
             <span className="flex items-center space-x-1.5">
               <Check className="w-3.5 h-3.5 text-[#FAFAFA]" />
-              <span>Uses public repository evidence</span>
+              <span>Grounded in actual codebase evidence</span>
             </span>
             <span className="flex items-center space-x-1.5">
               <Check className="w-3.5 h-3.5 text-[#FAFAFA]" />
-              <span>You review every AI-generated detail</span>
+              <span>Interactive system architecture diagrams</span>
             </span>
             <span className="flex items-center space-x-1.5">
               <Check className="w-3.5 h-3.5 text-[#FAFAFA]" />
-              <span>Share a recruiter-ready link</span>
+              <span>Extracted repository images &amp; screenshots</span>
             </span>
           </div>
         </div>
       </section>
 
-      {/* How RepoFolio Works Section */}
-      <section id="how-it-works" className="py-20 px-4 sm:px-6 lg:px-8 max-w-6xl mx-auto border-t border-[#222226]">
+      {/* How It Works Section */}
+      <section className="py-20 px-4 sm:px-6 lg:px-8 max-w-6xl mx-auto border-t border-[#222226]">
         <div className="text-center mb-16">
           <span className="text-xs font-mono uppercase tracking-widest text-[#71717A]">
             Workflow
           </span>
           <h2 className="text-3xl sm:text-4xl font-bold text-[#FAFAFA] tracking-tight mt-2">
-            How RepoFolio works
+            How RepoFolio extracts your project
           </h2>
           <p className="text-[#A1A1AA] text-sm sm:text-base max-w-xl mx-auto mt-2">
-            Four sequential steps from raw codebase to recruiter-ready portfolio page.
+            Automated technical analysis from repository code to interactive architecture flows.
           </p>
         </div>
 
@@ -147,9 +142,9 @@ export default function LandingPage() {
               <div className="w-8 h-8 rounded-lg bg-[#17171A] border border-[#2A2A2F] text-[#FAFAFA] text-xs font-mono font-semibold flex items-center justify-center mb-4">
                 01
               </div>
-              <h3 className="font-semibold text-base text-[#FAFAFA]">Connect your project</h3>
+              <h3 className="font-semibold text-base text-[#FAFAFA]">Connect repository</h3>
               <p className="text-xs text-[#A1A1AA] mt-2 leading-relaxed">
-                Paste any public GitHub repository link. No write permissions or complex setup required.
+                Paste any public GitHub repository link. No write permissions or setup required.
               </p>
             </div>
             <div className="mt-4 pt-3 border-t border-[#222226] text-[11px] text-[#71717A] flex items-center space-x-1">
@@ -164,14 +159,14 @@ export default function LandingPage() {
               <div className="w-8 h-8 rounded-lg bg-[#17171A] border border-[#2A2A2F] text-[#FAFAFA] text-xs font-mono font-semibold flex items-center justify-center mb-4">
                 02
               </div>
-              <h3 className="font-semibold text-base text-[#FAFAFA]">RepoFolio reads evidence</h3>
+              <h3 className="font-semibold text-base text-[#FAFAFA]">Extract code signals</h3>
               <p className="text-xs text-[#A1A1AA] mt-2 leading-relaxed">
-                We analyze your README, tech stack, folders, dependencies, and commit activity.
+                Inspects README, dependency manifests, directory hierarchy, and repository assets.
               </p>
             </div>
             <div className="mt-4 pt-3 border-t border-[#222226] text-[11px] text-[#71717A] flex items-center space-x-1">
               <FileSearch className="w-3 h-3" />
-              <span>Manifests & signals</span>
+              <span>Manifests &amp; codebase</span>
             </div>
           </div>
 
@@ -181,14 +176,14 @@ export default function LandingPage() {
               <div className="w-8 h-8 rounded-lg bg-[#17171A] border border-[#2A2A2F] text-[#FAFAFA] text-xs font-mono font-semibold flex items-center justify-center mb-4">
                 03
               </div>
-              <h3 className="font-semibold text-base text-[#FAFAFA]">Review your story</h3>
+              <h3 className="font-semibold text-base text-[#FAFAFA]">Generate system flows</h3>
               <p className="text-xs text-[#A1A1AA] mt-2 leading-relaxed">
-                Get an AI-generated draft, then edit every detail, add screenshots, and include your demo.
+                Produces visual Mermaid architecture diagrams, execution paths, and tech stack rationale.
               </p>
             </div>
             <div className="mt-4 pt-3 border-t border-[#222226] text-[11px] text-[#71717A] flex items-center space-x-1">
-              <PenLine className="w-3 h-3" />
-              <span>100% editable draft</span>
+              <Workflow className="w-3 h-3" />
+              <span>Interactive flowcharts</span>
             </div>
           </div>
 
@@ -198,19 +193,19 @@ export default function LandingPage() {
               <div className="w-8 h-8 rounded-lg bg-[#17171A] border border-[#2A2A2F] text-[#FAFAFA] text-xs font-mono font-semibold flex items-center justify-center mb-4">
                 04
               </div>
-              <h3 className="font-semibold text-base text-[#FAFAFA]">Share with confidence</h3>
+              <h3 className="font-semibold text-base text-[#FAFAFA]">Review &amp; share</h3>
               <p className="text-xs text-[#A1A1AA] mt-2 leading-relaxed">
-                Publish a clean project page for recruiters, clients, judges, or your portfolio.
+                Inspect every extracted detail, upload custom screenshots, and share the live link.
               </p>
             </div>
             <div className="mt-4 pt-3 border-t border-[#222226] text-[11px] text-[#71717A] flex items-center space-x-1">
               <Share2 className="w-3 h-3" />
-              <span>Shareable public slug</span>
+              <span>Shareable overview</span>
             </div>
           </div>
         </div>
 
-        {/* Restrained Visual Workflow Diagram */}
+        {/* Visual Workflow Diagram */}
         <div className="mt-12 p-6 rounded-xl border border-[#2A2A2F] bg-[#121214]">
           <div className="flex flex-col sm:flex-row items-center justify-between gap-3 text-xs font-mono text-[#A1A1AA]">
             <div className="flex items-center space-x-2 px-3 py-2 rounded-lg bg-[#17171A] border border-[#2A2A2F]">
@@ -220,99 +215,34 @@ export default function LandingPage() {
             <span className="text-[#52525B]">→</span>
             <div className="flex items-center space-x-2 px-3 py-2 rounded-lg bg-[#17171A] border border-[#2A2A2F]">
               <FileSearch className="w-3.5 h-3.5 text-[#FAFAFA]" />
-              <span>Repo Analysis</span>
+              <span>Codebase Extraction</span>
             </div>
             <span className="text-[#52525B]">→</span>
             <div className="flex items-center space-x-2 px-3 py-2 rounded-lg bg-[#17171A] border border-[#2A2A2F]">
-              <PenLine className="w-3.5 h-3.5 text-[#FAFAFA]" />
-              <span>Editable Story</span>
+              <Workflow className="w-3.5 h-3.5 text-[#FAFAFA]" />
+              <span>System Flows &amp; Diagrams</span>
             </div>
             <span className="text-[#52525B]">→</span>
             <div className="flex items-center space-x-2 px-3 py-2 rounded-lg bg-[#FAFAFA] text-[#111111] font-semibold">
               <Share2 className="w-3.5 h-3.5" />
-              <span>Public Project Page</span>
+              <span>Technical Overview Page</span>
             </div>
           </div>
         </div>
       </section>
 
-      {/* Audience Section */}
+      {/* Example Project Preview Section */}
       <section className="py-20 px-4 sm:px-6 lg:px-8 max-w-6xl mx-auto border-t border-[#222226]">
-        <div className="text-center mb-16">
-          <span className="text-xs font-mono uppercase tracking-widest text-[#71717A]">
-            Perspectives
-          </span>
-          <h2 className="text-3xl sm:text-4xl font-bold text-[#FAFAFA] tracking-tight mt-2">
-            Tell the right story to the right person
-          </h2>
-          <p className="text-[#A1A1AA] text-sm sm:text-base max-w-xl mx-auto mt-2">
-            Tailor the explanation automatically based on who is reading your portfolio.
-          </p>
-        </div>
-
-        <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
-          {/* Card 1: Recruiters */}
-          <div className="p-6 rounded-xl border border-[#2A2A2F] bg-[#121214] flex flex-col justify-between">
-            <div>
-              <div className="w-9 h-9 rounded-lg bg-[#17171A] border border-[#2A2A2F] flex items-center justify-center text-[#FAFAFA] mb-4">
-                <Briefcase className="w-4 h-4" />
-              </div>
-              <h3 className="text-base font-semibold text-[#FAFAFA]">Recruiters</h3>
-              <p className="text-xs text-[#A1A1AA] mt-2 leading-relaxed">
-                Show skills, technical decisions, ownership, and project impact.
-              </p>
-            </div>
-            <div className="mt-6 pt-4 border-t border-[#222226] text-[11px] text-[#71717A]">
-              Architecture trade-offs & interview defense Q&As.
-            </div>
-          </div>
-
-          {/* Card 2: Clients & founders */}
-          <div className="p-6 rounded-xl border border-[#2A2A2F] bg-[#121214] flex flex-col justify-between">
-            <div>
-              <div className="w-9 h-9 rounded-lg bg-[#17171A] border border-[#2A2A2F] flex items-center justify-center text-[#FAFAFA] mb-4">
-                <Building className="w-4 h-4" />
-              </div>
-              <h3 className="text-base font-semibold text-[#FAFAFA]">Clients & founders</h3>
-              <p className="text-xs text-[#A1A1AA] mt-2 leading-relaxed">
-                Explain the problem, solution, outcomes, and proof your product works.
-              </p>
-            </div>
-            <div className="mt-6 pt-4 border-t border-[#222226] text-[11px] text-[#71717A]">
-              Return on investment, screenshots, and business value.
-            </div>
-          </div>
-
-          {/* Card 3: Non-technical viewers */}
-          <div className="p-6 rounded-xl border border-[#2A2A2F] bg-[#121214] flex flex-col justify-between">
-            <div>
-              <div className="w-9 h-9 rounded-lg bg-[#17171A] border border-[#2A2A2F] flex items-center justify-center text-[#FAFAFA] mb-4">
-                <HeartHandshake className="w-4 h-4" />
-              </div>
-              <h3 className="text-base font-semibold text-[#FAFAFA]">Non-technical viewers</h3>
-              <p className="text-xs text-[#A1A1AA] mt-2 leading-relaxed">
-                Make your project understandable without code or developer jargon.
-              </p>
-            </div>
-            <div className="mt-6 pt-4 border-t border-[#222226] text-[11px] text-[#71717A]">
-              Intuitive ELI5 metaphors and clear 4-step flows.
-            </div>
-          </div>
-        </div>
-      </section>
-
-      {/* Example Project Section */}
-      <section id="example" className="py-20 px-4 sm:px-6 lg:px-8 max-w-6xl mx-auto border-t border-[#222226]">
         <div className="flex flex-col md:flex-row md:items-end justify-between mb-8 gap-4">
           <div>
             <span className="text-xs font-mono uppercase tracking-widest text-[#71717A]">
-              Live Output
+              Live Breakdown
             </span>
             <h2 className="text-2xl sm:text-3xl font-bold text-[#FAFAFA] tracking-tight mt-1">
-              Sample project case study
+              Sample repository technical analysis
             </h2>
             <p className="text-xs sm:text-sm text-[#A1A1AA] mt-1">
-              Real public case study generated by RepoFolio:
+              Real public repository breakdown extracted by RepoFolio:
             </p>
           </div>
 
@@ -320,7 +250,7 @@ export default function LandingPage() {
             onClick={() => setShowIngestModal(true)}
             className="px-4 py-2 rounded-lg bg-[#FAFAFA] hover:bg-[#E4E4E7] text-[#111111] text-xs font-semibold flex items-center space-x-1.5 self-start md:self-auto cursor-pointer"
           >
-            <span>Generate for your repo</span>
+            <span>Explain your repo</span>
             <ArrowRight className="w-3.5 h-3.5" />
           </button>
         </div>
@@ -373,7 +303,7 @@ export default function LandingPage() {
               {/* Problem */}
               <div className="p-4 rounded-lg bg-[#17171A] border border-[#2A2A2F]">
                 <span className="text-[11px] uppercase font-mono font-semibold text-[#FAFAFA] block mb-1">
-                  The Problem
+                  Problem Solved
                 </span>
                 <p className="text-xs sm:text-sm text-[#A1A1AA] leading-relaxed">
                   {showcaseProject.problem}
@@ -383,7 +313,7 @@ export default function LandingPage() {
               {/* Solution */}
               <div className="p-4 rounded-lg bg-[#17171A] border border-[#2A2A2F]">
                 <span className="text-[11px] uppercase font-mono font-semibold text-[#FAFAFA] block mb-1">
-                  The Solution
+                  Engineered Solution
                 </span>
                 <p className="text-xs sm:text-sm text-[#A1A1AA] leading-relaxed">
                   {showcaseProject.solution}
@@ -393,7 +323,7 @@ export default function LandingPage() {
               {/* Tech Stack Chips */}
               <div>
                 <span className="text-[11px] uppercase font-mono font-semibold text-[#71717A] block mb-2">
-                  Key Technologies & Rationale
+                  Key Technologies &amp; Rationale
                 </span>
                 <div className="flex flex-wrap gap-2">
                   {showcaseProject.tech_stack.map((t, idx) => (
@@ -412,7 +342,7 @@ export default function LandingPage() {
             {/* Architecture Flow Preview */}
             <div>
               <span className="text-[11px] uppercase font-mono font-semibold text-[#71717A] block mb-2">
-                System Flowchart Preview
+                System Architecture Flowchart
               </span>
               <div className="rounded-lg border border-[#2A2A2F] bg-[#17171A] p-2">
                 <MermaidChart
@@ -425,16 +355,16 @@ export default function LandingPage() {
         </div>
       </section>
 
-      {/* Why It Is Trustworthy Section */}
+      {/* Trust & Accuracy Section */}
       <section className="py-20 px-4 sm:px-6 lg:px-8 max-w-4xl mx-auto border-t border-[#222226] text-center">
         <span className="text-xs font-mono uppercase tracking-widest text-[#71717A]">
-          Trust & Accuracy
+          Accuracy &amp; Verification
         </span>
         <h2 className="text-3xl sm:text-4xl font-bold text-[#FAFAFA] tracking-tight mt-2">
-          AI-generated, developer-approved.
+          Code-grounded, developer-verified.
         </h2>
         <p className="text-[#A1A1AA] text-sm sm:text-base max-w-lg mx-auto mt-2">
-          You retain 100% control over the story before recruiters or clients see it.
+          Every architecture flow and technical detail is extracted directly from repository files.
         </p>
 
         <div className="grid grid-cols-1 md:grid-cols-3 gap-6 mt-12 text-left">
@@ -442,19 +372,19 @@ export default function LandingPage() {
             <div className="w-8 h-8 rounded-lg bg-[#17171A] border border-[#2A2A2F] flex items-center justify-center text-[#FAFAFA] mb-3">
               <ShieldCheck className="w-4 h-4" />
             </div>
-            <h3 className="font-semibold text-sm text-[#FAFAFA]">Grounded in repository evidence</h3>
+            <h3 className="font-semibold text-sm text-[#FAFAFA]">Grounded in repository files</h3>
             <p className="text-xs text-[#A1A1AA] mt-1.5 leading-relaxed">
-              Every detail is pulled from your actual code, README, package manifests, and commit records.
+              Extracted from actual code, README, package manifests, and commit history.
             </p>
           </div>
 
           <div className="p-5 rounded-xl border border-[#2A2A2F] bg-[#121214]">
             <div className="w-8 h-8 rounded-lg bg-[#17171A] border border-[#2A2A2F] flex items-center justify-center text-[#FAFAFA] mb-3">
-              <PenLine className="w-4 h-4" />
+              <Layers className="w-4 h-4" />
             </div>
-            <h3 className="font-semibold text-sm text-[#FAFAFA]">Every section is editable</h3>
+            <h3 className="font-semibold text-sm text-[#FAFAFA]">Interactive architecture flows</h3>
             <p className="text-xs text-[#A1A1AA] mt-1.5 leading-relaxed">
-              Easily refine the problem, tweak the tech stack reasons, or re-order features in the editor.
+              Auto-generates clean Mermaid system diagrams representing how data and components connect.
             </p>
           </div>
 
@@ -462,9 +392,9 @@ export default function LandingPage() {
             <div className="w-8 h-8 rounded-lg bg-[#17171A] border border-[#2A2A2F] flex items-center justify-center text-[#FAFAFA] mb-3">
               <Check className="w-4 h-4" />
             </div>
-            <h3 className="font-semibold text-sm text-[#FAFAFA]">Nothing published until you approve</h3>
+            <h3 className="font-semibold text-sm text-[#FAFAFA]">100% editable &amp; customizable</h3>
             <p className="text-xs text-[#A1A1AA] mt-1.5 leading-relaxed">
-              Stories remain drafts until you decide to hit publish and share your link with recruiters.
+              Refine architecture descriptions, add screenshots, and update technical sections anytime.
             </p>
           </div>
         </div>
@@ -473,10 +403,10 @@ export default function LandingPage() {
       {/* Final CTA Section */}
       <section className="py-24 px-4 sm:px-6 lg:px-8 max-w-5xl mx-auto border-t border-[#222226] text-center">
         <h2 className="text-3xl sm:text-5xl font-bold text-[#FAFAFA] tracking-tight max-w-2xl mx-auto">
-          Your code deserves a story people can understand.
+          Understand and explain any repository in seconds.
         </h2>
         <p className="text-[#A1A1AA] text-sm sm:text-base max-w-md mx-auto mt-4">
-          Turn your repository into a recruiter-ready case study in under 60 seconds.
+          Generate system architecture diagrams, tech stack breakdowns, and visual flows from any GitHub link.
         </p>
 
         <div className="mt-8 flex flex-col sm:flex-row items-center justify-center gap-3">
@@ -484,15 +414,9 @@ export default function LandingPage() {
             onClick={() => setShowIngestModal(true)}
             className="w-full sm:w-auto px-6 py-3.5 rounded-xl bg-[#FAFAFA] hover:bg-[#E4E4E7] text-[#111111] text-sm font-semibold flex items-center justify-center space-x-2 transition-colors cursor-pointer active:scale-98"
           >
-            <span>Create project story</span>
+            <span>Explain a repository</span>
             <ArrowRight className="w-4 h-4 text-[#111111]" />
           </button>
-          <Link
-            href="/dashboard"
-            className="w-full sm:w-auto px-5 py-3.5 rounded-xl border border-[#2A2A2F] bg-[#121214] hover:bg-[#17171A] text-xs sm:text-sm font-medium text-[#A1A1AA] hover:text-[#FAFAFA] transition-colors flex items-center justify-center"
-          >
-            Go to dashboard
-          </Link>
         </div>
       </section>
 

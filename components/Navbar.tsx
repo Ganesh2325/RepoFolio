@@ -22,16 +22,6 @@ export default function Navbar() {
                 RepoFolio
               </span>
             </Link>
-
-            {/* Nav links */}
-            <nav className="flex items-center space-x-4 text-sm text-[#A1A1AA]">
-              <Link
-                href="/dashboard"
-                className="hover:text-[#FAFAFA] transition-colors font-medium px-2.5 py-1 rounded-md hover:bg-[#17171A]"
-              >
-                Dashboard
-              </Link>
-            </nav>
           </div>
 
           {/* Right: Primary Action */}
@@ -39,10 +29,10 @@ export default function Navbar() {
             <button
               onClick={() => setShowIngestModal(true)}
               className="inline-flex items-center space-x-1.5 px-3.5 py-2 rounded-xl bg-[#FAFAFA] hover:bg-[#E4E4E7] text-[#111111] text-xs sm:text-sm font-semibold transition-colors shadow-sm cursor-pointer active:scale-98"
-              id="nav-create-story-btn"
+              id="nav-analyze-repo-btn"
             >
               <Plus className="w-3.5 h-3.5 text-[#111111]" />
-              <span>Create story</span>
+              <span>Explain repository</span>
             </button>
           </div>
         </div>

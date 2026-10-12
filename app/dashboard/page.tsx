@@ -57,10 +57,10 @@ export default function DashboardPage() {
             <span>Workspace</span>
           </div>
           <h1 className="text-2xl sm:text-3xl font-bold text-[#FAFAFA] tracking-tight">
-            My Project Stories
+            Repositories &amp; Architecture
           </h1>
           <p className="text-xs sm:text-sm text-[#A1A1AA] mt-1">
-            Manage, edit, and share your non-technical portfolio case studies.
+            Extracted repository breakdowns, architecture flows, and technical documentation.
           </p>
         </div>
 
@@ -80,7 +80,7 @@ export default function DashboardPage() {
       <div className="grid grid-cols-2 sm:grid-cols-4 gap-4 mb-8">
         <div className="p-4 rounded-xl border border-[#2A2A2F] bg-[#121214]">
           <span className="text-[11px] uppercase font-mono font-semibold text-[#71717A]">
-            Total Stories
+            Total Repositories
           </span>
           <div className="text-2xl font-bold text-[#FAFAFA] mt-1">{loading ? "—" : projects.length}</div>
         </div>
@@ -101,7 +101,7 @@ export default function DashboardPage() {
 
         <div className="p-4 rounded-xl border border-[#2A2A2F] bg-[#121214]">
           <span className="text-[11px] uppercase font-mono font-semibold text-[#71717A]">
-            Portfolio Link
+            Overview Link
           </span>
           <div className="text-2xl font-bold text-[#FAFAFA] mt-1">Ready</div>
         </div>
@@ -109,7 +109,7 @@ export default function DashboardPage() {
 
       {/* Projects Content / Loading Skeleton */}
       {loading ? (
-        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6" aria-label="Loading project stories">
+        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6" aria-label="Loading projects">
           {[1, 2, 3].map((n) => (
             <div key={n} className="rounded-xl border border-[#2A2A2F] bg-[#121214] p-5 space-y-4 animate-pulse">
               <div className="flex justify-between items-center">
@@ -146,10 +146,10 @@ export default function DashboardPage() {
           </div>
 
           <h2 className="text-xl sm:text-2xl font-bold text-[#FAFAFA] tracking-tight">
-            Create your first project story
+            Analyze your first repository
           </h2>
           <p className="text-sm text-[#A1A1AA] mt-2 max-w-lg mx-auto leading-relaxed">
-            Paste a public GitHub repository. RepoFolio will create an editable draft you can publish when you are ready.
+            Paste a public GitHub repository. RepoFolio will extract the codebase signals, architecture flows, and technical breakdown.
           </p>
 
           {/* Small 3-step sequence */}

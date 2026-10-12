@@ -133,43 +133,16 @@ export function generateHeuristicStory(
     }
   }
 
-  // Problem & Solution customized for audience & user onboarding hints
-  let pitch = answers?.problemSolved
-    ? `${repoNameFormatted} — Solving ${answers.problemSolved.slice(0, 80)}`
-    : repoData.description || `An advanced ${primaryLang} application designed for seamless performance and modern engineering workflows.`;
+  // Technical Summary, Problem & Solution grounded in codebase metadata
+  const pitch = repoData.description
+    ? `${repoNameFormatted}: ${repoData.description}`
+    : `${repoNameFormatted}: A ${primaryLang} application designed for high performance, modular architecture, and structured execution.`;
 
-  let problem = answers?.problemSolved ||
-    `Users frequently face fragmented workflows, manual overhead, and friction when attempting to achieve consistent results with legacy tooling.`;
+  const problem =
+    `Developers and teams frequently require streamlined, automated tooling to replace manual, error-prone workflows and disparate configurations.`;
 
-  let solution = answers?.proudestAchievement
-    ? `Engineered an automated solution featuring ${answers.proudestAchievement.slice(0, 100)}, delivering reliable, scalable outcomes.`
-    : `Provides a unified, automated interface leveraging ${primaryLang} that streamlines the end-to-end process with minimal configuration.`;
-
-  if (audience === "recruiter") {
-    pitch = `${repoNameFormatted}: A production-engineered ${primaryLang} platform engineered for developer productivity and scalable performance.`;
-    problem = answers?.problemSolved ||
-      `Engineering teams frequently struggle with slow development turnaround, brittle manual scripts, and technical debt across fragmented environments.`;
-    solution = answers?.proudestAchievement
-      ? `Architected a decoupled ${primaryLang} system resolving this through ${answers.proudestAchievement.slice(0, 110)}, ensuring maintainable high-throughput execution.`
-      : `Architected a modular ${primaryLang} solution featuring type-safe data modeling, optimized state handling, and decoupled services.`;
-  } else if (audience === "client") {
-    pitch = `${repoNameFormatted}: An intuitive, business-ready software tool that eliminates manual delays and boosts operational efficiency.`;
-    problem = answers?.problemSolved ||
-      `Traditional manual approaches cost companies valuable hours every week and introduce expensive errors into critical business workflows.`;
-    solution = `Automates repetitive tasks with an easy-to-use interface, cutting processing overhead by over 70% and ensuring verifiable accuracy.`;
-  } else if (audience === "non-technical") {
-    pitch = `${repoNameFormatted}: A super friendly helper app that makes tricky computer tasks feel as simple as clicking a single button.`;
-    problem = answers?.problemSolved ||
-      `Imagine trying to organize hundreds of puzzle pieces by hand every day—it's exhausting, confusing, and takes way too much time.`;
-    solution = `Think of this app as a smart assistant that sorts all the pieces instantly and hands you the finished picture in seconds.`;
-  } else if (audience === "judge") {
-    pitch = `${repoNameFormatted}: An innovative project demonstrating rapid prototyping, clean architecture, and practical real-world impact.`;
-    problem = answers?.problemSolved ||
-      `Existing solutions are either too complex or fail to provide a rapid, delightful user experience under real-world constraints.`;
-    solution = answers?.proudestAchievement
-      ? `Delivers a rapid, high-impact implementation featuring ${answers.proudestAchievement.slice(0, 100)} with responsive client feedback.`
-      : `Delivers a rapid, high-impact implementation combining modern ${primaryLang} primitives with responsive feedback.`;
-  }
+  const solution =
+    `Implements a cohesive ${primaryLang} architecture with modular components, type-safe boundaries, and decoupled services for robust execution.`;
 
   const features = [
     `Modular Architecture: Built with cleanly separated components for maximum maintainability`,
@@ -180,10 +153,6 @@ export function generateHeuristicStory(
 
   if (repoData.topics.length > 0) {
     features.push(`Domain Specialized: Tailored specifically for ${repoData.topics.slice(0, 3).join(", ")}`);
-  }
-
-  if (answers?.targetAudience) {
-    features.push(`Targeted Experience: Optimized directly for ${answers.targetAudience.slice(0, 60)}`);
   }
 
   const howItWorks = [

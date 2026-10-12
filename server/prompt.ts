@@ -1,43 +1,28 @@
 import { AudienceVersion, RepoIngestionData, UserOnboardingAnswers } from "@/types";
 
-export function buildSystemPrompt(audience: AudienceVersion): string {
-  const audienceInstructions: Record<AudienceVersion, string> = {
-    recruiter: `You are generating a project story for TECH RECRUITERS and ENGINEERING HIRING MANAGERS.
-Tone: Professional, high-signal, impact-driven, articulating clear engineering decisions, ownership, architecture trade-offs, and tangible value.
-Highlight: Technical stack reasons, scalability considerations, problem-solving depth, and real-world relevance.`,
+export function buildSystemPrompt(audience: AudienceVersion = "recruiter"): string {
+  return `You are "RepoFolio", an elite software engineering analyst and codebase documentation engine.
+Your mission is to analyze a public GitHub repository's actual code, structure, README, and dependency manifests, and extract an accurate, comprehensive technical breakdown explaining what the project actually does, how its architecture and data flows work (with Mermaid diagrams), its key modules and features, and its engineering decisions.
 
-    client: `You are generating a project story for POTENTIAL CLIENTS and BUSINESS STAKEHOLDERS.
-Tone: Value-focused, commercial, outcome-oriented, clean business language.
-Highlight: Business problem solved, return on investment, user satisfaction, reliability, and how this software delivers measurable results. Avoid deep code minutiae; focus on capabilities and outcomes.`,
-
-    "non-technical": `You are generating a project story for NON-TECHNICAL VIEWERS (such as family, friends, non-tech founders, or general public).
-Tone: Warm, conversational, intuitive, using real-world analogies.
-Explain the project as if the viewer has never written a line of code in their life. Never use unexplained jargon (like 'REST API', 'ORM', or 'state machine') without an immediate plain-English explanation.`,
-
-    judge: `You are generating a project story for HACKATHON JUDGES and INNOVATION REVIEWERS.
-Tone: Energetic, visionary, crisp, highlighting innovation, technical execution under constraints, demo flow, and high-impact future scope.`,
-  };
-
-  return `You are "RepoFolio", an elite AI application architect and portfolio storyteller.
-Your mission is to transform a public GitHub repository's raw data into an exceptionally polished, structured project story.
-
-${audienceInstructions[audience] || audienceInstructions.recruiter}
+IMPORTANT PRINCIPLES:
+- DO NOT invent fictional stories, marketing hype, or ungrounded narratives.
+- Focus strictly on extracting and explaining what the codebase actually does based on repository evidence.
+- Maintain a clear, high-signal, professional engineering tone.
 
 STRICT EVIDENCE & ACCURACY RULES:
 1. Ground every claim strictly in repository evidence (README, manifests, commit logs, directory structure, language distribution).
 2. DO NOT hallucinate features, third-party integrations, or benchmarks not substantiated by the repository.
 3. If information is inferred rather than explicitly stated, note it transparently in the "confidence_notes" array.
 4. For the "mermaid_diagram", output clean valid Mermaid flowchart syntax (using 'graph TD' or 'flowchart LR'). Do not use special characters or unescaped quotes in node labels.
-5. Provide maximum 6 key features.
-6. Provide 4 to 6 sequential steps for "how_it_works".
-7. Tech stack must explain *why* each technology was chosen based on the repo evidence.
-8. Pitch script must be a concise 45-second spoken pitch (approx 100-130 words).
-9. Output STRICT JSON only. Do not surround with markdown backticks or commentary.`;
+5. Provide maximum 6 key features based on actual code and documentation.
+6. Provide 4 to 6 sequential steps for "how_it_works" describing the actual execution/data flow.
+7. Tech stack must explain *why* each technology was chosen based on the repo evidence and dependencies.
+8. Output STRICT JSON only. Do not surround with markdown backticks or commentary.`;
 }
 
 export function buildUserPrompt(
   repoData: RepoIngestionData,
-  audience: AudienceVersion,
+  audience: AudienceVersion = "recruiter",
   userAnswers?: UserOnboardingAnswers
 ): string {
   // Extract key dependencies from manifests
@@ -68,18 +53,7 @@ export function buildUserPrompt(
     .map((c) => `- "${c.message}" by ${c.author}`)
     .join("\n");
 
-  // Onboarding answers if provided
-  let onboardingContext = "";
-  if (userAnswers?.problemSolved || userAnswers?.targetAudience || userAnswers?.proudestAchievement) {
-    onboardingContext = `
-DEVELOPER'S DIRECT INPUT:
-- Problem it solves: "${userAnswers.problemSolved || "Not specified"}"
-- Target audience / users: "${userAnswers.targetAudience || "Not specified"}"
-- Proudest achievement / hardest challenge: "${userAnswers.proudestAchievement || "Not specified"}"
-`;
-  }
-
-  return `Please analyze this GitHub repository and generate a structured project story targeted for a "${audience}" audience.
+  return `Please analyze this GitHub repository and extract an accurate technical overview, system architecture flow, and engineering breakdown.
 
 REPOSITORY CONTEXT:
 - Name: ${repoData.name}
@@ -94,16 +68,15 @@ REPOSITORY CONTEXT:
 - Dependency Manifests: ${manifestSummary}
 - Recent Commits:
 ${commitSummary || "None"}
-${onboardingContext}
 
 README EXCERPT:
 ${repoData.readme.slice(0, 4500) || "No README available."}
 
 REQUIRED JSON OUTPUT FORMAT:
 {
-  "title": "A catchy, polished project title (e.g. 'RepoFolio — Automated Portfolio Storyteller')",
-  "one_line_pitch": "A crisp, memorable one-line value proposition",
-  "problem": "Clear explanation of the pain point or gap this project addresses (2-3 sentences)",
+  "title": "Clear, accurate technical project title based on the repository",
+  "one_line_pitch": "A crisp, factual one-line technical summary of what this repository does",
+  "problem": "Clear explanation of the problem or gap this project addresses based on the README and code (2-3 sentences)",
   "solution": "How this application effectively solves that problem (2-3 sentences)",
   "features": [
     "Bullet point feature 1",
@@ -126,11 +99,11 @@ REQUIRED JSON OUTPUT FORMAT:
     "Planned enhancement 1",
     "Planned enhancement 2"
   ],
-  "pitch_script": "A 45-second spoken elevator pitch script written in first person for the developer to present at interviews or demo days.",
+  "pitch_script": "A concise 45-second technical spoken walkthrough summarizing the architecture and impact.",
   "interview_questions": [
     {
       "question": "Why did you choose this tech stack architecture?",
-      "talking_points": "Key points the developer should mention in response"
+      "talking_points": "Key points on architecture decisions and trade-offs"
     },
     {
       "question": "What was the most challenging technical hurdle during development?",
