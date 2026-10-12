@@ -1,0 +1,84 @@
+datasource db {
+  provider = "sqlite"
+  url      = env("DATABASE_URL")
+}
+
+generator client {
+  provider = "prisma-client-js"
+}
+
+model User {
+  id              String    @id @default(cuid())
+  email           String    @unique
+  name            String?
+  avatar_url      String?
+  github_username String?
+  created_at      DateTime  @default(now())
+
+  projects        Project[]
+
+  @@map("users")
+}
+
+model Project {
+  id                      String         @id @default(cuid())
+  user_id                 String
+  github_owner            String
+  github_repo             String
+  github_url              String
+  slug                    String         @unique
+  title                   String
+  one_line_pitch          String
+  problem                 String
+  solution                String
+  features                String         // JSON string: string[]
+  tech_stack              String         // JSON string: { name: string, reason: string }[]
+  how_it_works            String         // JSON string: string[]
+  architecture_summary    String
+  mermaid_diagram         String
+  future_improvements     String         // JSON string: string[]
+  pitch_script            String
+  interview_questions     String         // JSON string: string[]
+  audience_version        String         @default("recruiter") // recruiter | client | non-technical | judge
+  live_demo_url           String?
+  video_url               String?
+  external_case_study_url String?
+  is_public               Boolean        @default(true)
+  status                  String         @default("draft") // draft | published
+  raw_github_metadata     String         // JSON string: repo metadata
+  created_at              DateTime       @default(now())
+  updated_at              DateTime       @updatedAt
+
+  user                    User           @relation(fields: [user_id], references: [id], onDelete: Cascade)
+  images                  ProjectImage[]
+  generation_jobs         GenerationJob[]
+
+  @@map("projects")
+}
+
+model ProjectImage {
+  id          String   @id @default(cuid())
+  project_id  String
+  image_url   String
+  caption     String?
+  sort_order  Int      @default(0)
+  created_at  DateTime @default(now())
+
+  project     Project  @relation(fields: [project_id], references: [id], onDelete: Cascade)
+
+  @@map("project_images")
+}
+
+model GenerationJob {
+  id            String    @id @default(cuid())
+  project_id    String
+  status        String    @default("completed") // pending | processing | completed | failed
+  error_message String?
+  model_used    String    @default("gemini-2.0-flash")
+  created_at    DateTime  @default(now())
+  completed_at  DateTime?
+
+  project       Project   @relation(fields: [project_id], references: [id], onDelete: Cascade)
+
+  @@map("generation_jobs")
+}
