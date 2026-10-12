@@ -80,48 +80,38 @@ export default function LandingPage() {
           RepoFolio reads your public repository and turns it into an editable case study with the problem, solution, features, tech stack, proof of work, and a shareable link.
         </p>
 
-        {/* Hero Actions */}
-        <div className="mt-10 flex flex-col sm:flex-row items-center justify-center gap-3">
-          <Link
-            href="/login"
-            className="w-full sm:w-auto px-6 py-3.5 rounded-xl bg-[#FAFAFA] hover:bg-[#E4E4E7] text-[#111111] text-sm font-semibold flex items-center justify-center space-x-2 transition-all shadow-sm active:scale-98"
-            id="hero-create-account-btn"
+        {/* Working Hero Input & Action */}
+        <div className="mt-10 max-w-xl mx-auto">
+          <form
+            onSubmit={handleHeroSubmit}
+            className="p-1.5 rounded-xl border border-[#2A2A2F] bg-[#121214] flex flex-col sm:flex-row items-center gap-2 shadow-sm"
           >
-            <span>Create a free account</span>
-            <ArrowRight className="w-4 h-4 text-[#111111]" />
-          </Link>
-          <a
-            href="#example"
-            className="w-full sm:w-auto px-5 py-3.5 rounded-xl border border-[#2A2A2F] bg-[#121214] hover:bg-[#17171A] text-xs sm:text-sm font-medium text-[#A1A1AA] hover:text-[#FAFAFA] transition-colors flex items-center justify-center space-x-1.5"
-          >
-            <span>See a real example</span>
-            <ChevronRight className="w-3.5 h-3.5" />
-          </a>
-        </div>
-
-        {/* Mock/Preview GitHub URL Input with account note */}
-        <div className="mt-8 max-w-xl mx-auto">
-          <Link
-            href="/login"
-            className="p-1.5 rounded-xl border border-[#2A2A2F] bg-[#121214] hover:border-[#3E3E46] flex items-center justify-between shadow-sm group transition-all"
-          >
-            <div className="flex items-center pl-3 space-x-2.5 truncate">
-              <FolderGit2 className="w-4 h-4 text-[#71717A] flex-shrink-0" />
-              <span className="text-xs sm:text-sm text-[#71717A] font-mono truncate">
-                github.com/username/repository
-              </span>
+            <div className="relative flex-1 w-full flex items-center pl-3">
+              <FolderGit2 className="w-4 h-4 text-[#71717A] flex-shrink-0 mr-2" />
+              <input
+                type="text"
+                value={heroUrl}
+                onChange={(e) => setHeroUrl(e.target.value)}
+                placeholder="https://github.com/username/repository"
+                className="w-full py-2 bg-transparent text-sm text-[#FAFAFA] placeholder-[#71717A] focus:outline-none font-mono"
+                aria-label="GitHub Repository URL"
+              />
             </div>
-            <div className="px-3 py-1.5 rounded-lg bg-[#17171A] border border-[#2A2A2F] text-[11px] text-[#A1A1AA] flex items-center space-x-1.5 flex-shrink-0 group-hover:text-[#FAFAFA] transition-colors">
-              <ShieldCheck className="w-3.5 h-3.5 text-[#A1A1AA]" />
-              <span>Create account to generate story</span>
-            </div>
-          </Link>
+            <button
+              type="submit"
+              className="w-full sm:w-auto px-5 py-2.5 rounded-lg bg-[#FAFAFA] hover:bg-[#E4E4E7] text-[#111111] text-sm font-semibold flex items-center justify-center space-x-2 transition-colors cursor-pointer active:scale-98"
+              id="hero-generate-btn"
+            >
+              <span>Create story</span>
+              <ArrowRight className="w-3.5 h-3.5 text-[#111111]" />
+            </button>
+          </form>
 
           {/* Trust Statements */}
           <div className="flex flex-wrap items-center justify-center gap-6 mt-6 text-xs text-[#71717A]">
             <span className="flex items-center space-x-1.5">
               <Check className="w-3.5 h-3.5 text-[#FAFAFA]" />
-              <span>Uses your public repository</span>
+              <span>Uses public repository evidence</span>
             </span>
             <span className="flex items-center space-x-1.5">
               <Check className="w-3.5 h-3.5 text-[#FAFAFA]" />
@@ -490,19 +480,19 @@ export default function LandingPage() {
         </p>
 
         <div className="mt-8 flex flex-col sm:flex-row items-center justify-center gap-3">
-          <Link
-            href="/login"
+          <button
+            onClick={() => setShowIngestModal(true)}
             className="w-full sm:w-auto px-6 py-3.5 rounded-xl bg-[#FAFAFA] hover:bg-[#E4E4E7] text-[#111111] text-sm font-semibold flex items-center justify-center space-x-2 transition-colors cursor-pointer active:scale-98"
           >
-            <span>Create your free account</span>
+            <span>Create project story</span>
             <ArrowRight className="w-4 h-4 text-[#111111]" />
-          </Link>
-          <a
-            href="#example"
-            className="w-full sm:w-auto px-5 py-3.5 rounded-xl border border-[#2A2A2F] bg-[#121214] hover:bg-[#17171A] text-[#A1A1AA] hover:text-[#FAFAFA] text-sm font-medium transition-colors"
+          </button>
+          <Link
+            href="/dashboard"
+            className="w-full sm:w-auto px-5 py-3.5 rounded-xl border border-[#2A2A2F] bg-[#121214] hover:bg-[#17171A] text-xs sm:text-sm font-medium text-[#A1A1AA] hover:text-[#FAFAFA] transition-colors flex items-center justify-center"
           >
-            View an example project
-          </a>
+            Go to dashboard
+          </Link>
         </div>
       </section>
 

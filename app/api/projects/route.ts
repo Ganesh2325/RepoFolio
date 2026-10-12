@@ -1,6 +1,4 @@
 import { NextRequest, NextResponse } from "next/server";
-import { getServerSession } from "next-auth/next";
-import { authOptions } from "@/lib/auth";
 import { prisma } from "@/lib/db";
 import { fetchGitHubRepoData } from "@/server/github";
 import { generateProjectStory } from "@/server/ai";
@@ -10,12 +8,11 @@ import { checkRateLimit } from "@/server/rate-limit";
 
 export async function POST(req: NextRequest) {
   try {
-    const session = await getServerSession(authOptions);
-    let userId = (session?.user as { id?: string })?.id;
+    let userId: string | undefined;
 
     // Determine client identifier for rate limiting
     const ip = req.headers.get("x-forwarded-for")?.split(",")[0]?.trim() || "anonymous-ip";
-    const rateLimitKey = userId ? `user-${userId}` : `ip-${ip}`;
+    const rateLimitKey = `ip-${ip}`;
 
     // Apply rate limit: generous in dev/local mode, standard in production
     const maxAllowed = process.env.NODE_ENV === "production" ? 15 : 60;
